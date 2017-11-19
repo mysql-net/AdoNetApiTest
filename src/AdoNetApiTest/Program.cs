@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using AdoNetApiTest.Connectors;
 using AdoNetApiTest.Tests;
 using MySqlConnector = AdoNetApiTest.Connectors.MySqlConnector;
@@ -44,10 +46,31 @@ namespace AdoNetApiTest
 
 		private static void RunAllTests(Connector connector)
 		{
-			// TODO: use reflection
-			var commandTests = new CommandTests();
-			InitializeTest(connector, commandTests);
-			Console.WriteLine(commandTests.CreateCommandDoesNotSetTransaction());
+			Console.WriteLine(connector.Name);
+			Console.WriteLine(new string('=', connector.Name.Length));
+			var testTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsSubclassOf(typeof(TestBase))).ToList();
+			foreach (var testType in testTypes)
+			{
+				Console.WriteLine(testType.Name);
+				var constructor = testType.GetConstructor(new Type[0]);
+				var test = (TestBase) constructor.Invoke(new object[0]);
+				InitializeTest(connector, test);
+
+				foreach (var method in testType.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(x => x.ReturnType == typeof(bool) && x.GetParameters().Length == 0))
+				{
+					Console.Write("{0}: ", method.Name);
+					try
+					{
+						var result = (bool) method.Invoke(test, new object[0]);
+						Console.WriteLine(result);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine("EXCEPTION {0} {1}", ex.GetType().Name, ex.Message);
+					}
+				}
+			}
+			Console.WriteLine();
 		}
 
 		private static void InitializeTest(Connector connector, TestBase test)

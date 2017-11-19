@@ -15,6 +15,7 @@ namespace AdoNetApiTest.Connectors
 			MySqlConnection.ClearAllPools();
 		}
 
+		public override string Name => "MySqlConnector 0.31.1";
 		public override DbProviderFactory Factory => MySqlClientFactory.Instance;
 	}
 }

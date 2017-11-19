@@ -9,6 +9,7 @@ namespace AdoNetApiTest.Connectors
 		{
 		}
 
+		public override string Name => "SqlClient";
 		public override DbProviderFactory Factory => SqlClientFactory.Instance;
 	}
 }

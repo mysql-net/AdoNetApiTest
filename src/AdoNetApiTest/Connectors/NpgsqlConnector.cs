@@ -9,6 +9,7 @@ namespace AdoNetApiTest.Connectors
 		{
 		}
 
+		public override string Name => "Npgsql 3.2.5";
 		public override DbProviderFactory Factory => NpgsqlFactory.Instance;
 	}
 }

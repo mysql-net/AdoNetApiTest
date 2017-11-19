@@ -15,6 +15,7 @@ namespace AdoNetApiTest.Connectors
 			OnUninitialize();
 		}
 
+		public abstract string Name { get; }
 		public abstract DbProviderFactory Factory { get; }
 
 		public DbCommand CreateCommand() => Factory.CreateCommand();
