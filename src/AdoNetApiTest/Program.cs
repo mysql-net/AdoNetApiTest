@@ -26,11 +26,11 @@ namespace AdoNetApiTest
 
 			// TODO: make data-driven
 			var mySqlConnector = new MySqlConnector();
-			mySqlConnector.Initialize("server=localhost;user id=mysqltest;password='test;key=\"val';port=3306;database=mysqltest;ssl mode=none");
+			mySqlConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none");
 			connectors.Add(mySqlConnector);
 
 			var mySqlDataConnector = new MySqlDataConnector();
-			mySqlDataConnector.Initialize("server=localhost;user id=mysqltest;password='test;key=\"val';port=3306;database=mysqltest;ssl mode=none;UseAffectedRows=true");
+			mySqlDataConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none;UseAffectedRows=true");
 			connectors.Add(mySqlDataConnector);
 
 			var npgsqlConnector = new NpgsqlConnector();
@@ -38,7 +38,7 @@ namespace AdoNetApiTest
 			connectors.Add(npgsqlConnector);
 
 			var sqlConnector = new SqlConnector();
-			sqlConnector.Initialize("Data Source=localhost;Integrated Security=True");
+			sqlConnector.Initialize("Data Source=localhost;User Id=sa;Password=Pa$$word");
 			connectors.Add(sqlConnector);
 
 			return connectors;
