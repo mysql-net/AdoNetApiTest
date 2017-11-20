@@ -66,7 +66,7 @@ namespace AdoNetApiTest
 					}
 					catch (Exception ex)
 					{
-						Console.WriteLine("EXCEPTION {0} {1}", ex.GetType().Name, ex.Message);
+						Console.WriteLine("EXCEPTION {0} {1}", ex.InnerException.GetType().Name, ex.InnerException.Message);
 					}
 				}
 			}
