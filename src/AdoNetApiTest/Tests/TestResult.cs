@@ -6,6 +6,7 @@ namespace AdoNetApiTest.Tests
 		Fail,
 		Exception,
 		NoException,
+		WrongException,
 		ImplementationPass,
 		ImplementationFail,
 	}

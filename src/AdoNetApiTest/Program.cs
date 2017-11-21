@@ -24,6 +24,12 @@ namespace AdoNetApiTest
 <HEAD>
 <TITLE>ADO.NET API Tests</TITLE>
 <LINK rel='stylesheet' type='text/css' href='http://seriot.ch/json/style.css'>
+<STYLE type='text/css'>
+.WRONG_EXCEPTION {
+	border: 1px solid black;
+	background-color: #F96384;
+}
+</STYLE>
 <META charset='utf-8'>
 </HEAD>
 
@@ -136,6 +142,7 @@ namespace AdoNetApiTest
 						testResult == TestResult.Fail ? "SHOULD_HAVE_PASSED" :
 						testResult == TestResult.Exception ? "CRASH" :
 						testResult == TestResult.NoException ? "SHOULD_HAVE_FAILED" :
+						testResult == TestResult.WrongException ? "WRONG_EXCEPTION" :
 						testResult == TestResult.ImplementationPass ? "IMPLEMENTATION_PASS" :
 						testResult == TestResult.ImplementationFail ? "IMPLEMENTATION_FAIL" :
 						"";

@@ -24,6 +24,15 @@ namespace AdoNetApiTest.Tests
 			{
 				return TestResult.Pass;
 			}
+			catch (NullReferenceException)
+			{
+				return TestResult.Exception;
+			}
+			catch (Exception ex)
+			{
+				Console.Write("{0} {1}", ex.GetType().Name, ex.Message);
+				return TestResult.WrongException;
+			}
 		}
 	}
 }
