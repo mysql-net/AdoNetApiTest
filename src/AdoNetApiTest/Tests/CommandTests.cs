@@ -271,7 +271,7 @@ namespace AdoNetApiTest.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 'test';";
+				command.CommandText = "SELECT NULL;";
 				return DBNull.Value.Equals(command.ExecuteScalar());
 			}
 		}
