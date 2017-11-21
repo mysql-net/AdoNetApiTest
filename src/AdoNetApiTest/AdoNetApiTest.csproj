@@ -34,6 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.1805.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\dotConnect.Express.for.MySQL.8.10.1013\lib\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.MySql, Version=8.10.1013.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\dotConnect.Express.for.MySQL.8.10.1013\lib\Devart.Data.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.PostgreSql, Version=7.10.1013.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\dotConnect.Express.for.PostgreSQL.7.10.1013\lib\Devart.Data.PostgreSql.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -95,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connectors\Connector.cs" />
+    <Compile Include="Connectors\DotConnectMySqlConnector.cs" />
+    <Compile Include="Connectors\DotConnectPostgresConnector.cs" />
     <Compile Include="Connectors\MicrosoftSqliteConnector.cs" />
     <Compile Include="Connectors\MySqlConnector.cs" />
     <Compile Include="Connectors\MySqlDataConnector.cs" />

@@ -75,9 +75,17 @@ namespace AdoNetApiTest
 			mySqlDataConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none;UseAffectedRows=true");
 			connectors.Add(mySqlDataConnector);
 
+			var dotConnectMySqlConnector = new DotConnectMySqlConnector();
+			dotConnectMySqlConnector.Initialize("server=localhost;user id=root;password=test");
+			connectors.Add(dotConnectMySqlConnector);
+
 			var npgsqlConnector = new NpgsqlConnector();
 			npgsqlConnector.Initialize("host=localhost;user id=root;password=test");
 			connectors.Add(npgsqlConnector);
+
+			var dotConnectPostgresConnector = new DotConnectPostgresConnector();
+			dotConnectPostgresConnector.Initialize("host=localhost;user id=root;password=test");
+			connectors.Add(dotConnectPostgresConnector);
 
 			var sqlConnector = new SqlConnector();
 			sqlConnector.Initialize("data source=localhost;user id=sa;password=Pa$$word");

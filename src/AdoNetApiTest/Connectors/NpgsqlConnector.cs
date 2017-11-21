@@ -9,6 +9,11 @@ namespace AdoNetApiTest.Connectors
 		{
 		}
 
+		protected override void OnUninitialize()
+		{
+			NpgsqlConnection.ClearAllPools();
+		}
+
 		public override string Name => "Npgsql 3.2.5";
 		public override DbProviderFactory Factory => NpgsqlFactory.Instance;
 	}
