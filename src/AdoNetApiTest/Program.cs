@@ -34,11 +34,11 @@ namespace AdoNetApiTest
 			connectors.Add(mySqlDataConnector);
 
 			var npgsqlConnector = new NpgsqlConnector();
-			npgsqlConnector.Initialize("Host=localhost;Username=root;Password=test");
+			npgsqlConnector.Initialize("host=localhost;user id=root;password=test");
 			connectors.Add(npgsqlConnector);
 
 			var sqlConnector = new SqlConnector();
-			sqlConnector.Initialize("Data Source=localhost;User Id=sa;Password=Pa$$word");
+			sqlConnector.Initialize("data source=localhost;user id=sa;password=Pa$$word");
 			connectors.Add(sqlConnector);
 
 			var sqliteConnector = new MicrosoftSqliteConnector();
