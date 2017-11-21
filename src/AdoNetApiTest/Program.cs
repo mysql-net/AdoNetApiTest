@@ -67,6 +67,8 @@ namespace AdoNetApiTest
 			var connectors = new List<Connector>();
 
 			// TODO: make data-driven
+
+			// docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
 			var mySqlConnector = new MySqlConnector();
 			mySqlConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none");
 			connectors.Add(mySqlConnector);
@@ -79,6 +81,7 @@ namespace AdoNetApiTest
 			dotConnectMySqlConnector.Initialize("server=localhost;user id=root;password=test");
 			connectors.Add(dotConnectMySqlConnector);
 
+			// docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
 			var npgsqlConnector = new NpgsqlConnector();
 			npgsqlConnector.Initialize("host=localhost;user id=root;password=test");
 			connectors.Add(npgsqlConnector);
@@ -87,6 +90,7 @@ namespace AdoNetApiTest
 			dotConnectPostgresConnector.Initialize("host=localhost;user id=root;password=test");
 			connectors.Add(dotConnectPostgresConnector);
 
+			// docker run --name mssql -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=Pa$$word -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
 			var sqlConnector = new SqlConnector();
 			sqlConnector.Initialize("data source=localhost;user id=sa;password=Pa$$word");
 			connectors.Add(sqlConnector);
