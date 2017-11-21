@@ -203,7 +203,8 @@ namespace AdoNetApiTest.Tests
 				parameter.Value = 1;
 				command.Parameters.Add(parameter);
 
-				return 1L.Equals(command.ExecuteScalar());
+				var scalar = command.ExecuteScalar();
+				return 1.Equals(scalar) || 1L.Equals(scalar);
 			}
 		}
 
