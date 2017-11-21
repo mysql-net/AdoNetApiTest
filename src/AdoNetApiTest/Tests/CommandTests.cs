@@ -15,6 +15,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		[ImplementationSpecific]
 		public bool CreateCommand_does_not_set_Transaction_property()
 		{
 			using (var connection = CreateOpenConnection())
@@ -25,7 +26,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool CommandText_throws_when_set_when_open_reader()
+		public TestResult CommandText_throws_when_set_when_open_reader()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -53,7 +54,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool Connection_throws_when_set_when_open_reader()
+		public TestResult Connection_throws_when_set_when_open_reader()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -96,47 +97,47 @@ namespace AdoNetApiTest.Tests
 				return command.CreateParameter() != null;
 		}
 
-		public bool Prepare_throws_when_no_connection()
+		public TestResult Prepare_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.Prepare());
 		}
 
-		public bool Prepare_throws_when_connection_closed()
+		public TestResult Prepare_throws_when_connection_closed()
 		{
 			using (var connection = Connector.CreateConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.Prepare());
 		}
 
-		public bool Prepare_throws_when_no_command_text()
+		public TestResult Prepare_throws_when_no_command_text()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.Prepare());
 		}
 
-		public bool ExecuteReader_throws_when_no_connection()
+		public TestResult ExecuteReader_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteReader());
 		}
 
-		public bool ExecuteReader_throws_when_connection_closed()
+		public TestResult ExecuteReader_throws_when_connection_closed()
 		{
 			using (var connection = Connector.CreateConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteReader());
 		}
 
-		public bool ExecuteReader_throws_when_no_command_text()
+		public TestResult ExecuteReader_throws_when_no_command_text()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteReader());
 		}
 
-		public bool ExecuteReader_throws_on_error()
+		public TestResult ExecuteReader_throws_on_error()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -146,7 +147,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool ExecuteReader_throws_when_transaction_required()
+		public TestResult ExecuteReader_throws_when_transaction_required()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -160,7 +161,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool ExecuteReader_throws_when_transaction_mismatched()
+		public TestResult ExecuteReader_throws_when_transaction_mismatched()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -177,7 +178,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool ExecuteReader_throws_when_reader_open()
+		public TestResult ExecuteReader_throws_when_reader_open()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -206,20 +207,20 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
-		public bool ExecuteScalar_throws_when_no_connection()
+		public TestResult ExecuteScalar_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteScalar());
 		}
 
-		public bool ExecuteScalar_throws_when_connection_closed()
+		public TestResult ExecuteScalar_throws_when_connection_closed()
 		{
 			using (var connection = Connector.CreateConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteScalar());
 		}
 
-		public bool ExecuteScalar_throws_when_no_command_text()
+		public TestResult ExecuteScalar_throws_when_no_command_text()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -306,20 +307,20 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 		
-		public bool ExecuteNonQuery_throws_when_no_connection()
+		public TestResult ExecuteNonQuery_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteNonQuery());
 		}
 
-		public bool ExecuteNonQuery_throws_when_connection_closed()
+		public TestResult ExecuteNonQuery_throws_when_connection_closed()
 		{
 			using (var connection = Connector.CreateConnection())
 			using (var command = connection.CreateCommand())
 				return Throws<InvalidOperationException>(() => command.ExecuteNonQuery());
 		}
 
-		public bool ExecuteNonQuery_throws_when_no_command_text()
+		public TestResult ExecuteNonQuery_throws_when_no_command_text()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())

@@ -12,17 +12,17 @@ namespace AdoNetApiTest.Tests
 
 		protected DbConnection CreateOpenConnection() => Connector.CreateOpenConnection();
 
-		protected bool Throws<TException>(Action action)
+		protected TestResult Throws<TException>(Action action)
 			where TException : Exception
 		{
 			try
 			{
 				action();
-				return false;
+				return TestResult.NoException;
 			}
 			catch (TException)
 			{
-				return true;
+				return TestResult.Pass;
 			}
 		}
 	}

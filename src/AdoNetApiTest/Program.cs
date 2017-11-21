@@ -98,29 +98,48 @@ namespace AdoNetApiTest
 				var test = (TestBase) constructor.Invoke(new object[0]);
 				InitializeTest(connector, test);
 
-				foreach (var method in testType.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(x => x.ReturnType == typeof(bool) && x.GetParameters().Length == 0))
+				foreach (var method in testType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Where(x => x.GetParameters().Length == 0))
 				{
 					Console.Write("{0}: ", method.Name);
 					if (index >= s_rows.Count)
 						s_rows.Add($"<TD>{method.Name}</TD>");
 
+					TestResult testResult;
 					try
 					{
-						var result = (bool) method.Invoke(test, new object[0]);
+						var result = method.Invoke(test, new object[0]);
+						if (method.ReturnType == typeof(bool))
+							testResult = (bool) result ? TestResult.Pass : TestResult.Fail;
+						else if (method.ReturnType == typeof(TestResult))
+							testResult = (TestResult) result;
+						else
+							testResult = TestResult.Exception;
 						Console.WriteLine(result);
-						var className = result ? "EXPECTED_RESULT" : "SHOULD_HAVE_PASSED";
-						s_rows[index] += $"<TD class='{className}'></TD>";
 					}
 					catch (TargetInvocationException ex)
 					{
-						s_rows[index] += $"<TD class='CRASH'></TD>";
+						testResult = TestResult.Exception;
 						Console.WriteLine("EXCEPTION {0} {1}", ex.InnerException.GetType().Name, ex.InnerException.Message);
 					}
 					catch (Exception ex)
 					{
-						s_rows[index] += $"<TD class='CRASH'></TD>";
+						testResult = TestResult.Exception;
 						Console.WriteLine("UNEXPECTED EXCEPTION {0} {1}", ex.GetType().Name, ex.Message);
 					}
+
+					var isImplementationSpecific = method.GetCustomAttribute<ImplementationSpecificAttribute>() != null;
+					if (isImplementationSpecific)
+						testResult = testResult == TestResult.Pass ? TestResult.ImplementationPass : testResult == TestResult.Fail ? TestResult.ImplementationFail : testResult;
+
+					var className =
+						testResult == TestResult.Pass ? "EXPECTED_RESULT" :
+						testResult == TestResult.Fail ? "SHOULD_HAVE_PASSED" :
+						testResult == TestResult.Exception ? "CRASH" :
+						testResult == TestResult.NoException ? "SHOULD_HAVE_FAILED" :
+						testResult == TestResult.ImplementationPass ? "IMPLEMENTATION_PASS" :
+						testResult == TestResult.ImplementationFail ? "IMPLEMENTATION_FAIL" :
+						"";
+					s_rows[index] += $"<TD class='{className}'></TD>";
 
 					index++;
 				}
