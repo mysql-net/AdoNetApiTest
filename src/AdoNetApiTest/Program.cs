@@ -68,9 +68,13 @@ namespace AdoNetApiTest
 						var result = (bool) method.Invoke(test, new object[0]);
 						Console.WriteLine(result);
 					}
-					catch (Exception ex)
+					catch (TargetInvocationException ex)
 					{
 						Console.WriteLine("EXCEPTION {0} {1}", ex.InnerException.GetType().Name, ex.InnerException.Message);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine("UNEXPECTED EXCEPTION {0} {1}", ex.GetType().Name, ex.Message);
 					}
 				}
 			}
