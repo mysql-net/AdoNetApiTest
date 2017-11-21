@@ -9,7 +9,7 @@ namespace AdoNetApiTest.Connectors
 		{
 		}
 
-		public override string Name => "Microsoft.Sqlite";
+		public override string Name => "Microsoft SQLite 2.0.0";
 		public override DbProviderFactory Factory => SqliteFactory.Instance;
 	}
 }
