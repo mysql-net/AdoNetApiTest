@@ -208,6 +208,47 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		public bool ExecuteReader_HasRows_is_false_for_comment()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "-- TODO: Write SQL";
+
+				using (var reader = command.ExecuteReader())
+				{
+					return !reader.HasRows;
+				}
+			}
+		}
+
+		public bool ExecuteReader_works_when_trailing_comments()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 0; -- My favorite number";
+
+				using (var reader = command.ExecuteReader())
+				{
+					return reader.Read() && 0L.Equals(reader.GetValue(0)) && !reader.NextResult();
+				}
+			}
+		}
+
+		public bool ExecuteReader_supports_CloseConnection()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 0;";
+				using (command.ExecuteReader(CommandBehavior.CloseConnection))
+				{
+				}
+				return connection.State == ConnectionState.Closed;
+			}
+		}
+
 		public TestResult ExecuteScalar_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
@@ -340,47 +381,6 @@ namespace AdoNetApiTest.Tests
 			{
 				command.CommandText = "SELECT 1;";
 				return command.ExecuteNonQuery() == -1;
-			}
-		}
-
-		public bool ExecuteReader_HasRows_is_false_for_comment()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "-- TODO: Write SQL";
-
-				using (var reader = command.ExecuteReader())
-				{
-					return !reader.HasRows;
-				}
-			}
-		}
-
-		public bool ExecuteReader_works_when_trailing_comments()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 0; -- My favorite number";
-
-				using (var reader = command.ExecuteReader())
-				{
-					return reader.Read() && 0L.Equals(reader.GetValue(0)) && !reader.NextResult();
-				}
-			}
-		}
-
-		public bool ExecuteReader_supports_CloseConnection()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 0;";
-				using (command.ExecuteReader(CommandBehavior.CloseConnection))
-				{
-				}
-				return connection.State == ConnectionState.Closed;
 			}
 		}
 	}
