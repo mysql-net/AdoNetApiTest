@@ -237,6 +237,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}*/
 
+		[ImplementationSpecific]
 		public bool ExecuteScalar_returns_long_when_integer()
 		{
 			using (var connection = CreateOpenConnection())
@@ -247,6 +248,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		[ImplementationSpecific]
 		public bool ExecuteScalar_returns_double_when_real()
 		{
 			using (var connection = CreateOpenConnection())
@@ -277,6 +279,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		[ImplementationSpecific]
 		public bool ExecuteScalar_returns_long_when_batching()
 		{
 			using (var connection = CreateOpenConnection())
@@ -287,6 +290,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		[ImplementationSpecific]
 		public bool ExecuteScalar_returns_long_when_multiple_columns()
 		{
 			using (var connection = CreateOpenConnection())
@@ -297,6 +301,7 @@ namespace AdoNetApiTest.Tests
 			}
 		}
 
+		[ImplementationSpecific]
 		public bool ExecuteScalar_returns_long_when_multiple_rows()
 		{
 			using (var connection = CreateOpenConnection())
@@ -306,7 +311,7 @@ namespace AdoNetApiTest.Tests
 				return 42L.Equals(command.ExecuteScalar());
 			}
 		}
-		
+
 		public TestResult ExecuteNonQuery_throws_when_no_connection()
 		{
 			using (var command = Connector.CreateCommand())
