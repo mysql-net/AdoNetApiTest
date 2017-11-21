@@ -9,6 +9,11 @@ namespace AdoNetApiTest.Connectors
 		{
 		}
 
+		protected override void OnUninitialize()
+		{
+			SqlConnection.ClearAllPools();
+		}
+
 		public override string Name => "SqlClient";
 		public override DbProviderFactory Factory => SqlClientFactory.Instance;
 	}
