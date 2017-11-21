@@ -83,7 +83,11 @@ namespace AdoNetApiTest
 			sqlConnector.Initialize("data source=localhost;user id=sa;password=Pa$$word");
 			connectors.Add(sqlConnector);
 
-			var sqliteConnector = new MicrosoftSqliteConnector();
+			var microsoftSqliteConnector = new MicrosoftSqliteConnector();
+			microsoftSqliteConnector.Initialize("data source=:memory:");
+			connectors.Add(microsoftSqliteConnector);
+
+			var sqliteConnector = new SqliteConnector();
 			sqliteConnector.Initialize("data source=:memory:");
 			connectors.Add(sqliteConnector);
 
