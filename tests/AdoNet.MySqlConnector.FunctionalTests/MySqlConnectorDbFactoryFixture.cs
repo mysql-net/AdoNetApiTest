@@ -9,6 +9,6 @@ namespace AdoNet.MySqlConnector.FunctionalTests
 		public DbProviderFactory Factory => MySqlClientFactory.Instance;
 
 		// docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
-		public string ConnectionString => "server=localhost;user id=root;password=test;ssl mode=none";
+		public string ConnectionString => "Server=localhost;User Id=root;Password=test;SSL Mode=none";
 	}
 }
