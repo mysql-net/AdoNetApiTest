@@ -20,13 +20,14 @@ namespace AdoNetApiTest
 			var assemblyTestResults = new Dictionary<string, IReadOnlyDictionary<string, TestResult>>();
 			foreach (var testFolder in Directory.GetDirectories(testsPath).Where(x => x[0] != '.'))
 			{
-				var assemblyName = Regex.Match(testFolder, @"AdoNet\.(.*?)\.FunctionalTests").Groups[1].Value;
-				Console.Write("Processing {0}...", assemblyName);
+				var folderName = Regex.Match(testFolder, @"AdoNet\.(.*?)\.FunctionalTests").Groups[1].Value;
+				Console.Write("Processing {0}...", folderName);
 
 				// RunXunit(testFolder);
 				var outputXml = LoadXunitOutput(testFolder);
 				var testResults = CreateTestResults(outputXml);
-				assemblyTestResults.Add(assemblyName, testResults);
+				var connectorName = GetConnectorName(testFolder);
+				assemblyTestResults.Add(connectorName ?? folderName, testResults);
 
 				Console.WriteLine("done.");
 			}
@@ -156,6 +157,19 @@ namespace AdoNetApiTest
 			}
 
 			return testResults;
+		}
+
+		private static string GetConnectorName(string testFolder)
+		{
+			var csproj = Directory.GetFiles(testFolder, "*.csproj").First();
+			var project = XDocument.Load(csproj);
+			foreach (var package in project.Root.Elements("ItemGroup").Elements("PackageReference"))
+			{
+				var include = (string) package.Attribute("Include");
+				if (include.IndexOf("sql", StringComparison.OrdinalIgnoreCase) != -1 || include.IndexOf("connect", StringComparison.OrdinalIgnoreCase) != -1)
+					return include.Replace(".Express.for", "") + " " + (string) package.Attribute("Version");
+			}
+			return null;
 		}
 
 		private static string EscapeHtml(string value) => value?.Replace("&", "&amp;").Replace("\"", "&quot").Replace("<", "&lt;");
