@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.DotConnectMySql.Func
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.MySqlData.FunctionalTests", "tests\AdoNet.MySqlData.FunctionalTests\AdoNet.MySqlData.FunctionalTests.csproj", "{45E02ACF-225F-4C62-934B-009C4D97D1B5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.SqlClientFull.FunctionalTests", "tests\AdoNet.SqlClientFull.FunctionalTests\AdoNet.SqlClientFull.FunctionalTests.csproj", "{CA06481A-1109-4BCC-95F6-4ED3C1567F14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA06481A-1109-4BCC-95F6-4ED3C1567F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA06481A-1109-4BCC-95F6-4ED3C1567F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA06481A-1109-4BCC-95F6-4ED3C1567F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA06481A-1109-4BCC-95F6-4ED3C1567F14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
