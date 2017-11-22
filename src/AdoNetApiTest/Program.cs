@@ -148,7 +148,7 @@ namespace AdoNetApiTest
 						if (testStatus == TestStatus.Exception)
 							testMessage = message;
 						else
-							testMessage = message.Replace("\\r\\n", "\n"); // Regex.Replace(message, @"(Expected:\s+.*?)\\r\\n(Actual:\s+.*?)$", "$1\n$2");
+							testMessage = message.Replace("\\r\\n", "\n");
 						break;
 					}
 				}
