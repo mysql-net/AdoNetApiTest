@@ -10,26 +10,6 @@ namespace AdoNet.Specification.Tests
 	public abstract class CommandTestBase<TFixture> : IAsyncLifetime, IDisposable, IClassFixture<TFixture>
 		where TFixture : class, IDbFactoryFixture
 	{
-		[Fact]
-		public virtual void CreateCommand_sets_Connection_property()
-		{
-			using (var connection = Fixture.Factory.CreateConnection())
-			using (var command = connection.CreateCommand())
-			{
-				Assert.Same(connection, command.Connection);
-			}
-		}
-
-		[Fact]
-		public virtual void CreateCommand_does_not_set_Transaction_property()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction())
-			using (var command = connection.CreateCommand())
-			{
-				Assert.Null(command.Transaction);
-			}
-		}
 
 		[Fact]
 		public virtual void CommandText_throws_when_set_when_open_reader()
