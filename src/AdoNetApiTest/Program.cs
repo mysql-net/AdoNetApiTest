@@ -139,7 +139,7 @@ namespace AdoNetApiTest
 						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
 							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
 							TestStatus.WrongException;
-						if (testStatus == TestStatus.WrongException)
+						if (testStatus != TestStatus.NoException)
 							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
 						break;
 
