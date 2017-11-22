@@ -100,13 +100,10 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void Open_throws_when_error()
+		public virtual void Set_ConnectionString_throws_when_invalid()
 		{
 			using (var connection = Fixture.Factory.CreateConnection())
-			{
-				connection.ConnectionString = "xyzzy=Invalid";
-				Assert.ThrowsAny<DbException>(() => connection.Open());
-			}
+				Assert.ThrowsAny<ArgumentException>(() => connection.ConnectionString = "xyzzy=Invalid");
 		}
 
 		[Fact]
