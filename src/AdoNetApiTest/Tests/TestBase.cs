@@ -1,5 +1,6 @@
 using System;
 using System.Data.Common;
+using System.Threading.Tasks;
 using AdoNetApiTest.Connectors;
 
 namespace AdoNetApiTest.Tests
@@ -24,8 +25,33 @@ namespace AdoNetApiTest.Tests
 			{
 				return TestResult.Pass;
 			}
-			catch (NullReferenceException)
+			catch (NullReferenceException ex)
 			{
+				Console.Write("{0} {1}", ex.GetType().Name, ex.Message);
+				return TestResult.Exception;
+			}
+			catch (Exception ex)
+			{
+				Console.Write("{0} {1}", ex.GetType().Name, ex.Message);
+				return TestResult.WrongException;
+			}
+		}
+
+		protected async Task<TestResult> ThrowsAsync<TException>(Func<Task> action)
+			where TException : Exception
+		{
+			try
+			{
+				await action().ConfigureAwait(false);
+				return TestResult.NoException;
+			}
+			catch (TException)
+			{
+				return TestResult.Pass;
+			}
+			catch (NullReferenceException ex)
+			{
+				Console.Write("{0} {1}", ex.GetType().Name, ex.Message);
 				return TestResult.Exception;
 			}
 			catch (Exception ex)

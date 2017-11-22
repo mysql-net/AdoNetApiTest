@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using AdoNetApiTest.Connectors;
 using AdoNetApiTest.Tests;
 using MySqlConnector = AdoNetApiTest.Connectors.MySqlConnector;
@@ -134,9 +135,13 @@ namespace AdoNetApiTest
 							testResult = (bool) result ? TestResult.Pass : TestResult.Fail;
 						else if (method.ReturnType == typeof(TestResult))
 							testResult = (TestResult) result;
+						else if (method.ReturnType == typeof(Task<bool>))
+							testResult = ((Task<bool>) result).GetAwaiter().GetResult() ? TestResult.Pass : TestResult.Fail;
+						else if (method.ReturnType == typeof(Task<TestResult>))
+							testResult = ((Task<TestResult>) result).GetAwaiter().GetResult();
 						else
 							testResult = TestResult.Exception;
-						Console.WriteLine(result);
+						Console.WriteLine(testResult);
 					}
 					catch (TargetInvocationException ex)
 					{

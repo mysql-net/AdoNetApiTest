@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Threading.Tasks;
 
 namespace AdoNetApiTest.Tests
 {
@@ -381,6 +382,36 @@ namespace AdoNetApiTest.Tests
 			{
 				command.CommandText = "SELECT 1;";
 				return command.ExecuteNonQuery() == -1;
+			}
+		}
+
+		public async Task<TestResult> ExecuteReaderAsync_throws_when_no_connection()
+		{
+			using (var command = Connector.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteReaderAsync);
+		}
+
+		public async Task<TestResult> ExecuteReaderAsync_throws_when_connection_closed()
+		{
+			using (var connection = Connector.CreateConnection())
+			using (var command = connection.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteReaderAsync);
+		}
+
+		public async Task<TestResult> ExecuteReaderAsync_throws_when_no_command_text()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteReaderAsync);
+		}
+
+		public async Task<TestResult> ExecuteReaderAsync_throws_on_error()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "INVALID;";
+				return await ThrowsAsync<DbException>(command.ExecuteReaderAsync);
 			}
 		}
 	}
