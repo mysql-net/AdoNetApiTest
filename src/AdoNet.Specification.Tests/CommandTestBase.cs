@@ -256,7 +256,7 @@ namespace AdoNet.Specification.Tests
 
 				using (var reader = command.ExecuteReader())
 				{
-					Assert.True(reader.Read());
+					Assert.Null(reader.Read());
 					Assert.Equal(0, reader.GetInt32(0));
 					Assert.False(reader.NextResult());
 				}
@@ -312,24 +312,32 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_long_when_integer()
+		public virtual void ExecuteScalar_returns_integer()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
 				command.CommandText = "SELECT 1;";
-				Assert.Equal(1L, command.ExecuteScalar());
+				var result = command.ExecuteScalar();
+				if (result is int)
+					Assert.Equal(1, result);
+				else
+					Assert.Equal(1L, result);
 			}
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_double_when_real()
+		public virtual void ExecuteScalar_returns_real()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
 				command.CommandText = "SELECT 3.14;";
-				Assert.Equal(3.14, command.ExecuteScalar());
+				var result = command.ExecuteScalar();
+				if (result is double)
+					Assert.Equal(3.14, result);
+				else
+					Assert.Equal(3.14m, result);
 			}
 		}
 
@@ -356,35 +364,35 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_long_when_batching()
+		public virtual void ExecuteScalar_returns_first_when_batching()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
 				command.CommandText = "SELECT 42; SELECT 43;";
-				Assert.Equal(42L, command.ExecuteScalar());
+				Assert.Equal(42, Convert.ToInt32(command.ExecuteScalar()));
 			}
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_long_when_multiple_columns()
+		public virtual void ExecuteScalar_returns_first_when_multiple_columns()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
 				command.CommandText = "SELECT 42, 43;";
-				Assert.Equal(42L, command.ExecuteScalar());
+				Assert.Equal(42, Convert.ToInt32(command.ExecuteScalar()));
 			}
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_long_when_multiple_rows()
+		public virtual void ExecuteScalar_returns_first_when_multiple_rows()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
 				command.CommandText = "SELECT 42 UNION SELECT 43;";
-				Assert.Equal(42L, command.ExecuteScalar());
+				Assert.Equal(42, Convert.ToInt32(command.ExecuteScalar()));
 			}
 		}
 

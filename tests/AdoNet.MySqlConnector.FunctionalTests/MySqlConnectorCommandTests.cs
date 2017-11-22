@@ -10,16 +10,6 @@ namespace AdoNet.MySqlConnector.FunctionalTests
 		{
 		}
 
-		public override void ExecuteScalar_returns_double_when_real()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 3.14;";
-				Assert.Equal(3.14m, command.ExecuteScalar());
-			}
-		}
-
 		public override void ExecuteScalar_returns_null_when_empty()
 		{
 			using (var connection = CreateOpenConnection())
