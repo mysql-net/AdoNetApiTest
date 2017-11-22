@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNetApiTest", "src\AdoNetApiTest\AdoNetApiTest.csproj", "{D043AFD3-3834-4710-8C45-05586DFA1478}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNet.Specification.Tests", "src\AdoNet.Specification.Tests\AdoNet.Specification.Tests.csproj", "{94DDCAB9-4634-4352-8874-AE716B30124D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNet.MySqlConnector.FunctionalTests", "tests\AdoNet.MySqlConnector.FunctionalTests\AdoNet.MySqlConnector.FunctionalTests.csproj", "{76515D51-B60B-4584-A9AA-7ED969736501}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D043AFD3-3834-4710-8C45-05586DFA1478}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D043AFD3-3834-4710-8C45-05586DFA1478}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D043AFD3-3834-4710-8C45-05586DFA1478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DDCAB9-4634-4352-8874-AE716B30124D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DDCAB9-4634-4352-8874-AE716B30124D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DDCAB9-4634-4352-8874-AE716B30124D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DDCAB9-4634-4352-8874-AE716B30124D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76515D51-B60B-4584-A9AA-7ED969736501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76515D51-B60B-4584-A9AA-7ED969736501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76515D51-B60B-4584-A9AA-7ED969736501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76515D51-B60B-4584-A9AA-7ED969736501}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
