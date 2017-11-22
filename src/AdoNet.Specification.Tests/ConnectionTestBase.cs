@@ -112,14 +112,20 @@ namespace AdoNet.Specification.Tests
 			using (var connection = Fixture.Factory.CreateConnection())
 			{
 				var raised = false;
+				var previousState = ConnectionState.Closed;
 
 				void Handler(object sender, StateChangeEventArgs e)
 				{
 					raised = true;
 
 					Assert.Equal(connection, sender);
-					Assert.Equal(ConnectionState.Closed, e.OriginalState);
-					Assert.Equal(ConnectionState.Open, e.CurrentState);
+					Assert.Equal(previousState, e.OriginalState);
+					if (previousState == ConnectionState.Closed && (e.CurrentState == ConnectionState.Connecting || e.CurrentState == ConnectionState.Open))
+						previousState = e.CurrentState;
+					else if (previousState == ConnectionState.Connecting && e.CurrentState == ConnectionState.Open)
+						previousState = e.CurrentState;
+					else
+						Assert.Equal(ConnectionState.Open, e.CurrentState);
 				}
 
 				connection.StateChange += Handler;
