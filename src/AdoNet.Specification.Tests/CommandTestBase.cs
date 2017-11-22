@@ -498,7 +498,7 @@ namespace AdoNet.Specification.Tests
 			{
 				command.CommandText = "SELECT 1;";
 				var task = command.ExecuteReaderAsync(CanceledToken);
-				await Assert.ThrowsAsync<OperationCanceledException>(() => task);
+				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
 				Assert.True(task.IsCanceled);
 			}
 		}
@@ -511,7 +511,7 @@ namespace AdoNet.Specification.Tests
 			{
 				command.CommandText = "SELECT 1;";
 				var task = command.ExecuteNonQueryAsync(CanceledToken);
-				await Assert.ThrowsAsync<OperationCanceledException>(() => task);
+				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
 				Assert.True(task.IsCanceled);
 			}
 		}
@@ -524,7 +524,7 @@ namespace AdoNet.Specification.Tests
 			{
 				command.CommandText = "SELECT 1;";
 				var task = command.ExecuteScalarAsync(CanceledToken);
-				await Assert.ThrowsAsync<OperationCanceledException>(() => task);
+				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
 				Assert.True(task.IsCanceled);
 			}
 		}
