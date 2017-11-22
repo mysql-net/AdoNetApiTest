@@ -55,7 +55,7 @@ namespace AdoNetApiTest
 				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", assemblyName);
 			sb.AppendLine("</tr>");
 
-			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().ToList();
+			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().OrderBy(x => x).ToList();
 			foreach (var testName in allTestNames)
 			{
 				sb.AppendFormat("<tr><td>{0}</td>", testName);
