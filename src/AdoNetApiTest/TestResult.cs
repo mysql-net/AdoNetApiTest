@@ -1,14 +1,14 @@
 namespace AdoNetApiTest
 {
-	public enum TestResult
+	public struct TestResult
 	{
-		None,
-		Pass,
-		Fail,
-		Exception,
-		NoException,
-		WrongException,
-		ImplementationPass,
-		ImplementationFail,
+		public TestResult(TestStatus status, string message)
+		{
+			Status = status;
+			Message = message;
+		}
+
+		public TestStatus Status { get; }
+		public string Message { get; }
 	}
 }

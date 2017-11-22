@@ -52,27 +52,28 @@ namespace AdoNetApiTest
         <th></th>
 ");
 			foreach (var assemblyName in assemblyTestResults.Keys)
-				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", assemblyName);
+				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", EscapeHtml(assemblyName));
 			sb.AppendLine("</tr>");
 
 			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().OrderBy(x => x).ToList();
 			foreach (var testName in allTestNames)
 			{
-				sb.AppendFormat("<tr><td>{0}</td>", testName);
+				sb.AppendFormat("<tr><td>{0}</td>", EscapeHtml(testName));
 
 				foreach (var testResults in assemblyTestResults.Values)
 				{
 					testResults.TryGetValue(testName, out var testResult);
+					var status = testResult.Status;
 					var className =
-						testResult == TestResult.Pass ? "EXPECTED_RESULT" :
-						testResult == TestResult.Fail ? "SHOULD_HAVE_PASSED" :
-						testResult == TestResult.Exception ? "CRASH" :
-						testResult == TestResult.NoException ? "SHOULD_HAVE_FAILED" :
-						testResult == TestResult.WrongException ? "WRONG_EXCEPTION" :
-						testResult == TestResult.ImplementationPass ? "IMPLEMENTATION_PASS" :
-						testResult == TestResult.ImplementationFail ? "IMPLEMENTATION_FAIL" :
+						status == TestStatus.Pass ? "EXPECTED_RESULT" :
+						status == TestStatus.Fail ? "SHOULD_HAVE_PASSED" :
+						status == TestStatus.Exception ? "CRASH" :
+						status == TestStatus.NoException ? "SHOULD_HAVE_FAILED" :
+						status == TestStatus.WrongException ? "WRONG_EXCEPTION" :
+						status == TestStatus.ImplementationPass ? "IMPLEMENTATION_PASS" :
+						status == TestStatus.ImplementationFail ? "IMPLEMENTATION_FAIL" :
 						"";
-					sb.AppendFormat("<td class='{0}'></td>", className);
+					sb.AppendFormat("<td class='{0}'{1}></td>", className, testResult.Message == null ? "" : $" title=\"{EscapeHtml(testResult.Message)}\"'");
 				}
 
 				sb.Append("</tr>");
@@ -117,10 +118,11 @@ namespace AdoNetApiTest
 				var testName = (string) test.Attribute("name");
 				testName = testName.Substring(testName.LastIndexOf('.') + 1);
 
-				TestResult testResult;
+				TestStatus testStatus;
+				string testMessage = null;
 				if ((string) test.Attribute("result") == "Pass")
 				{
-					testResult = TestResult.Pass;
+					testStatus = TestStatus.Pass;
 				}
 				else
 				{
@@ -133,21 +135,29 @@ namespace AdoNetApiTest
 					case "Xunit.Sdk.ThrowsException":
 						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
 						var actual = Regex.Match(message, @"\\nActual:\s+(.*?)$").Groups[1].Value;
-						testResult = actual == "(No exception was thrown)" ? TestResult.NoException :
-							actual == "typeof(System.NullReferenceException)" ? TestResult.Exception :
-							TestResult.WrongException;
+						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
+							actual == "typeof(System.NullReferenceException)" ? TestStatus.Exception :
+							TestStatus.WrongException;
+						if (testStatus == TestStatus.WrongException)
+							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
 						break;
 
 					default:
 						// an Xunit exception indicates a test failure; any other type of exception is a crash
-						testResult = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestResult.Fail : TestResult.Exception;
+						testStatus = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestStatus.Fail : TestStatus.Exception;
+						if (testStatus == TestStatus.Exception)
+							testMessage = message;
+						else
+							testMessage = message.Replace("\\r\\n", "\n"); // Regex.Replace(message, @"(Expected:\s+.*?)\\r\\n(Actual:\s+.*?)$", "$1\n$2");
 						break;
 					}
 				}
-				testResults.Add(testName, testResult);
+				testResults.Add(testName, new TestResult(testStatus, testMessage));
 			}
 
 			return testResults;
 		}
+
+		private static string EscapeHtml(string value) => value?.Replace("&", "&amp;").Replace("\"", "&quot").Replace("<", "&lt;");
 	}
 }
