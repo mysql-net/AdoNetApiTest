@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Npgsql.FunctionalTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.SqlClient.FunctionalTests", "tests\AdoNet.SqlClient.FunctionalTests\AdoNet.SqlClient.FunctionalTests.csproj", "{454AE224-F846-42B1-A7CD-DCA0478F7C9A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.DotConnectMySql.FunctionalTests", "tests\AdoNet.DotConnectMySql.FunctionalTests\AdoNet.DotConnectMySql.FunctionalTests.csproj", "{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.MySqlData.FunctionalTests", "tests\AdoNet.MySqlData.FunctionalTests\AdoNet.MySqlData.FunctionalTests.csproj", "{45E02ACF-225F-4C62-934B-009C4D97D1B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E02ACF-225F-4C62-934B-009C4D97D1B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
