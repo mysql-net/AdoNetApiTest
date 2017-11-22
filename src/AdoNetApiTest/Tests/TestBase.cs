@@ -1,5 +1,6 @@
 using System;
 using System.Data.Common;
+using System.Threading;
 using System.Threading.Tasks;
 using AdoNetApiTest.Connectors;
 
@@ -9,9 +10,17 @@ namespace AdoNetApiTest.Tests
 	{
 		internal void SetConnector(Connector connector) => Connector = connector;
 
+		protected TestBase()
+		{
+			m_cancellationTokenSource = new CancellationTokenSource();
+			m_cancellationTokenSource.Cancel();
+		}
+
 		protected Connector Connector { get; private set; }
 
 		protected DbConnection CreateOpenConnection() => Connector.CreateOpenConnection();
+
+		protected CancellationToken CanceledToken => m_cancellationTokenSource.Token;
 
 		protected TestResult Throws<TException>(Action action)
 			where TException : Exception
@@ -60,5 +69,7 @@ namespace AdoNetApiTest.Tests
 				return TestResult.WrongException;
 			}
 		}
+
+		CancellationTokenSource m_cancellationTokenSource;
 	}
 }

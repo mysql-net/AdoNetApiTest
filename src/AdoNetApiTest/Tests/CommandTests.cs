@@ -414,5 +414,65 @@ namespace AdoNetApiTest.Tests
 				return await ThrowsAsync<DbException>(command.ExecuteReaderAsync);
 			}
 		}
+		
+		public async Task<TestResult> ExecuteScalarAsync_throws_when_no_connection()
+		{
+			using (var command = Connector.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteScalarAsync);
+		}
+
+		public async Task<TestResult> ExecuteScalarAsync_throws_when_connection_closed()
+		{
+			using (var connection = Connector.CreateConnection())
+			using (var command = connection.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteScalarAsync);
+		}
+
+		public async Task<TestResult> ExecuteScalarAsync_throws_when_no_command_text()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+				return await ThrowsAsync<InvalidOperationException>(command.ExecuteScalarAsync);
+		}
+
+		public async Task<TestResult> ExecuteScalarAsync_throws_on_error()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "INVALID;";
+				return await ThrowsAsync<DbException>(command.ExecuteScalarAsync);
+			}
+		}
+
+		public async Task<TestResult> ExecuteReaderAsync_is_canceled()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				return await ThrowsAsync<OperationCanceledException>(async () => await command.ExecuteReaderAsync(CanceledToken));
+			}
+		}
+
+		public async Task<TestResult> ExecuteNonQueryAsync_is_canceled()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				return await ThrowsAsync<OperationCanceledException>(async () => await command.ExecuteNonQueryAsync(CanceledToken));
+			}
+		}
+
+		public async Task<TestResult> ExecuteScalarAsync_is_canceled()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				return await ThrowsAsync<OperationCanceledException>(async () => await command.ExecuteScalarAsync(CanceledToken));
+			}
+		}
 	}
 }
