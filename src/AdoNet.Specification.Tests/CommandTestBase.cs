@@ -256,7 +256,7 @@ namespace AdoNet.Specification.Tests
 
 				using (var reader = command.ExecuteReader())
 				{
-					Assert.Null(reader.Read());
+					Assert.True(reader.Read());
 					Assert.Equal(0, reader.GetInt32(0));
 					Assert.False(reader.NextResult());
 				}
