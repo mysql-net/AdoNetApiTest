@@ -1,7 +1,8 @@
-namespace AdoNetApiTest.Tests
+namespace AdoNetApiTest
 {
 	public enum TestResult
 	{
+		None,
 		Pass,
 		Fail,
 		Exception,

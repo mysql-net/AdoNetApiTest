@@ -5,159 +5,64 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using AdoNetApiTest.Connectors;
-using AdoNetApiTest.Tests;
-using MySqlConnector = AdoNetApiTest.Connectors.MySqlConnector;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace AdoNetApiTest
 {
 	class Program
 	{
-		static List<string> s_rows;
-
-		static void Main(string[] args)
+		static void Main()
 		{
-			var connectors = CreateConnectors();
+			var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
+			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "tests"));
 
-			var sb = new StringBuilder(@"<!DOCTYPE html>
-<HTML>
-<HEAD>
-<TITLE>ADO.NET API Tests</TITLE>
-<LINK rel='stylesheet' type='text/css' href='http://seriot.ch/json/style.css'>
-<STYLE type='text/css'>
+			var assemblyTestResults = new Dictionary<string, IReadOnlyDictionary<string, TestResult>>();
+			foreach (var testFolder in Directory.GetDirectories(testsPath).Where(x => x[0] != '.'))
+			{
+				var assemblyName = Regex.Match(testFolder, @"AdoNet\.(.*?)\.FunctionalTests").Groups[1].Value;
+				Console.Write("Processing {0}...", assemblyName);
+
+				// RunXunit(testFolder);
+				var outputXml = LoadXunitOutput(testFolder);
+				var testResults = CreateTestResults(outputXml);
+				assemblyTestResults.Add(assemblyName, testResults);
+
+				Console.WriteLine("done.");
+			}
+
+			var sb = new StringBuilder(@"<!doctype html>
+<html>
+<head>
+<title>ADO.NET Specification Tests</title>
+<link rel='stylesheet' type='text/css' href='http://seriot.ch/json/style.css'>
+<style type='text/css'>
 .WRONG_EXCEPTION {
 	border: 1px solid black;
-	background-color: #F96384;
+	background-color: #f96384;
 }
-</STYLE>
-<META charset='utf-8'>
-</HEAD>
+</style>
+<meta charset='utf-8'>
+</head>
 
-<BODY>
-<H1>ADO.NET API Tests</H1>
-<TABLE>
-    <TR>
-        <TH></TH>
+<body>
+<h1>ADO.NET Specification Tests</h1>
+<table>
+    <tr>
+        <th></th>
 ");
-			foreach (var connector in connectors)
-				sb.AppendFormat("<TH class='vertical'><DIV>{0}</DIV></TH>", connector.Name);
-			sb.AppendLine("</TR>");
+			foreach (var assemblyName in assemblyTestResults.Keys)
+				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", assemblyName);
+			sb.AppendLine("</tr>");
 
-			s_rows = new List<string>();
-
-			foreach (var connector in connectors)
-				RunAllTests(connector);
-
-			foreach (var connector in connectors)
-				connector.Uninitialize();
-
-			foreach (var row in s_rows)
-				sb.AppendLine($"<TR>{row}</TR>");
-			sb.Append(@"</TABLE>
-</BODY>
-</HTML>
-");
-			var path = Path.Combine(Path.GetTempPath(), "results.html");
-			File.WriteAllText(path, sb.ToString());
-			Process.Start(path);
-		}
-
-		private static IReadOnlyList<Connector> CreateConnectors()
-		{
-			var connectors = new List<Connector>();
-
-			// TODO: make data-driven
-
-			// docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
-			var mySqlConnector = new MySqlConnector();
-			mySqlConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none");
-			connectors.Add(mySqlConnector);
-
-			var mySqlDataConnector = new MySqlDataConnector();
-			mySqlDataConnector.Initialize("server=localhost;user id=root;password=test;ssl mode=none;UseAffectedRows=true");
-			connectors.Add(mySqlDataConnector);
-
-			var dotConnectMySqlConnector = new DotConnectMySqlConnector();
-			dotConnectMySqlConnector.Initialize("server=localhost;user id=root;password=test");
-			connectors.Add(dotConnectMySqlConnector);
-
-			// docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
-			var npgsqlConnector = new NpgsqlConnector();
-			npgsqlConnector.Initialize("host=localhost;user id=root;password=test");
-			connectors.Add(npgsqlConnector);
-
-			var dotConnectPostgresConnector = new DotConnectPostgresConnector();
-			dotConnectPostgresConnector.Initialize("host=localhost;user id=root;password=test");
-			connectors.Add(dotConnectPostgresConnector);
-
-			// docker run --name mssql -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=Pa$$word -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
-			var sqlConnector = new SqlConnector();
-			sqlConnector.Initialize("data source=localhost;user id=sa;password=Pa$$word");
-			connectors.Add(sqlConnector);
-
-			var microsoftSqliteConnector = new MicrosoftSqliteConnector();
-			microsoftSqliteConnector.Initialize("data source=:memory:");
-			connectors.Add(microsoftSqliteConnector);
-
-			var sqliteConnector = new SqliteConnector();
-			sqliteConnector.Initialize("data source=:memory:");
-			connectors.Add(sqliteConnector);
-
-			return connectors;
-		}
-
-		private static void RunAllTests(Connector connector)
-		{
-			int index = 0;
-
-			Console.WriteLine(connector.Name);
-			Console.WriteLine(new string('=', connector.Name.Length));
-			var testTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsSubclassOf(typeof(TestBase))).ToList();
-			foreach (var testType in testTypes)
+			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().ToList();
+			foreach (var testName in allTestNames)
 			{
-				Console.WriteLine(testType.Name);
-				var constructor = testType.GetConstructor(new Type[0]);
-				var test = (TestBase) constructor.Invoke(new object[0]);
-				InitializeTest(connector, test);
+				sb.AppendFormat("<tr><td>{0}</td>", testName);
 
-				foreach (var method in testType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Where(x => x.GetParameters().Length == 0))
+				foreach (var testResults in assemblyTestResults.Values)
 				{
-					Console.Write("{0}: ", method.Name);
-					if (index >= s_rows.Count)
-						s_rows.Add($"<TD>{method.Name}</TD>");
-
-					TestResult testResult;
-					try
-					{
-						var result = method.Invoke(test, new object[0]);
-						if (method.ReturnType == typeof(bool))
-							testResult = (bool) result ? TestResult.Pass : TestResult.Fail;
-						else if (method.ReturnType == typeof(TestResult))
-							testResult = (TestResult) result;
-						else if (method.ReturnType == typeof(Task<bool>))
-							testResult = ((Task<bool>) result).GetAwaiter().GetResult() ? TestResult.Pass : TestResult.Fail;
-						else if (method.ReturnType == typeof(Task<TestResult>))
-							testResult = ((Task<TestResult>) result).GetAwaiter().GetResult();
-						else
-							testResult = TestResult.Exception;
-						Console.WriteLine(testResult);
-					}
-					catch (TargetInvocationException ex)
-					{
-						testResult = TestResult.Exception;
-						Console.WriteLine("EXCEPTION {0} {1}", ex.InnerException.GetType().Name, ex.InnerException.Message);
-					}
-					catch (Exception ex)
-					{
-						testResult = TestResult.Exception;
-						Console.WriteLine("UNEXPECTED EXCEPTION {0} {1}", ex.GetType().Name, ex.Message);
-					}
-
-					var isImplementationSpecific = method.GetCustomAttribute<ImplementationSpecificAttribute>() != null;
-					if (isImplementationSpecific)
-						testResult = testResult == TestResult.Pass ? TestResult.ImplementationPass : testResult == TestResult.Fail ? TestResult.ImplementationFail : testResult;
-
+					testResults.TryGetValue(testName, out var testResult);
 					var className =
 						testResult == TestResult.Pass ? "EXPECTED_RESULT" :
 						testResult == TestResult.Fail ? "SHOULD_HAVE_PASSED" :
@@ -167,17 +72,82 @@ namespace AdoNetApiTest
 						testResult == TestResult.ImplementationPass ? "IMPLEMENTATION_PASS" :
 						testResult == TestResult.ImplementationFail ? "IMPLEMENTATION_FAIL" :
 						"";
-					s_rows[index] += $"<TD class='{className}'></TD>";
-
-					index++;
+					sb.AppendFormat("<td class='{0}'></td>", className);
 				}
+
+				sb.Append("</tr>");
 			}
-			Console.WriteLine();
+
+			sb.Append(@"</table>
+</body>
+</html>
+");
+			var path = Path.Combine(Path.GetTempPath(), "results.html");
+			File.WriteAllText(path, sb.ToString());
+			Process.Start(path);
 		}
 
-		private static void InitializeTest(Connector connector, TestBase test)
+		private static void RunXunit(string testFolder)
 		{
-			test.SetConnector(connector);
+			using (var process = new Process
+			{
+				StartInfo =
+				{
+					FileName = "dotnet",
+					Arguments = "xunit -xml bin\\output.xml",
+					CreateNoWindow = true,
+					UseShellExecute = false,
+					WorkingDirectory = testFolder,
+				},
+				EnableRaisingEvents = true,
+			})
+			{
+				process.Start();
+				process.WaitForExit();
+			}
+		}
+
+		private static XDocument LoadXunitOutput(string testFolder) => XDocument.Load(Path.Combine(testFolder, "bin\\output.xml"));
+
+		private static IReadOnlyDictionary<string, TestResult> CreateTestResults(XDocument xml)
+		{
+			var testResults = new Dictionary<string, TestResult>();
+			foreach (var test in xml.Root.Element("assembly").Elements("collection").Elements("test"))
+			{
+				var testName = (string) test.Attribute("name");
+				testName = testName.Substring(testName.LastIndexOf('.') + 1);
+
+				TestResult testResult;
+				if ((string) test.Attribute("result") == "Pass")
+				{
+					testResult = TestResult.Pass;
+				}
+				else
+				{
+					var failure = test.Element("failure");
+					var exceptionType = (string) failure.Attribute("exception-type");
+					var message = (string) failure.Element("message");
+
+					switch (exceptionType)
+					{
+					case "Xunit.Sdk.ThrowsException":
+						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
+						var actual = Regex.Match(message, @"\\nActual:\s+(.*?)$").Groups[1].Value;
+						testResult = actual == "(No exception was thrown)" ? TestResult.NoException :
+							actual == "typeof(System.NullReferenceException)" ? TestResult.Exception :
+							TestResult.WrongException;
+						break;
+
+					default:
+						// an Xunit exception indicates a test failure; any other type of exception is a crash
+						testResult = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestResult.Fail : TestResult.Exception;
+						break;
+					}
+				}
+				testResults.Add(testName, testResult);
+			}
+
+			return testResults;
 		}
 	}
 }
