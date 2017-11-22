@@ -136,7 +136,7 @@ namespace AdoNetApiTest
 						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
 						var actual = Regex.Match(message, @"\\nActual:\s+(.*?)$").Groups[1].Value;
 						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
-							actual == "typeof(System.NullReferenceException)" ? TestStatus.Exception :
+							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
 							TestStatus.WrongException;
 						if (testStatus == TestStatus.WrongException)
 							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
