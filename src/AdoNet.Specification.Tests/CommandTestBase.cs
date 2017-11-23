@@ -289,7 +289,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1 WHERE 0 = 1;";
+				command.CommandText = Fixture.SelectNoRows;
 				Assert.Null(command.ExecuteScalar());
 			}
 		}

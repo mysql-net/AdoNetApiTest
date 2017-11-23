@@ -51,7 +51,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetBoolean_works()
 			=> GetX_works(
-				"SELECT 1;",
+				$"SELECT {Fixture.CreateBooleanLiteral(true)};",
 				r => r.GetBoolean(0),
 				true);
 
@@ -508,7 +508,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1 WHERE 0 = 1;";
+				command.CommandText = Fixture.SelectNoRows;
 				using (var reader = command.ExecuteReader())
 				{
 					Assert.False(reader.HasRows);
@@ -522,7 +522,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1 WHERE 0 = 1; SELECT 1;";
+				command.CommandText = Fixture.SelectNoRows + "SELECT 1;";
 				using (var reader = command.ExecuteReader())
 				{
 					Assert.False(reader.HasRows);
