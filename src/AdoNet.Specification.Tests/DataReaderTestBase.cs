@@ -693,9 +693,11 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void Read_throws_when_closed()
-			=> X_throws_when_closed(r => r.Read());
-		
+		public virtual void Read_throws_when_closed() => X_throws_when_closed(r => r.Read());
+
+		[Fact]
+		public virtual void NextResult_throws_when_closed() => X_throws_when_closed(r => r.NextResult());
+
 		private void GetX_works<T>(string sql, Func<DbDataReader, T> action, T expected)
 		{
 			using (var connection = CreateOpenConnection())
