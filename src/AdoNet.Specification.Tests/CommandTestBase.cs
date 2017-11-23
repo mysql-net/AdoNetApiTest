@@ -188,7 +188,7 @@ namespace AdoNet.Specification.Tests
 
 				using (var reader = command.ExecuteReader())
 				{
-					Assert.Throws<InvalidOperationException>(() => command.ExecuteReader());
+					Assert.ThrowsAny<InvalidOperationException>(() => command.ExecuteReader());
 				}
 			}
 		}
