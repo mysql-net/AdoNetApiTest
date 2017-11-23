@@ -13,7 +13,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void Depth_returns_zero()
+		public virtual void Depth_returns_zero()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -27,7 +27,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void FieldCount_works()
+		public virtual void FieldCount_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -41,7 +41,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void FieldCount_throws_when_closed()
+		public virtual void FieldCount_throws_when_closed()
 			=> X_throws_when_closed(
 				r =>
 				{
@@ -49,21 +49,21 @@ namespace AdoNet.Specification.Tests
 				});
 
 		[Fact]
-		public void GetBoolean_works()
+		public virtual void GetBoolean_works()
 			=> GetX_works(
 				"SELECT 1;",
 				r => r.GetBoolean(0),
 				true);
 
 		[Fact]
-		public void GetByte_works()
+		public virtual void GetByte_works()
 			=> GetX_works(
 				"SELECT 1;",
 				r => r.GetByte(0),
 				(byte) 1);
 
 		[Fact]
-		public void GetBytes_works()
+		public virtual void GetBytes_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -82,21 +82,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetChar_works()
-			=> GetX_works(
-				"SELECT 1;",
-				r => r.GetChar(0),
-				(char) 1);
-
-		[Fact]
-		public void GetChar_works_with_text()
-			=> GetX_works(
-				"SELECT 'A';",
-				r => r.GetChar(0),
-				'A');
-
-		[Fact]
-		public void GetChars_works()
+		public virtual void GetChars_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -115,32 +101,18 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetDateTime_works_with_text()
+		public virtual void GetDateTime_works_with_text()
 			=> GetX_works(
 				"SELECT '2014-04-15 10:47:16';",
 				r => r.GetDateTime(0),
 				new DateTime(2014, 4, 15, 10, 47, 16));
 
 		[Fact]
-		public void GetDateTime_works_with_real()
-			=> GetX_works(
-				"SELECT julianday('2013-10-07 08:23:19.120');",
-				r => r.GetDateTime(0),
-				new DateTime(2013, 10, 7, 8, 23, 19, 120));
-
-		[Fact]
-		public void GetDateTime_works_with_integer()
-			=> GetX_works(
-				"SELECT CAST(julianday('2013-10-07 12:00') AS INTEGER);",
-				r => r.GetDateTime(0),
-				new DateTime(2013, 10, 7, 12, 0, 0));
-
-		[Fact]
-		public void GetDateTime_throws_when_null()
+		public virtual void GetDateTime_throws_when_null()
 			=> GetX_throws_when_null(r => r.GetDateTime(0));
 		
 		[Fact]
-		public void GetDataTypeName_throws_when_ordinal_out_of_range()
+		public virtual void GetDataTypeName_throws_when_ordinal_out_of_range()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -148,29 +120,26 @@ namespace AdoNet.Specification.Tests
 				command.CommandText = "SELECT 1;";
 				using (var reader = command.ExecuteReader())
 				{
-					var ex = Assert.Throws<ArgumentOutOfRangeException>(() => reader.GetDataTypeName(1));
-
-					Assert.Equal("ordinal", ex.ParamName);
-					Assert.Equal(1, ex.ActualValue);
+					Assert.Throws<IndexOutOfRangeException>(() => reader.GetDataTypeName(1));
 				}
 			}
 		}
 
 		[Fact]
-		public void GetDataTypeName_throws_when_closed()
+		public virtual void GetDataTypeName_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetDataTypeName(0));
 		
 		[Fact]
-		public void GetDecimal_throws_when_null()
+		public virtual void GetDecimal_throws_when_null()
 			=> GetX_throws_when_null(r => r.GetDecimal(0));
 
 		[Fact]
-		public void GetDouble_throws_when_null()
+		public virtual void GetDouble_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetDouble(0));
 
 		[Fact]
-		public void GetEnumerator_works()
+		public virtual void GetEnumerator_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -186,21 +155,7 @@ namespace AdoNet.Specification.Tests
 			}
 		}
 
-		[Theory]
-		[InlineData("SELECT 1;", true)]
-		[InlineData("SELECT 1;", (byte) 1)]
-		[InlineData("SELECT 1;", (char) 1)]
-		[InlineData("SELECT 3.14;", 3.14)]
-		[InlineData("SELECT 3;", 3f)]
-		[InlineData("SELECT 1;", 1)]
-		[InlineData("SELECT 1;", 1L)]
-		[InlineData("SELECT 1;", (sbyte) 1)]
-		[InlineData("SELECT 1;", (short) 1)]
-		[InlineData("SELECT 'test';", "test")]
-		[InlineData("SELECT 1;", 1u)]
-		[InlineData("SELECT 1;", 1ul)]
-		[InlineData("SELECT 1;", (ushort) 1)]
-		public void GetFieldValue_works<T>(string sql, T expected)
+		private void GetFieldValue_works<T>(string sql, T expected)
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -217,42 +172,33 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetFieldValue_of_byteArray_works()
+		public virtual void GetFieldValue_of_string_works() => GetFieldValue_works<string>("SELECT 'test';", "test");
+
+		[Fact]
+		public virtual void GetFieldValue_of_byteArray_works()
 			=> GetFieldValue_works(
 				"SELECT X'7E57';",
 				new byte[] { 0x7e, 0x57 });
 
 		[Fact]
-		public void GetFieldValue_of_byteArray_empty()
+		public virtual void GetFieldValue_of_byteArray_empty()
 			=> GetFieldValue_works(
 				"SELECT X'';",
 				new byte[0]);
 
 		[Fact]
-		public void GetFieldValue_of_byteArray_throws_when_null()
+		public virtual void GetFieldValue_of_byteArray_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetFieldValue<byte[]>(0));
 
 		[Fact]
-		public void GetFieldValue_of_DateTime_works()
-			=> GetFieldValue_works(
-				"SELECT '2014-04-15 11:58:13';",
-				new DateTime(2014, 4, 15, 11, 58, 13));
-
-		[Fact]
-		public void GetFieldValue_of_DateTimeOffset_works()
-			=> GetFieldValue_works(
-				"SELECT '2014-04-15 11:58:13-08:00';",
-				new DateTimeOffset(2014, 4, 15, 11, 58, 13, new TimeSpan(-8, 0, 0)));
-
-		[Fact]
-		public void GetFieldValue_of_DBNull_works()
+		public virtual void GetFieldValue_of_DBNull_works()
 			=> GetFieldValue_works(
 				"SELECT NULL;",
 				DBNull.Value);
 
 		[Fact]
-		public void GetFieldValue_of_DBNull_throws_when_not_null()
+		public virtual void GetFieldValue_of_DBNull_throws_when_not_null()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -269,68 +215,29 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetFieldValue_of_decimal_works()
-			=> GetFieldValue_works(
-				"SELECT '3.14';",
-				3.14m);
-
-		[Fact]
-		public void GetFieldValue_of_Enum_works()
-			=> GetFieldValue_works(
-				"SELECT 1;",
-				MyEnum.One);
-
-		[Fact]
-		public void GetFieldValue_of_Guid_works()
-			=> GetFieldValue_works(
-				"SELECT X'0E7E0DDC5D364849AB9B8CA8056BF93A';",
-				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
-
-		[Fact]
-		public void GetFieldValue_of_Nullable_works()
-			=> GetFieldValue_works(
-				"SELECT 1;",
-				(int?) 1);
-
-		[Fact]
-		public void GetFieldValue_of_TimeSpan_works()
-			=> GetFieldValue_works(
-				"SELECT '12:06:29';",
-				new TimeSpan(12, 6, 29));
-
-		[Fact]
-		public void GetFieldValue_of_TimeSpan_throws_when_null()
-			=> GetX_throws_when_null(r => r.GetFieldValue<TimeSpan>(0));
-
-		[Fact]
-		public void GetFieldValue_throws_before_read()
+		public virtual void GetFieldValue_throws_before_read()
 			=> X_throws_before_read(r => r.GetFieldValue<DBNull>(0));
 
 		[Fact]
-		public void GetFieldValue_throws_when_done()
+		public virtual void GetFieldValue_throws_when_done()
 			=> X_throws_when_done(r => r.GetFieldValue<DBNull>(0));
 
-		[Theory]
-		[InlineData("SELECT 1;", typeof(long))]
-		[InlineData("SELECT 3.14;", typeof(double))]
-		[InlineData("SELECT 'test';", typeof(string))]
-		[InlineData("SELECT X'7E57';", typeof(byte[]))]
-		[InlineData("SELECT NULL;", typeof(int))]
-		public void GetFieldType_works(string sql, Type expected)
+		[Fact]
+		public virtual void GetFieldType_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = sql;
+				command.CommandText = "SELECT 'test';";
 				using (var reader = command.ExecuteReader())
 				{
-					Assert.Equal(expected, reader.GetFieldType(0));
+					Assert.Equal(typeof(string), reader.GetFieldType(0));
 				}
 			}
 		}
 
 		[Fact]
-		public void GetFieldType_throws_when_ordinal_out_of_range()
+		public virtual void GetFieldType_throws_when_ordinal_out_of_range()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -338,93 +245,68 @@ namespace AdoNet.Specification.Tests
 				command.CommandText = "SELECT 1;";
 				using (var reader = command.ExecuteReader())
 				{
-					var ex = Assert.Throws<ArgumentOutOfRangeException>(() => reader.GetFieldType(1));
-
-					Assert.Equal("ordinal", ex.ParamName);
-					Assert.Equal(1, ex.ActualValue);
+					Assert.Throws<IndexOutOfRangeException>(() => reader.GetFieldType(1));
 				}
 			}
 		}
 
 		[Fact]
-		public void GetFieldType_throws_when_closed()
+		public virtual void GetFieldType_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetFieldType(0));
 
-		[Theory]
-		[InlineData("3", 3f)]
-		[InlineData("9e999", float.PositiveInfinity)]
-		[InlineData("-9e999", float.NegativeInfinity)]
-		public void GetFloat_works(string val, float result)
+		[Fact]
+		public virtual void GetFloat_works()
 			=> GetX_works(
-				"SELECT " + val,
+				"SELECT 3",
 				r => r.GetFloat(0),
-				result);
-
-		[Theory]
-		[InlineData("2.0", 2.0)]
-		[InlineData("9e999", double.PositiveInfinity)]
-		[InlineData("-9e999", double.NegativeInfinity)]
-		[InlineData("'3.14'", 3.14)]
-		[InlineData("'1.2e-03'", 0.0012)]
-		public void GetDouble_works(string val, double result)
-			=> GetX_works(
-				"SELECT " + val,
-				r => r.GetDouble(0),
-				result);
+				3);
 
 		[Fact]
-		public void GetGuid_works_when_blob()
+		public virtual void GetGuid_works_when_blob()
 			=> GetX_works(
 				"SELECT X'0E7E0DDC5D364849AB9B8CA8056BF93A';",
 				r => r.GetGuid(0),
 				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
 
 		[Fact]
-		public void GetGuid_works_when_text_blob()
-			=> GetX_works(
-				"SELECT CAST('dc0d7e0e-365d-4948-ab9b-8ca8056bf93a' AS BLOB);",
-				r => r.GetGuid(0),
-				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
-
-		[Fact]
-		public void GetGuid_works_when_text()
+		public virtual void GetGuid_works_when_text()
 			=> GetX_works(
 				"SELECT 'dc0d7e0e-365d-4948-ab9b-8ca8056bf93a';",
 				r => r.GetGuid(0),
 				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
 
 		[Fact]
-		public void GetGuid_throws_when_null()
+		public virtual void GetGuid_throws_when_null()
 			=> GetX_throws_when_null(r => r.GetGuid(0));
 
 		[Fact]
-		public void GetInt16_works()
+		public virtual void GetInt16_works()
 			=> GetX_works(
 				"SELECT 1;",
 				r => r.GetInt16(0),
 				(short) 1);
 
 		[Fact]
-		public void GetInt32_works()
+		public virtual void GetInt32_works()
 			=> GetX_works(
 				"SELECT 1;",
 				r => r.GetInt32(0),
 				1);
 
 		[Fact]
-		public void GetInt64_works()
+		public virtual void GetInt64_works()
 			=> GetX_works(
 				"SELECT 1;",
 				r => r.GetInt64(0),
 				1L);
 
 		[Fact]
-		public void GetInt64_throws_when_null()
+		public virtual void GetInt64_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetInt64(0));
 
 		[Fact]
-		public void GetName_works()
+		public virtual void GetName_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -438,7 +320,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetName_throws_when_ordinal_out_of_range()
+		public virtual void GetName_throws_when_ordinal_out_of_range()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -446,20 +328,17 @@ namespace AdoNet.Specification.Tests
 				command.CommandText = "SELECT 1;";
 				using (var reader = command.ExecuteReader())
 				{
-					var ex = Assert.Throws<ArgumentOutOfRangeException>(() => reader.GetName(1));
-
-					Assert.Equal("ordinal", ex.ParamName);
-					Assert.Equal(1, ex.ActualValue);
+					Assert.Throws<IndexOutOfRangeException>(() => reader.GetName(1));
 				}
 			}
 		}
 
 		[Fact]
-		public void GetName_throws_when_closed()
+		public virtual void GetName_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetName(0));
 
 		[Fact]
-		public void GetOrdinal_works()
+		public virtual void GetOrdinal_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -473,7 +352,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetOrdinal_throws_when_out_of_range()
+		public virtual void GetOrdinal_throws_when_out_of_range()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -481,52 +360,51 @@ namespace AdoNet.Specification.Tests
 				command.CommandText = "SELECT 1;";
 				using (var reader = command.ExecuteReader())
 				{
-					var ex = Assert.Throws<ArgumentOutOfRangeException>(() => reader.GetOrdinal("Name"));
-					Assert.NotNull(ex.Message);
-					Assert.Equal("name", ex.ParamName);
-					Assert.Equal("Name", ex.ActualValue);
+					Assert.Throws<IndexOutOfRangeException>(() => reader.GetOrdinal("Name"));
 				}
 			}
 		}
 
 		[Fact]
-		public void GetString_works_utf8()
-			=> GetX_works(
-				"SELECT '测试测试测试';",
-				r => r.GetString(0),
-				"测试测试测试");
+		public virtual void GetString_works_utf8_two_bytes() => GetX_works("SELECT 'Ä';", r => r.GetString(0), "Ä");
 
 		[Fact]
-		public void GetFieldValue_works_utf8()
-			=> GetX_works(
-				"SELECT '测试测试测试';",
-				r => r.GetFieldValue<string>(0),
-				"测试测试测试");
+		public virtual void GetString_works_utf8_three_bytes() => GetX_works("SELECT 'Ḁ';", r => r.GetString(0), "Ḁ");
 
 		[Fact]
-		public void GetValue_to_string_works_utf8()
-			=> GetX_works(
-				"SELECT '测试测试测试';",
-				r => r.GetValue(0) as string,
-				"测试测试测试");
+		public virtual void GetString_works_utf8_four_bytes() => GetX_works("SELECT '😀';", r => r.GetString(0), "😀");
 
 		[Fact]
-		public void GetString_works()
+		public virtual void GetFieldValue_works_utf8_two_bytes() => GetX_works("SELECT 'Ä';", r => r.GetFieldValue<string>(0), "Ä");
+
+		[Fact]
+		public virtual void GetFieldValue_works_utf8_three_bytes() => GetX_works("SELECT 'Ḁ';", r => r.GetFieldValue<string>(0), "Ḁ");
+
+		[Fact]
+		public virtual void GetFieldValue_works_utf8_four_bytes() => GetX_works("SELECT '😀';", r => r.GetFieldValue<string>(0), "😀");
+
+		[Fact]
+		public virtual void GetValue_to_string_works_utf8_two_bytes() => GetX_works("SELECT 'Ä';", r => r.GetValue(0) as string, "Ä");
+
+		[Fact]
+		public virtual void GetValue_to_string_works_utf8_three_bytes() => GetX_works("SELECT 'Ḁ';", r => r.GetValue(0) as string, "Ḁ");
+
+		[Fact]
+		public virtual void GetValue_to_string_works_utf8_four_bytes() => GetX_works("SELECT '😀';", r => r.GetValue(0) as string, "😀");
+
+		[Fact]
+		public virtual void GetString_works()
 			=> GetX_works(
 				"SELECT 'test';",
 				r => r.GetString(0),
 				"test");
 
 		[Fact]
-		public void GetString_throws_when_null()
+		public virtual void GetString_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetString(0));
 
-		[Theory]
-		[InlineData("SELECT 1;", 1L)]
-		[InlineData("SELECT 3.14;", 3.14)]
-		[InlineData("SELECT 'test';", "test")]
-		public void GetValue_works(string sql, object expected)
+		private void GetValue_works(string sql, object expected)
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -543,53 +421,57 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void GetValue_works_when_blob()
+		public virtual void GetValue_works_when_string() => GetValue_works("SELECT 'test';", "test");
+
+		[Fact]
+		public virtual void GetValue_works_when_blob()
 			=> GetValue_works(
 				"SELECT X'7E57';",
 				new byte[] { 0x7e, 0x57 });
 
 		[Fact]
-		public void GetValue_works_when_null()
+		public virtual void GetValue_works_when_null()
 			=> GetValue_works(
 				"SELECT NULL;",
 				DBNull.Value);
 
 		[Fact]
-		public void GetValue_throws_before_read()
+		public virtual void GetValue_throws_before_read()
 			=> X_throws_before_read(r => r.GetValue(0));
 
 		[Fact]
-		public void GetValue_throws_when_done()
+		public virtual void GetValue_throws_when_done()
 			=> X_throws_when_done(r => r.GetValue(0));
 
 		[Fact]
-		public void GetValue_throws_when_closed()
+		public virtual void GetValue_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetValue(0));
 
 		[Fact]
-		public void GetValues_works()
+		public virtual void GetValues_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1;";
+				command.CommandText = "SELECT 'a', 'b';";
 				using (var reader = command.ExecuteReader())
 				{
 					var hasData = reader.Read();
 					Assert.True(hasData);
 
 					// Array may be wider than row
-					var values = new object[2];
+					var values = new object[3];
 					var result = reader.GetValues(values);
 
-					Assert.Equal(1, result);
-					Assert.Equal(1L, values[0]);
+					Assert.Equal(2, result);
+					Assert.Equal("a", values[0]);
+					Assert.Equal("b", values[1]);
 				}
 			}
 		}
 
 		[Fact]
-		public void GetValues_throws_when_too_narrow()
+		public virtual void GetValues_when_too_narrow()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -601,13 +483,13 @@ namespace AdoNet.Specification.Tests
 					Assert.True(hasData);
 
 					var values = new object[0];
-					Assert.Throws<IndexOutOfRangeException>(() => reader.GetValues(values));
+					Assert.Equal(0, reader.GetValues(values));
 				}
 			}
 		}
 
 		[Fact]
-		public void HasRows_returns_true_when_rows()
+		public virtual void HasRows_returns_true_when_rows()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -621,12 +503,12 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void HasRows_returns_false_when_no_rows()
+		public virtual void HasRows_returns_false_when_no_rows()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1;";
+				command.CommandText = "SELECT 1 WHERE 0 = 1;";
 				using (var reader = command.ExecuteReader())
 				{
 					Assert.False(reader.HasRows);
@@ -635,7 +517,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void HasRows_works_when_batching()
+		public virtual void HasRows_works_when_batching()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -653,7 +535,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void IsClosed_returns_false_when_active()
+		public virtual void IsClosed_returns_false_when_active()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -667,7 +549,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void IsClosed_returns_true_when_closed()
+		public virtual void IsClosed_returns_true_when_closed()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -681,7 +563,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void IsDBNull_works()
+		public virtual void IsDBNull_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -698,53 +580,53 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void IsDBNull_throws_before_read()
+		public virtual void IsDBNull_throws_before_read()
 			=> X_throws_before_read(r => r.IsDBNull(0));
 
 		[Fact]
-		public void IsDBNull_throws_when_done()
+		public virtual void IsDBNull_throws_when_done()
 			=> X_throws_when_done(r => r.IsDBNull(0));
 
 		[Fact]
-		public void IsDBNull_throws_when_closed()
+		public virtual void IsDBNull_throws_when_closed()
 			=> X_throws_when_closed(r => r.IsDBNull(0));
 
 		[Fact]
-		public void Item_by_ordinal_works()
+		public virtual void Item_by_ordinal_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1;";
+				command.CommandText = "SELECT 'test';";
 				using (var reader = command.ExecuteReader())
 				{
 					var hasData = reader.Read();
 					Assert.True(hasData);
 
-					Assert.Equal(1L, reader[0]);
+					Assert.Equal("test", reader[0]);
 				}
 			}
 		}
 
 		[Fact]
-		public void Item_by_name_works()
+		public virtual void Item_by_name_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1 AS Id;";
+				command.CommandText = "SELECT 'test' AS Id;";
 				using (var reader = command.ExecuteReader())
 				{
 					var hasData = reader.Read();
 					Assert.True(hasData);
 
-					Assert.Equal(1L, reader["Id"]);
+					Assert.Equal("test", reader["Id"]);
 				}
 			}
 		}
 
 		[Fact]
-		public void NextResult_works()
+		public virtual void NextResult_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -770,7 +652,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void NextResult_can_be_called_more_than_once()
+		public virtual void NextResult_can_be_called_more_than_once()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -788,7 +670,7 @@ namespace AdoNet.Specification.Tests
 		}
 		
 		[Fact]
-		public void Read_works()
+		public virtual void Read_works()
 		{
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
@@ -811,7 +693,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public void Read_throws_when_closed()
+		public virtual void Read_throws_when_closed()
 			=> X_throws_when_closed(r => r.Read());
 		
 		private void GetX_works<T>(string sql, Func<DbDataReader, T> action, T expected)
