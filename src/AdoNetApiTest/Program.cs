@@ -6,31 +6,25 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AdoNetApiTest
 {
 	class Program
 	{
-		static void Main()
+		static async Task Main()
 		{
 			var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
 			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "tests"));
 
-			var assemblyTestResults = new Dictionary<string, IReadOnlyDictionary<string, TestResult>>();
-			foreach (var testFolder in Directory.GetDirectories(testsPath).Where(x => x[0] != '.'))
-			{
-				var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
-				Console.Write("Processing {0}...", folderName);
+			Console.Write("Running tests");
 
-				// RunXunit(testFolder);
-				var outputXml = LoadXunitOutput(testFolder);
-				var testResults = CreateTestResults(outputXml);
-				var connectorName = GetConnectorName(testFolder);
-				assemblyTestResults.Add(connectorName ?? folderName, testResults);
-
-				Console.WriteLine("done.");
-			}
+			var assemblyTestResults = (await Task.WhenAll(Directory.GetDirectories(testsPath)
+				.Where(x => x[0] != '.')
+				.Select(RunTestsAsync)))
+				.ToDictionary(x => x.Name, x => x.Results);
+			Console.WriteLine("done.");
 
 			var sb = new StringBuilder(@"<!doctype html>
 <html>
@@ -89,27 +83,42 @@ namespace AdoNetApiTest
 			Process.Start(path);
 		}
 
-		private static void RunXunit(string testFolder)
+		private static async Task<(string Name, IReadOnlyDictionary<string, TestResult> Results)> RunTestsAsync(string testFolder)
 		{
-			using (var process = new Process
+			var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
+			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
+			File.Delete(outputXmlPath);
+			await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
+			var outputXml = XDocument.Load(outputXmlPath);
+			var testResults = CreateTestResults(outputXml);
+			var connectorName = GetConnectorName(testFolder);
+			Console.Write(".");
+			return((connectorName ?? folderName, testResults));
+		}
+
+		private static Task RunXunitAsync(string testFolder, string outputXmlPath)
+		{
+			var taskCompletionSource = new TaskCompletionSource<object>();
+			var process = new Process
 			{
 				StartInfo =
 				{
 					FileName = "dotnet",
-					Arguments = "xunit -xml bin\\output.xml",
+					Arguments = $"xunit -xml \"{outputXmlPath}\"",
 					CreateNoWindow = true,
 					UseShellExecute = false,
 					WorkingDirectory = testFolder,
 				},
 				EnableRaisingEvents = true,
-			})
+			};
+			process.Exited += (sender, args) =>
 			{
-				process.Start();
-				process.WaitForExit();
-			}
+				((Process) sender).Dispose();
+				taskCompletionSource.SetResult(null);
+			};
+			process.Start();
+			return taskCompletionSource.Task;
 		}
-
-		private static XDocument LoadXunitOutput(string testFolder) => XDocument.Load(Path.Combine(testFolder, "bin\\output.xml"));
 
 		private static IReadOnlyDictionary<string, TestResult> CreateTestResults(XDocument xml)
 		{
