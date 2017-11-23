@@ -56,13 +56,6 @@ namespace AdoNet.Specification.Tests
 				true);
 
 		[Fact]
-		public virtual void GetByte_works()
-			=> GetX_works(
-				"SELECT 1;",
-				r => r.GetByte(0),
-				(byte) 1);
-
-		[Fact]
 		public virtual void GetBytes_works()
 		{
 			using (var connection = CreateOpenConnection())
@@ -99,13 +92,6 @@ namespace AdoNet.Specification.Tests
 				}
 			}
 		}
-
-		[Fact]
-		public virtual void GetDateTime_works_with_text()
-			=> GetX_works(
-				"SELECT '2014-04-15 10:47:16';",
-				r => r.GetDateTime(0),
-				new DateTime(2014, 4, 15, 10, 47, 16));
 
 		[Fact]
 		public virtual void GetDateTime_throws_when_null()
@@ -255,50 +241,8 @@ namespace AdoNet.Specification.Tests
 			=> X_throws_when_closed(r => r.GetFieldType(0));
 
 		[Fact]
-		public virtual void GetFloat_works()
-			=> GetX_works(
-				"SELECT 3",
-				r => r.GetFloat(0),
-				3);
-
-		[Fact]
-		public virtual void GetGuid_works_when_blob()
-			=> GetX_works(
-				"SELECT X'0E7E0DDC5D364849AB9B8CA8056BF93A';",
-				r => r.GetGuid(0),
-				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
-
-		[Fact]
-		public virtual void GetGuid_works_when_text()
-			=> GetX_works(
-				"SELECT 'dc0d7e0e-365d-4948-ab9b-8ca8056bf93a';",
-				r => r.GetGuid(0),
-				new Guid("dc0d7e0e-365d-4948-ab9b-8ca8056bf93a"));
-
-		[Fact]
 		public virtual void GetGuid_throws_when_null()
 			=> GetX_throws_when_null(r => r.GetGuid(0));
-
-		[Fact]
-		public virtual void GetInt16_works()
-			=> GetX_works(
-				"SELECT 1;",
-				r => r.GetInt16(0),
-				(short) 1);
-
-		[Fact]
-		public virtual void GetInt32_works()
-			=> GetX_works(
-				"SELECT 1;",
-				r => r.GetInt32(0),
-				1);
-
-		[Fact]
-		public virtual void GetInt64_works()
-			=> GetX_works(
-				"SELECT 1;",
-				r => r.GetInt64(0),
-				1L);
 
 		[Fact]
 		public virtual void GetInt64_throws_when_null()
