@@ -1,55 +1,16 @@
 using System;
 using System.Data;
-using System.Data.Common;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
-	public abstract class ConnectionTestBase<TFixture> : IAsyncLifetime, IDisposable, IClassFixture<TFixture>
+	public abstract class ConnectionTestBase<TFixture> : DbFactoryTestBase<TFixture>
 		where TFixture : class, IDbFactoryFixture
 	{
-		public virtual async Task InitializeAsync()
-		{
-			await OnInitializeAsync().ConfigureAwait(false);
-		}
-
-		public virtual async Task DisposeAsync()
-		{
-			await OnDisposeAsync().ConfigureAwait(false);
-		}
-
-		public void Dispose()
-		{
-			m_cancellationTokenSource.Dispose();
-		}
-
 		protected ConnectionTestBase(TFixture fixture)
+			: base(fixture)
 		{
-			Fixture = fixture;
-			m_cancellationTokenSource = new CancellationTokenSource();
-			m_cancellationTokenSource.Cancel();
-			CanceledToken = m_cancellationTokenSource.Token;
 		}
-
-		protected TFixture Fixture { get; }
-
-		protected CancellationToken CanceledToken { get; }
-
-		protected virtual Task OnInitializeAsync() => Task.CompletedTask;
-
-		protected virtual Task OnDisposeAsync() => Task.CompletedTask;
-
-		protected virtual DbConnection CreateOpenConnection()
-		{
-			var connection = Fixture.Factory.CreateConnection();
-			connection.ConnectionString = Fixture.ConnectionString;
-			connection.Open();
-			return connection;
-		}
-
-		readonly CancellationTokenSource m_cancellationTokenSource;
 
 		[Fact]
 		public virtual void ConnectionString_setter_throws_when_open()
