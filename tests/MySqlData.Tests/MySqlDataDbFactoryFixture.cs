@@ -9,6 +9,6 @@ namespace MySqlData.Tests
 		public DbProviderFactory Factory => MySqlClientFactory.Instance;
 
 		// docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
-		public string ConnectionString => "server=localhost;user id=root;password=test";
+		public string ConnectionString => "server=localhost;user id=root;password=test;charset=utf8mb4";
 	}
 }
