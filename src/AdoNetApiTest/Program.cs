@@ -20,7 +20,7 @@ namespace AdoNetApiTest
 			var assemblyTestResults = new Dictionary<string, IReadOnlyDictionary<string, TestResult>>();
 			foreach (var testFolder in Directory.GetDirectories(testsPath).Where(x => x[0] != '.'))
 			{
-				var folderName = Regex.Match(testFolder, @"AdoNet\.(.*?)\.FunctionalTests").Groups[1].Value;
+				var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
 				Console.Write("Processing {0}...", folderName);
 
 				// RunXunit(testFolder);

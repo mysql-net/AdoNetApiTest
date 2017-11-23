@@ -7,23 +7,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNetApiTest", "src\AdoNet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Specification.Tests", "src\AdoNet.Specification.Tests\AdoNet.Specification.Tests.csproj", "{94DDCAB9-4634-4352-8874-AE716B30124D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.MySqlConnector.FunctionalTests", "tests\AdoNet.MySqlConnector.FunctionalTests\AdoNet.MySqlConnector.FunctionalTests.csproj", "{76515D51-B60B-4584-A9AA-7ED969736501}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlConnector.Tests", "tests\MySqlConnector.Tests\MySqlConnector.Tests.csproj", "{76515D51-B60B-4584-A9AA-7ED969736501}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Npgsql.FunctionalTests", "tests\AdoNet.Npgsql.FunctionalTests\AdoNet.Npgsql.FunctionalTests.csproj", "{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql.Tests", "tests\Npgsql.Tests\Npgsql.Tests.csproj", "{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.SqlClient.FunctionalTests", "tests\AdoNet.SqlClient.FunctionalTests\AdoNet.SqlClient.FunctionalTests.csproj", "{454AE224-F846-42B1-A7CD-DCA0478F7C9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlClient.Tests", "tests\SqlClient.Tests\SqlClient.Tests.csproj", "{454AE224-F846-42B1-A7CD-DCA0478F7C9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.DotConnectMySql.FunctionalTests", "tests\AdoNet.DotConnectMySql.FunctionalTests\AdoNet.DotConnectMySql.FunctionalTests.csproj", "{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotConnectMySql.Tests", "tests\DotConnectMySql.Tests\DotConnectMySql.Tests.csproj", "{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.MySqlData.FunctionalTests", "tests\AdoNet.MySqlData.FunctionalTests\AdoNet.MySqlData.FunctionalTests.csproj", "{45E02ACF-225F-4C62-934B-009C4D97D1B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData.Tests", "tests\MySqlData.Tests\MySqlData.Tests.csproj", "{45E02ACF-225F-4C62-934B-009C4D97D1B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.SqlClientFull.FunctionalTests", "tests\AdoNet.SqlClientFull.FunctionalTests\AdoNet.SqlClientFull.FunctionalTests.csproj", "{CA06481A-1109-4BCC-95F6-4ED3C1567F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlClientBcl.Tests", "tests\SqlClientBcl.Tests\SqlClientBcl.Tests.csproj", "{CA06481A-1109-4BCC-95F6-4ED3C1567F14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.DotConnectPostgres.FunctionalTests", "tests\AdoNet.DotConnectPostgres.FunctionalTests\AdoNet.DotConnectPostgres.FunctionalTests.csproj", "{6E00B0B1-A2B0-4936-BDDC-0E1B53C96613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotConnectPostgres.Tests", "tests\DotConnectPostgres.Tests\DotConnectPostgres.Tests.csproj", "{6E00B0B1-A2B0-4936-BDDC-0E1B53C96613}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Sqlite.FunctionalTests", "tests\AdoNet.Sqlite.FunctionalTests\AdoNet.Sqlite.FunctionalTests.csproj", "{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite.Tests", "tests\Sqlite.Tests\Sqlite.Tests.csproj", "{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.MicrosoftSqlite.FunctionalTests", "tests\AdoNet.MicrosoftSqlite.FunctionalTests\AdoNet.MicrosoftSqlite.FunctionalTests.csproj", "{FE87F461-CF5E-4A1F-8967-D3A158F674A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite.Tests", "tests\MicrosoftSqlite.Tests\MicrosoftSqlite.Tests.csproj", "{FE87F461-CF5E-4A1F-8967-D3A158F674A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
