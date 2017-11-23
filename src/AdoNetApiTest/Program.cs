@@ -117,7 +117,7 @@ namespace AdoNetApiTest
 			foreach (var test in xml.Root.Element("assembly").Elements("collection").Elements("test"))
 			{
 				var testName = (string) test.Attribute("name");
-				testName = testName.Substring(testName.LastIndexOf('.') + 1);
+				testName = testName.Substring(GetNthIndexOf(testName, '.', 3) + 1);
 
 				TestStatus testStatus;
 				string testMessage = null;
@@ -157,6 +157,18 @@ namespace AdoNetApiTest
 			}
 
 			return testResults;
+		}
+
+		private static int GetNthIndexOf(string value, char ch, int count)
+		{
+			int startIndex = -1;
+			for (int i = 0; i < count; i++)
+			{
+				startIndex = value.IndexOf(ch, startIndex + 1);
+				if (startIndex == -1)
+					break;
+			}
+			return startIndex;
 		}
 
 		private static string GetConnectorName(string testFolder)
