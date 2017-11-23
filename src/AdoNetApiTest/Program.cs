@@ -34,6 +34,10 @@ namespace AdoNetApiTest
 <style type='text/css'>
 .WRONG_EXCEPTION {
 	border: 1px solid black;
+	background-color: #ffcc33;
+}
+.SHOULD_HAVE_FAILED {
+	border: 1px solid black;
 	background-color: #f96384;
 }
 </style>
