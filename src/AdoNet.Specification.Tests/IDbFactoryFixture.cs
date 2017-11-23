@@ -6,5 +6,6 @@ namespace AdoNet.Specification.Tests
 	{
 		DbProviderFactory Factory { get; }
 		string ConnectionString { get; }
+		string CreateHexLiteral(byte[] value);
 	}
 }

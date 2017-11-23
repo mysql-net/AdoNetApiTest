@@ -1,14 +1,11 @@
 using System.Data.Common;
-using AdoNet.Specification.Tests;
+using AdoNet.Specification.Tests.Databases;
 using Devart.Data.PostgreSql;
 
 namespace DotConnectPostgres.Tests
 {
-    public sealed class DotConnectPostgresDbFactoryFixture : IDbFactoryFixture
+	public sealed class DotConnectPostgresDbFactoryFixture : DbFactoryFixtureBase<PostgresDatabaseBase>
 	{
-		public DbProviderFactory Factory => PgSqlProviderFactory.Instance;
-
-		// docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
-		public string ConnectionString => "host=localhost;user id=root;password=test;";
+		public override DbProviderFactory Factory => PgSqlProviderFactory.Instance;
 	}
 }

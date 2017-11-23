@@ -68,7 +68,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT x'7E57';";
+				command.CommandText = $"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};";
 				using (var reader = command.ExecuteReader())
 				{
 					var hasData = reader.Read();
@@ -177,13 +177,13 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetFieldValue_of_byteArray_works()
 			=> GetFieldValue_works(
-				"SELECT X'7E57';",
+				$"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};",
 				new byte[] { 0x7e, 0x57 });
 
 		[Fact]
 		public virtual void GetFieldValue_of_byteArray_empty()
 			=> GetFieldValue_works(
-				"SELECT X'';",
+				$"SELECT {Fixture.CreateHexLiteral(new byte[0])};",
 				new byte[0]);
 
 		[Fact]
@@ -426,7 +426,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetValue_works_when_blob()
 			=> GetValue_works(
-				"SELECT X'7E57';",
+				$"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};",
 				new byte[] { 0x7e, 0x57 });
 
 		[Fact]

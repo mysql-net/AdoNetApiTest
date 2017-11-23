@@ -1,14 +1,11 @@
 using System.Data.Common;
 using System.Data.SqlClient;
-using AdoNet.Specification.Tests;
+using AdoNet.Specification.Tests.Databases;
 
 namespace SqlClientBcl.Tests
 {
-    public class SqlClientDbFactoryFixture : IDbFactoryFixture
+	public class SqlClientDbFactoryFixture : DbFactoryFixtureBase<MsSqlDatabaseBase>
 	{
-		public DbProviderFactory Factory => SqlClientFactory.Instance;
-
-		// docker run --name mssql -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=Pa$$word -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
-		public string ConnectionString => "data source=localhost;user id=sa;password=Pa$$word";
+		public override DbProviderFactory Factory => SqlClientFactory.Instance;
 	}
 }

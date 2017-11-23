@@ -1,12 +1,11 @@
 using System.Data.Common;
 using System.Data.SQLite;
-using AdoNet.Specification.Tests;
+using AdoNet.Specification.Tests.Databases;
 
 namespace Sqlite.Tests
 {
-    public class SqliteDbFactoryFixture : IDbFactoryFixture
+	public class SqliteDbFactoryFixture : DbFactoryFixtureBase<SqliteDatabaseBase>
 	{
-		public DbProviderFactory Factory => SQLiteFactory.Instance;
-		public string ConnectionString => "data source=:memory:";
+		public override DbProviderFactory Factory => SQLiteFactory.Instance;
 	}
 }
