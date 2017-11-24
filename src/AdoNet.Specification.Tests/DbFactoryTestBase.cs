@@ -3,6 +3,7 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Sdk;
 
 namespace AdoNet.Specification.Tests
 {
@@ -46,6 +47,49 @@ namespace AdoNet.Specification.Tests
 			connection.ConnectionString = Fixture.ConnectionString;
 			connection.Open();
 			return connection;
+		}
+
+		protected static Exception AssertThrowsAny<TException1, TException2>(Action action)
+			where TException1 : Exception
+			where TException2 : Exception
+		{
+			try
+			{
+				action();
+				throw new ThrowsException(typeof(TException1));
+			}
+			catch (TException1 ex)
+			{
+				return ex;
+			}
+			catch (TException2 ex)
+			{
+				return ex;
+			}
+		}
+
+		protected static Exception AssertThrowsAny<TException1, TException2, TException3>(Action action)
+			where TException1 : Exception
+			where TException2 : Exception
+			where TException3 : Exception
+		{
+			try
+			{
+				action();
+				throw new ThrowsException(typeof(TException1));
+			}
+			catch (TException1 ex)
+			{
+				return ex;
+			}
+			catch (TException2 ex)
+			{
+				return ex;
+			}
+			catch (TException3 ex)
+			{
+				return ex;
+			}
 		}
 
 		readonly CancellationTokenSource m_cancellationTokenSource;

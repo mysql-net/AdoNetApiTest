@@ -642,6 +642,150 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void NextResult_throws_when_closed() => X_throws_when_closed(r => r.NextResult());
 
+		[Fact]
+		public virtual void GetBytes_throws_when_dataOffset_is_negative() => TestGetBytes(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException, InvalidOperationException>(() => reader.GetBytes(0, -1, new byte[4], 0, 4));
+		});
+
+		[Fact]
+		public virtual void GetBytes_reads_nothing_when_dataOffset_is_too_large() => TestGetBytes(reader =>
+		{
+			Assert.Equal(0, reader.GetBytes(0, 6, new byte[4], 0, 4));
+		});
+
+		[Fact]
+		public virtual void GetBytes_returns_length_when_buffer_is_null() => TestGetBytes(reader =>
+		{
+			Assert.Equal(4, reader.GetBytes(0, 0, null, 0, 0));
+		});
+
+		[Fact]
+		public virtual void GetBytes_throws_when_bufferOffset_is_negative() => TestGetBytes(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetBytes(0, 0, new byte[4], -1, 4));
+		});
+
+		[Fact]
+		public virtual void GetBytes_throws_when_bufferOffset_is_too_large() => TestGetBytes(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetBytes(0, 0, new byte[4], 5, 0));
+		});
+
+		[Fact]
+		public virtual void GetBytes_reads_nothing_at_end_of_buffer() => TestGetBytes(reader =>
+		{
+			Assert.Equal(0, reader.GetBytes(0, 0, new byte[4], 4, 0));
+		});
+
+		[Fact]
+		public virtual void GetBytes_throws_when_bufferOffset_plus_length_is_too_long() => TestGetBytes(reader =>
+		{
+			AssertThrowsAny<ArgumentException, IndexOutOfRangeException>(() => reader.GetBytes(0, 0, new byte[4], 2, 3));
+		});
+
+		[Fact]
+		public virtual void GetBytes_works_when_buffer_is_large() => TestGetBytes(reader =>
+		{
+			var buffer = new byte[6];
+			Assert.Equal(4, reader.GetBytes(0, 0, buffer, 0, 6));
+			Assert.Equal(new byte[] { 1, 2, 3, 4, 0, 0 }, buffer);
+		});
+
+		[Fact]
+		public virtual void GetBytes_reads_part_of_blob() => TestGetBytes(reader =>
+		{
+			var buffer = new byte[5];
+			Assert.Equal(2, reader.GetBytes(0, 1, buffer, 2, 2));
+			Assert.Equal(new byte[] { 0, 0, 2, 3, 0 }, buffer);
+		});
+
+		private void TestGetBytes(Action<DbDataReader> action)
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = $"SELECT {Fixture.CreateHexLiteral(new byte[] { 1, 2, 3, 4 })};";
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+					action(reader);
+				}
+			}
+		}
+
+		[Fact]
+		public virtual void GetChars_throws_when_dataOffset_is_negative() => TestGetChars(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException, InvalidOperationException>(() => reader.GetChars(0, -1, new char[4], 0, 4));
+		});
+
+		[Fact]
+		public virtual void GetChars_reads_nothing_when_dataOffset_is_too_large() => TestGetChars(reader =>
+		{
+			Assert.Equal(0, reader.GetChars(0, 6, new char[4], 0, 4));
+		});
+
+		[Fact]
+		public virtual void GetChars_returns_length_when_buffer_is_null() => TestGetChars(reader =>
+		{
+			Assert.Equal(4, reader.GetChars(0, 0, null, 0, 0));
+		});
+
+		[Fact]
+		public virtual void GetChars_throws_when_bufferOffset_is_negative() => TestGetChars(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetChars(0, 0, new char[4], -1, 4));
+		});
+
+		[Fact]
+		public virtual void GetChars_throws_when_bufferOffset_is_too_large() => TestGetChars(reader =>
+		{
+			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetChars(0, 0, new char[4], 5, 0));
+		});
+
+		[Fact]
+		public virtual void GetChars_reads_nothing_at_end_of_buffer() => TestGetChars(reader =>
+		{
+			Assert.Equal(0, reader.GetChars(0, 0, new char[4], 4, 0));
+		});
+
+		[Fact]
+		public virtual void GetChars_throws_when_bufferOffset_plus_length_is_too_long() => TestGetChars(reader =>
+		{
+			AssertThrowsAny<ArgumentException, IndexOutOfRangeException>(() => reader.GetChars(0, 0, new char[4], 2, 3));
+		});
+
+		[Fact]
+		public virtual void GetChars_works_when_buffer_is_large() => TestGetChars(reader =>
+		{
+			var buffer = new char[6];
+			Assert.Equal(4, reader.GetChars(0, 0, buffer, 0, 6));
+			Assert.Equal(new[] { 'a', 'b', 'c', 'd', '\0', '\0' }, buffer);
+		});
+
+		[Fact]
+		public virtual void GetChars_reads_part_of_string() => TestGetChars(reader =>
+		{
+			var buffer = new char[5];
+			Assert.Equal(2, reader.GetChars(0, 1, buffer, 2, 2));
+			Assert.Equal(new[] { '\0', '\0', 'b', 'c', '\0' }, buffer);
+		});
+
+		private void TestGetChars(Action<DbDataReader> action)
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 'abcd';";
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+					action(reader);
+				}
+			}
+		}
+
 		private void GetX_works<T>(string sql, Func<DbDataReader, T> action, T expected)
 		{
 			using (var connection = CreateOpenConnection())
