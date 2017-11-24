@@ -158,7 +158,12 @@ namespace AdoNet.Specification.Tests
 
 				using (connection.BeginTransaction())
 				{
-					Assert.Throws<InvalidOperationException>(() => command.ExecuteReader());
+					Assert.Throws<InvalidOperationException>(() =>
+					{
+						using (command.ExecuteReader())
+						{
+						}
+					});
 				}
 			}
 		}
@@ -176,7 +181,12 @@ namespace AdoNet.Specification.Tests
 				{
 					command.Transaction = otherTransaction;
 
-					Assert.Throws<InvalidOperationException>(() => command.ExecuteReader());
+					Assert.Throws<InvalidOperationException>(() =>
+					{
+						using (command.ExecuteReader())
+						{
+						}
+					});
 				}
 			}
 		}
