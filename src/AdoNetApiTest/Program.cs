@@ -92,11 +92,14 @@ namespace AdoNetApiTest
 			var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
 			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
 			File.Delete(outputXmlPath);
-			await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
+			do
+			{
+				await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
+				Console.Write(".");
+			} while (!File.Exists(outputXmlPath));
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
 			var connectorName = GetConnectorName(testFolder);
-			Console.Write(".");
 			return((connectorName ?? folderName, testResults));
 		}
 
@@ -151,6 +154,8 @@ namespace AdoNetApiTest
 						var actual = Regex.Match(message, @"\\nActual:\s+(.*?)$").Groups[1].Value;
 						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
 							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
+							actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
+							actual.StartsWith("typeof(System.NotImplementedException)", StringComparison.Ordinal) ? TestStatus.Exception :
 							TestStatus.WrongException;
 						if (testStatus != TestStatus.NoException)
 							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
