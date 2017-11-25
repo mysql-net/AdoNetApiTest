@@ -141,6 +141,11 @@ namespace AdoNetApiTest
 				{
 					testStatus = TestStatus.Pass;
 				}
+				else if ((string) test.Attribute("result") == "Skip")
+				{
+					testStatus = TestStatus.ImplementationFail;
+					testMessage = (string) test.Element("reason");
+				}
 				else
 				{
 					var failure = test.Element("failure");
