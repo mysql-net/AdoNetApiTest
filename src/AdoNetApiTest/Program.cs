@@ -16,7 +16,7 @@ namespace AdoNetApiTest
 		static async Task Main()
 		{
 			var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
-			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "tests"));
+			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "..", "tests"));
 
 			Console.Write("Running tests");
 
@@ -84,7 +84,11 @@ namespace AdoNetApiTest
 ");
 			var path = Path.Combine(Path.GetTempPath(), "results.html");
 			File.WriteAllText(path, sb.ToString());
-			Process.Start(path);
+			Process.Start(new ProcessStartInfo
+			{
+				FileName = path,
+				UseShellExecute = true,
+			});
 		}
 
 		private static async Task<(string Name, IReadOnlyDictionary<string, TestResult> Results)> RunTestsAsync(string testFolder)
