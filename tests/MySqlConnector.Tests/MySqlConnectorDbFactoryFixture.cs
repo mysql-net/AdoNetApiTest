@@ -7,6 +7,6 @@ namespace MySqlConnector.Tests
     public sealed class MySqlConnectorDbFactoryFixture : DbFactoryFixtureBase<MySqlDatabaseBase>
 	{
 		public override DbProviderFactory Factory => MySqlClientFactory.Instance;
-		public override string ConnectionString => base.ConnectionString + "SSL Mode=none";
+		public override string ConnectionString => "Server=localhost;User Id=root;Password=test;SSL Mode=none";
 	}
 }

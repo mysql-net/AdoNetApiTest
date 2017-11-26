@@ -7,6 +7,6 @@ namespace DotConnectMySql.Tests
 	public sealed class DotConnectMySqlDbFactoryFixture : DbFactoryFixtureBase<MySqlDatabaseBase>
 	{
 		public override DbProviderFactory Factory => MySqlProviderFactory.Instance;
-		public override string ConnectionString => base.ConnectionString + "character set=utf8mb4;";
+		public override string ConnectionString => "server=localhost;user id=root;password=test;character set=utf8mb4;";
 	}
 }

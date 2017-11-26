@@ -7,5 +7,6 @@ namespace Sqlite.Tests
 	public class SqliteDbFactoryFixture : DbFactoryFixtureBase<SqliteDatabaseBase>
 	{
 		public override DbProviderFactory Factory => SQLiteFactory.Instance;
+		public override string ConnectionString => "data source=:memory:";
 	}
 }

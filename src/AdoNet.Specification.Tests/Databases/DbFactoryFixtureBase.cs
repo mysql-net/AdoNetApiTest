@@ -11,7 +11,7 @@ namespace AdoNet.Specification.Tests.Databases
 		}
 
 		public abstract DbProviderFactory Factory { get; }
-		public virtual string ConnectionString => Database.ConnectionString;
+		public abstract string ConnectionString { get; }
 		public virtual string CreateBooleanLiteral(bool value) => Database.CreateBooleanLiteral(value);
 		public virtual string CreateHexLiteral(byte[] value) => Database.CreateHexLiteral(value);
 		public virtual string SelectNoRows => Database.SelectNoRows;
