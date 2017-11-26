@@ -40,12 +40,30 @@ namespace AdoNetApiTest
 	border: 1px solid black;
 	background-color: #f96384;
 }
+TD A {
+	color: black;
+	text-decoration: none;
+}
+TD A:hover {
+	text-decoration: underline;
+}
 </style>
 <meta charset='utf-8'>
 </head>
 
 <body>
 <h1>ADO.NET Specification Tests</h1>
+<h4>Legend</h4>
+    <table>
+        <tr><td class='EXPECTED_RESULT'>expected result</td></tr>
+        <tr><td class='WRONG_EXCEPTION'>exception was not of expected type</td></tr>
+        <tr><td class='SHOULD_HAVE_PASSED'>should have succeeded but failed</td></tr>
+        <tr><td class='SHOULD_HAVE_FAILED'>should have failed but succeeded</td></tr>
+        <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded</td></tr>
+        <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed</td></tr>
+        <tr><td class='CRASH'>provider threw unhandled exception</td></tr>
+    </table>
+<h4>Results</h4>
 <table>
     <tr>
         <th></th>
@@ -57,7 +75,7 @@ namespace AdoNetApiTest
 			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().OrderBy(x => x).ToList();
 			foreach (var testName in allTestNames)
 			{
-				sb.AppendFormat("<tr><td>{0}</td>", EscapeHtml(testName));
+				sb.AppendFormat("<tr><td id='{0}'><a href='#{0}'>{0}</a></td>", EscapeHtml(testName));
 
 				foreach (var testResults in assemblyTestResults.Values)
 				{
