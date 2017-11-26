@@ -13,7 +13,9 @@ Add a reference to the [NuGet package](https://www.nuget.org/packages/AdoNet.Spe
 Create a class that implements `IDbFactoryFixture`. In most cases, the easiest way to do this
 is to inherit from ` DbFactoryFixtureBase<TDatabase>` where `TDatabase` is one of the built-in
 classes from the `AdoNet.Specification.Tests.Databases` namespace. Then implement the
-`Factory` property, which returns a `DbProviderFactory` for your ADO.NET implementation. See
+`Factory` property, which returns a `DbProviderFactory` for your ADO.NET implementation,
+and the `ConnectionString` property, which must return a valid connection string that the test
+suite can use to connect to a database. See
 [this example](https://github.com/mysql-net/AdoNetApiTest/blob/master/tests/SqlClient.Tests/SqlClientDbFactoryFixture.cs) for
 `System.Data.SqlClient`.
 
