@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite.Tests", "tests\Sqlit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite.Tests", "tests\MicrosoftSqlite.Tests\MicrosoftSqlite.Tests.csproj", "{FE87F461-CF5E-4A1F-8967-D3A158F674A1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData8.Tests", "tests\MySqlData8.Tests\MySqlData8.Tests.csproj", "{D5201906-1566-42EA-885E-076AA2C18AF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5201906-1566-42EA-885E-076AA2C18AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5201906-1566-42EA-885E-076AA2C18AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5201906-1566-42EA-885E-076AA2C18AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5201906-1566-42EA-885E-076AA2C18AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
