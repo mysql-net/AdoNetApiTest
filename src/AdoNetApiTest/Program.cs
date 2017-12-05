@@ -13,6 +13,8 @@ namespace AdoNetApiTest
 {
 	class Program
 	{
+		static bool RunXUnit = true;
+
 		static async Task Main()
 		{
 			var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
@@ -113,12 +115,15 @@ TD A:hover {
 		{
 			var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
 			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
-			File.Delete(outputXmlPath);
-			do
+			if (RunXUnit)
 			{
-				await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
-				Console.Write(".");
-			} while (!File.Exists(outputXmlPath));
+				File.Delete(outputXmlPath);
+				do
+				{
+					await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
+					Console.Write(".");
+				} while (!File.Exists(outputXmlPath));
+			}
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
 			var connectorName = GetConnectorName(testFolder);
