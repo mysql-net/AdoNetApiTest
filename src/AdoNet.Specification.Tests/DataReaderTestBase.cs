@@ -49,13 +49,6 @@ namespace AdoNet.Specification.Tests
 				});
 
 		[Fact]
-		public virtual void GetBoolean_works()
-			=> GetX_works(
-				$"SELECT {Fixture.CreateBooleanLiteral(true)};",
-				r => r.GetBoolean(0),
-				true);
-
-		[Fact]
 		public virtual void GetBytes_works()
 		{
 			using (var connection = CreateOpenConnection())
