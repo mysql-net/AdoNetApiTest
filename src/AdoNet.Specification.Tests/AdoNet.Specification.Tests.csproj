@@ -11,7 +11,7 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <AssemblyOriginatorKeyFile>..\..\MySqlConnector.snk</AssemblyOriginatorKeyFile>
     <Authors>Bradley Grainger</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net47</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PackageTags>ado.net;database;test</PackageTags>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">

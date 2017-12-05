@@ -42,6 +42,10 @@ namespace AdoNetApiTest
 	border: 1px solid black;
 	background-color: #f96384;
 }
+.NOT_APPLICABLE {
+	border: 1px solid black;
+	background-color: #ccc;
+}
 TD A {
 	color: black;
 	text-decoration: none;
@@ -63,6 +67,7 @@ TD A:hover {
         <tr><td class='SHOULD_HAVE_FAILED'>should have failed but succeeded</td></tr>
         <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded</td></tr>
         <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed</td></tr>
+        <tr><td class='NOT_APPLICABLE'>test not applicable to this provider</td></tr>
         <tr><td class='CRASH'>provider threw unhandled exception</td></tr>
     </table>
 <h4>Results</h4>
@@ -91,6 +96,7 @@ TD A:hover {
 						status == TestStatus.WrongException ? "WRONG_EXCEPTION" :
 						status == TestStatus.ImplementationPass ? "IMPLEMENTATION_PASS" :
 						status == TestStatus.ImplementationFail ? "IMPLEMENTATION_FAIL" :
+						status == TestStatus.NotApplicable ? "NOT_APPLICABLE" :
 						"";
 					sb.AppendFormat("<td class='{0}'{1}></td>", className, testResult.Message == null ? "" : $" title=\"{EscapeHtml(testResult.Message)}\"'");
 				}
@@ -170,20 +176,20 @@ TD A:hover {
 				}
 				else if ((string) test.Attribute("result") == "Skip")
 				{
-					testStatus = TestStatus.ImplementationFail;
 					testMessage = (string) test.Element("reason");
+					testStatus = testMessage == "Database doesn't support this data type" ? TestStatus.NotApplicable : TestStatus.ImplementationFail;
 				}
 				else
 				{
 					var failure = test.Element("failure");
 					var exceptionType = (string) failure.Attribute("exception-type");
-					var message = (string) failure.Element("message");
+					var message = ((string) failure.Element("message")).Replace("\\r\\n", "\n");
 
 					switch (exceptionType)
 					{
 					case "Xunit.Sdk.ThrowsException":
 						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
-						var actual = Regex.Match(message, @"\\nActual:\s+(.*?)$").Groups[1].Value;
+						var actual = Regex.Match(message, @"\bActual:\s+(.*?)$").Groups[1].Value;
 						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
 							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
 							actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
@@ -196,10 +202,7 @@ TD A:hover {
 					default:
 						// an Xunit exception indicates a test failure; any other type of exception is a crash
 						testStatus = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestStatus.Fail : TestStatus.Exception;
-						if (testStatus == TestStatus.Exception)
-							testMessage = message;
-						else
-							testMessage = message.Replace("\\r\\n", "\n");
+						testMessage = message;
 						break;
 					}
 				}

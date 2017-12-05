@@ -10,5 +10,6 @@ namespace AdoNetApiTest
 		WrongException,
 		ImplementationPass,
 		ImplementationFail,
+		NotApplicable,
 	}
 }

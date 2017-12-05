@@ -4,9 +4,9 @@ using MySql.Data.MySqlClient;
 
 namespace MySqlData.Tests
 {
-	public sealed class MySqlDataDbFactoryFixture : DbFactoryFixtureBase<MySqlDatabaseBase>
+	public class MySqlDataDbFactoryFixture : DbFactoryFixtureBase<MySqlDatabaseBase>
 	{
 		public override DbProviderFactory Factory => MySqlClientFactory.Instance;
-		public override string ConnectionString => "server=localhost;user id=root;password=test;characterset=utf8mb4";
+		public override string ConnectionString => "server=localhost;user id=root;password=test;characterset=utf8mb4;database=mysqldata";
 	}
 }
