@@ -18,6 +18,7 @@ namespace AdoNet.Specification.Tests
 		protected new TFixture Fixture { get; }
 		protected virtual Type GetNullExceptionType() => typeof(InvalidCastException);
 
+		protected virtual void TestGetFieldType(DbType dbType, ValueKind kind, Type expectedType) => DoTest(dbType, kind, reader => Assert.Equal(expectedType, reader.GetFieldType(0)));
 		protected virtual void TestGetValue<T>(DbType dbType, ValueKind kind, Func<DbDataReader, T> getValue, T expected) => DoTest(dbType, kind, reader => Assert.Equal(expected, getValue(reader)));
 		protected virtual void TestException<T>(DbType dbType, ValueKind kind, Func<DbDataReader, T> getValue, Type exceptionType) => DoTest(dbType, kind, reader => Assert.Throws(exceptionType, () => getValue(reader)));
 

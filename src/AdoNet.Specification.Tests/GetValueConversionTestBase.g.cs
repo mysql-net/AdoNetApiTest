@@ -511,5 +511,64 @@ namespace AdoNet.Specification.Tests
 		[SkippableFact]
 		public virtual void GetString_for_one_String() => TestGetValue(DbType.String, ValueKind.One, x => x.GetString(0), "1");
 
+		[SkippableFact]
+		public virtual void GetFieldType_for_Binary() => TestGetFieldType(DbType.Binary, ValueKind.One, typeof(byte[]));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Boolean() => TestGetFieldType(DbType.Boolean, ValueKind.One, typeof(bool));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Byte() => TestGetFieldType(DbType.Byte, ValueKind.One, typeof(byte));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Currency() => TestGetFieldType(DbType.Currency, ValueKind.One, typeof(decimal));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Date() => TestGetFieldType(DbType.Date, ValueKind.One, typeof(DateTime));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_DateTime() => TestGetFieldType(DbType.DateTime, ValueKind.One, typeof(DateTime));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_DateTimeOffset() => TestGetFieldType(DbType.DateTimeOffset, ValueKind.One, typeof(DateTimeOffset));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Decimal() => TestGetFieldType(DbType.Decimal, ValueKind.One, typeof(decimal));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Double() => TestGetFieldType(DbType.Double, ValueKind.One, typeof(double));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Guid() => TestGetFieldType(DbType.Guid, ValueKind.One, typeof(Guid));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Int16() => TestGetFieldType(DbType.Int16, ValueKind.One, typeof(short));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Int32() => TestGetFieldType(DbType.Int32, ValueKind.One, typeof(int));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Int64() => TestGetFieldType(DbType.Int64, ValueKind.One, typeof(long));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_SByte() => TestGetFieldType(DbType.SByte, ValueKind.One, typeof(sbyte));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Single() => TestGetFieldType(DbType.Single, ValueKind.One, typeof(float));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_String() => TestGetFieldType(DbType.String, ValueKind.One, typeof(string));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_Time() => TestGetFieldType(DbType.Time, ValueKind.One, typeof(TimeSpan));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_UInt16() => TestGetFieldType(DbType.UInt16, ValueKind.One, typeof(ushort));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_UInt32() => TestGetFieldType(DbType.UInt32, ValueKind.One, typeof(uint));
+
+		[SkippableFact]
+		public virtual void GetFieldType_for_UInt64() => TestGetFieldType(DbType.UInt64, ValueKind.One, typeof(ulong));
 	}
 }
