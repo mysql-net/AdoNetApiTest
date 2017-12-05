@@ -33,7 +33,12 @@ Run the required database servers locally:
 
 ```
 docker run --name mssql -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=Pa$$word -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
+docker exec mssql /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Pa$$word -Q "create database sqlclient;"
+
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
+docker exec mysql mysql -uroot -ptest -e "create schema dotconnect collate utf8mb4_bin;"
+docker exec mysql mysql -uroot -ptest -e "create schema mysqlconnector collate utf8mb4_bin;"
+
 docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
 ```
 
