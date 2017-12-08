@@ -151,21 +151,6 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void GetFieldValue_of_string_works() => GetFieldValue_works<string>("SELECT 'test';", "test");
-
-		[Fact]
-		public virtual void GetFieldValue_of_byteArray_works()
-			=> GetFieldValue_works(
-				$"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};",
-				new byte[] { 0x7e, 0x57 });
-
-		[Fact]
-		public virtual void GetFieldValue_of_byteArray_empty()
-			=> GetFieldValue_works(
-				$"SELECT {Fixture.CreateHexLiteral(new byte[0])};",
-				new byte[0]);
-
-		[Fact]
 		public virtual void GetFieldValue_of_byteArray_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetFieldValue<byte[]>(0));
