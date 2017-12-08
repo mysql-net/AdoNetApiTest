@@ -632,6 +632,9 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetFieldValue_for_UInt64() => TestGetFieldValue(DbType.UInt64, ValueKind.One, 1ul);
 
 		[SkippableFact]
+		public virtual void GetFieldValue_for_null() => TestGetFieldValue(DbType.String, ValueKind.Null, DBNull.Value);
+
+		[SkippableFact]
 		public virtual void GetValue_for_Binary() => TestGetValue(DbType.Binary, ValueKind.One, new byte[] { 0x11 });
 
 		[SkippableFact]
@@ -690,5 +693,8 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetValue_for_UInt64() => TestGetValue(DbType.UInt64, ValueKind.One, 1ul);
+
+		[SkippableFact]
+		public virtual void GetValue_for_null() => TestGetValue(DbType.String, ValueKind.Null, DBNull.Value);
 	}
 }

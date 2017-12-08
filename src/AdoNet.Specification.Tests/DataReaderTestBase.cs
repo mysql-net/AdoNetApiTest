@@ -134,32 +134,10 @@ namespace AdoNet.Specification.Tests
 			}
 		}
 
-		private void GetFieldValue_works<T>(string sql, T expected)
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = sql;
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-
-					Assert.True(hasData);
-					Assert.Equal(expected, reader.GetFieldValue<T>(0));
-				}
-			}
-		}
-
 		[Fact]
 		public virtual void GetFieldValue_of_byteArray_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetFieldValue<byte[]>(0));
-
-		[Fact]
-		public virtual void GetFieldValue_of_DBNull_works()
-			=> GetFieldValue_works(
-				"SELECT NULL;",
-				DBNull.Value);
 
 		[Fact]
 		public virtual void GetFieldValue_of_DBNull_throws_when_not_null()
@@ -325,29 +303,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetString_throws_when_null()
 			=> GetX_throws_when_null(
 				r => r.GetString(0));
-
-		private void GetValue_works(string sql, object expected)
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = sql;
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-
-					Assert.True(hasData);
-					Assert.Equal(expected, reader.GetValue(0));
-				}
-			}
-		}
-
-		[Fact]
-		public virtual void GetValue_works_when_null()
-			=> GetValue_works(
-				"SELECT NULL;",
-				DBNull.Value);
-
+		
 		[Fact]
 		public virtual void GetValue_throws_before_read()
 			=> X_throws_before_read(r => r.GetValue(0));
