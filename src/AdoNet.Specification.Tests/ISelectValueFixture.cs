@@ -3,7 +3,10 @@ using System.Data;
 
 namespace AdoNet.Specification.Tests
 {
-	public interface IGetValueFixture : IDbFactoryFixture
+	/// <summary>
+	/// Provides methods to SELECT values of specific types from a particular database server.
+	/// </summary>
+	public interface ISelectValueFixture : IDbFactoryFixture
 	{
 		/// <summary>
 		/// Returns a collection of all <see cref="DbType"/> values that are supported by this database

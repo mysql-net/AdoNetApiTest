@@ -2,9 +2,9 @@ using AdoNet.Specification.Tests;
 
 namespace MySqlData.Tests
 {
-	public sealed class MySqlDataDataReaderTests : DataReaderTestBase<MySqlDataGetValueFixture>
+	public sealed class MySqlDataDataReaderTests : DataReaderTestBase<MySqlDataSelectValueFixture>
 	{
-		public MySqlDataDataReaderTests(MySqlDataGetValueFixture fixture)
+		public MySqlDataDataReaderTests(MySqlDataSelectValueFixture fixture)
 			: base(fixture)
 		{
 		}

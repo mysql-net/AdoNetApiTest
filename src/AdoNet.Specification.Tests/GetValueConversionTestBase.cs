@@ -6,9 +6,9 @@ using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
-	[Collection("GetValue Collection")]
+	[Collection("ISelectValueFixture Collection")]
 	public abstract partial class GetValueConversionTestBase<TFixture> : DbFactoryTestBase<TFixture>
-		where TFixture : class, IGetValueFixture
+		where TFixture : class, ISelectValueFixture
 	{
 		protected GetValueConversionTestBase(TFixture fixture)
 			: base(fixture)

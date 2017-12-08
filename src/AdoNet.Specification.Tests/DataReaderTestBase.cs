@@ -4,9 +4,9 @@ using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
-	[Collection("GetValue Collection")]
+	[Collection("ISelectValueFixture Collection")]
 	public class DataReaderTestBase<TFixture> : DbFactoryTestBase<TFixture>
-		where TFixture : class, IGetValueFixture
+		where TFixture : class, ISelectValueFixture
 	{
 		public DataReaderTestBase(TFixture fixture)
 			: base(fixture)

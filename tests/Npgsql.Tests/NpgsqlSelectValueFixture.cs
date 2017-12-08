@@ -6,9 +6,9 @@ using AdoNet.Specification.Tests;
 
 namespace Npgsql.Tests
 {
-	public class NpgsqlGetValueFixture : NpgsqlDbFactoryFixture, IGetValueFixture, IDisposable
+	public class NpgsqlSelectValueFixture : NpgsqlDbFactoryFixture, ISelectValueFixture, IDisposable
 	{
-		public NpgsqlGetValueFixture()
+		public NpgsqlSelectValueFixture()
 		{
 			using (var connection = Factory.CreateConnection())
 			{

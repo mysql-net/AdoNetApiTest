@@ -2,9 +2,9 @@ using AdoNet.Specification.Tests;
 
 namespace SqlClient.Tests
 {
-	public sealed class SqlClientDataReaderTests : DataReaderTestBase<SqlClientGetValueFixture>
+	public sealed class SqlClientDataReaderTests : DataReaderTestBase<SqlClientSelectValueFixture>
 	{
-		public SqlClientDataReaderTests(SqlClientGetValueFixture fixture)
+		public SqlClientDataReaderTests(SqlClientSelectValueFixture fixture)
 			: base(fixture)
 		{
 		}

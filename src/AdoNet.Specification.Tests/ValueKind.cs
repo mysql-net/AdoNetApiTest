@@ -4,7 +4,7 @@ using System.Data.Common;
 namespace AdoNet.Specification.Tests
 {
 	/// <summary>
-	/// The "kind" of value that should be returned by <see cref="IGetValueFixture.CreateSelectSql"/>.
+	/// The "kind" of value that should be returned by <see cref="ISelectValueFixture.CreateSelectSql"/>.
 	/// </summary>
 	public enum ValueKind
 	{

@@ -4,9 +4,9 @@ using AdoNet.Specification.Tests;
 
 namespace MySqlConnector.Tests
 {
-	public sealed class MySqlConnectorGetValueConversionTests : GetValueConversionTestBase<MySqlConnectorGetValueFixture>
+	public sealed class MySqlConnectorGetValueConversionTests : GetValueConversionTestBase<MySqlConnectorSelectValueFixture>
 	{
-		public MySqlConnectorGetValueConversionTests(MySqlConnectorGetValueFixture fixture)
+		public MySqlConnectorGetValueConversionTests(MySqlConnectorSelectValueFixture fixture)
 			: base(fixture)
 		{
 		}

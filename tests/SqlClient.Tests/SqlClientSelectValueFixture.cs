@@ -5,9 +5,9 @@ using AdoNet.Specification.Tests;
 
 namespace SqlClient.Tests
 {
-	public class SqlClientGetValueFixture : SqlClientDbFactoryFixture, IGetValueFixture, IDisposable
+	public class SqlClientSelectValueFixture : SqlClientDbFactoryFixture, ISelectValueFixture, IDisposable
 	{
-		public SqlClientGetValueFixture()
+		public SqlClientSelectValueFixture()
 		{
 			using (var connection = Factory.CreateConnection())
 			{

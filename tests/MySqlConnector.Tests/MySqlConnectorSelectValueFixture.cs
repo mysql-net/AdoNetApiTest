@@ -5,9 +5,9 @@ using AdoNet.Specification.Tests;
 
 namespace MySqlConnector.Tests
 {
-	public class MySqlConnectorGetValueFixture : MySqlConnectorDbFactoryFixture, IGetValueFixture, IDisposable
+	public class MySqlConnectorSelectValueFixture : MySqlConnectorDbFactoryFixture, ISelectValueFixture, IDisposable
 	{
-		public MySqlConnectorGetValueFixture()
+		public MySqlConnectorSelectValueFixture()
 		{
 			using (var connection = Factory.CreateConnection())
 			{
