@@ -1,12 +1,12 @@
 using AdoNet.Specification.Tests;
 
-namespace MySqlData.Tests
+namespace MySqlData8.Tests
 {
-	/*public sealed class MySqlDataDataReaderTests : DataReaderTestBase<MySqlDataDbFactoryFixture>
+	public sealed class MySqlData8DataReaderTests : DataReaderTestBase<MySqlData8SelectValueFixture>
 	{
-		public MySqlDataDataReaderTests(MySqlDataDbFactoryFixture fixture)
+		public MySqlData8DataReaderTests(MySqlData8SelectValueFixture fixture)
 			: base(fixture)
 		{
 		}
-	}*/
+	}
 }

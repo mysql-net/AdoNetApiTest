@@ -38,6 +38,8 @@ docker exec mssql /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Pa$$word -Q 
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=test -p 3306:3306 -d mysql:5.7
 docker exec mysql mysql -uroot -ptest -e "create schema dotconnect collate utf8mb4_bin;"
 docker exec mysql mysql -uroot -ptest -e "create schema mysqlconnector collate utf8mb4_bin;"
+docker exec mysql mysql -uroot -ptest -e "create schema mysqldata collate utf8mb4_bin;"
+docker exec mysql mysql -uroot -ptest -e "create schema mysqldata8 collate utf8mb4_bin;"
 
 docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
 ```

@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using AdoNet.Databases;
 using AdoNet.Specification.Tests;
 
-namespace MySqlData.Tests
+namespace DotConnectMySql.Tests
 {
-	public class MySqlDataSelectValueFixture : MySqlDataDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class DotConnectMySqlSelectValueFixture : DotConnectMySqlDbFactoryFixture, ISelectValueFixture
 	{
-		public MySqlDataSelectValueFixture() => MySqlDatabase.CreateSelectValueTable(this);
+		public DotConnectMySqlSelectValueFixture() => MySqlDatabase.CreateSelectValueTable(this);
 
 		public void Dispose() => MySqlDatabase.DropSelectValueTable(this);
 

@@ -1,11 +1,10 @@
 using AdoNet.Specification.Tests;
-using Xunit;
 
-namespace MySqlData.Tests
+namespace MySqlData8.Tests
 {
-	public sealed class MySqlDataCommandTests : CommandTestBase<MySqlDataDbFactoryFixture>
+	public sealed class MySqlData8CommandTests : CommandTestBase<MySqlData8DbFactoryFixture>
 	{
-		public MySqlDataCommandTests(MySqlDataDbFactoryFixture fixture)
+		public MySqlData8CommandTests(MySqlData8DbFactoryFixture fixture)
 			: base(fixture)
 		{
 		}
