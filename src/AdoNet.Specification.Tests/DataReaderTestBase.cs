@@ -343,15 +343,6 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void GetValue_works_when_string() => GetValue_works("SELECT 'test';", "test");
-
-		[Fact]
-		public virtual void GetValue_works_when_blob()
-			=> GetValue_works(
-				$"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};",
-				new byte[] { 0x7e, 0x57 });
-
-		[Fact]
 		public virtual void GetValue_works_when_null()
 			=> GetValue_works(
 				"SELECT NULL;",

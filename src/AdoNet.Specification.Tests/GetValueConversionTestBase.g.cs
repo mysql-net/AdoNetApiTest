@@ -630,5 +630,65 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetFieldValue_for_UInt64() => TestGetFieldValue(DbType.UInt64, ValueKind.One, 1ul);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Binary() => TestGetValue(DbType.Binary, ValueKind.One, new byte[] { 0x11 });
+
+		[SkippableFact]
+		public virtual void GetValue_for_Boolean() => TestGetValue(DbType.Boolean, ValueKind.One, true);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Byte() => TestGetValue(DbType.Byte, ValueKind.One, (byte) 1);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Currency() => TestGetValue(DbType.Currency, ValueKind.One, 1m);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Date() => TestGetValue(DbType.Date, ValueKind.One, new DateTime(1111, 11, 11));
+
+		[SkippableFact]
+		public virtual void GetValue_for_DateTime() => TestGetValue(DbType.DateTime, ValueKind.One, new DateTime(1111, 11, 11, 11, 11, 11, 111));
+
+		[SkippableFact]
+		public virtual void GetValue_for_DateTimeOffset() => TestGetValue(DbType.DateTimeOffset, ValueKind.One, new DateTimeOffset(1111, 11, 11, 11, 11, 11, 111, new TimeSpan(11, 11, 0)));
+
+		[SkippableFact]
+		public virtual void GetValue_for_Decimal() => TestGetValue(DbType.Decimal, ValueKind.One, 1m);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Double() => TestGetValue(DbType.Double, ValueKind.One, 1.0);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Guid() => TestGetValue(DbType.Guid, ValueKind.One, new Guid("11111111111111111111111111111111"));
+
+		[SkippableFact]
+		public virtual void GetValue_for_Int16() => TestGetValue(DbType.Int16, ValueKind.One, (short) 1);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Int32() => TestGetValue(DbType.Int32, ValueKind.One, 1);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Int64() => TestGetValue(DbType.Int64, ValueKind.One, 1L);
+
+		[SkippableFact]
+		public virtual void GetValue_for_SByte() => TestGetValue(DbType.SByte, ValueKind.One, (sbyte) 1);
+
+		[SkippableFact]
+		public virtual void GetValue_for_Single() => TestGetValue(DbType.Single, ValueKind.One, 1f);
+
+		[SkippableFact]
+		public virtual void GetValue_for_String() => TestGetValue(DbType.String, ValueKind.One, "1");
+
+		[SkippableFact]
+		public virtual void GetValue_for_Time() => TestGetValue(DbType.Time, ValueKind.One, new TimeSpan(0, 11, 11, 11, 111));
+
+		[SkippableFact]
+		public virtual void GetValue_for_UInt16() => TestGetValue(DbType.UInt16, ValueKind.One, (ushort) 1);
+
+		[SkippableFact]
+		public virtual void GetValue_for_UInt32() => TestGetValue(DbType.UInt32, ValueKind.One, 1u);
+
+		[SkippableFact]
+		public virtual void GetValue_for_UInt64() => TestGetValue(DbType.UInt64, ValueKind.One, 1ul);
 	}
 }
