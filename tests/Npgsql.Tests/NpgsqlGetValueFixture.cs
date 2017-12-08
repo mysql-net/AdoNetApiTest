@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using AdoNet.Specification.Tests;
 
 namespace Npgsql.Tests
@@ -64,6 +65,10 @@ insert into get_value_tests values
 		}
 
 		public string CreateSelectSql(DbType dbType, ValueKind kind) => $"SELECT \"{dbType.ToString()}\" from get_value_tests WHERE Id = {(int) kind};";
+
+		public string CreateSelectSql(byte[] value) => $@"SELECT E'{string.Join("", value.Select(x => @"\x" + x.ToString("X2")))}'::bytea";
+
+		public string SelectNoRows => "SELECT 1 WHERE 0 = 1;";
 
 		public IReadOnlyCollection<DbType> SupportedDbTypes { get; } = new[]
 		{

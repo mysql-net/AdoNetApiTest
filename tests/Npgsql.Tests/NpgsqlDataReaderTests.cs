@@ -2,9 +2,9 @@ using AdoNet.Specification.Tests;
 
 namespace Npgsql.Tests
 {
-	public sealed class NpgsqlDataReaderTests : DataReaderTestBase<NpgsqlDbFactoryFixture>
+	public sealed class NpgsqlDataReaderTests : DataReaderTestBase<NpgsqlGetValueFixture>
 	{
-		public NpgsqlDataReaderTests(NpgsqlDbFactoryFixture fixture)
+		public NpgsqlDataReaderTests(NpgsqlGetValueFixture fixture)
 			: base(fixture)
 		{
 		}

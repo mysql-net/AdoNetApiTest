@@ -13,11 +13,21 @@ namespace AdoNet.Specification.Tests
 		IReadOnlyCollection<DbType> SupportedDbTypes { get; }
 
 		/// <summary>
-		/// Returns a complete <code>SELECT </code> statement that returns a value of the specified
+		/// Returns a complete <c>SELECT</c> statement that returns a value of the specified
 		/// type and kind.
 		/// </summary>
 		/// <param name="dbType">The data type of the value to return. This must be an entry in <see cref="SupportedDbTypes"/>.</param>
 		/// <param name="kind">The kind of value; see the documentation on <see cref="ValueKind"/> for details.</param>
 		string CreateSelectSql(DbType dbType, ValueKind kind);
+
+		/// <summary>
+		/// Returns a <c>SELECT</c> statement that returns the specified byte array.
+		/// </summary>
+		string CreateSelectSql(byte[] value);
+
+		/// <summary>
+		/// Returns a <c>SELECT</c> statement that selects no rows.
+		/// </summary>
+		string SelectNoRows { get; }
 	}
 }

@@ -294,17 +294,6 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void ExecuteScalar_returns_null_when_empty()
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.SelectNoRows;
-				Assert.Null(command.ExecuteScalar());
-			}
-		}
-
-		[Fact]
 		public virtual void ExecuteScalar_returns_integer()
 		{
 			using (var connection = CreateOpenConnection())

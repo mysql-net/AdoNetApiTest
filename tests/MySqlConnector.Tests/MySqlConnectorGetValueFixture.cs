@@ -69,6 +69,10 @@ insert into get_value_tests values
 
 		public string CreateSelectSql(DbType dbType, ValueKind kind) => $"SELECT `{dbType.ToString()}` from get_value_tests WHERE Id = {(int) kind};";
 
+		public string CreateSelectSql(byte[] value) => $"SELECT X'{BitConverter.ToString(value).Replace("-", "")}'";
+
+		public string SelectNoRows => "SELECT * FROM mysql.user WHERE 0 = 1;";
+
 		public IReadOnlyCollection<DbType> SupportedDbTypes { get; } = new[]
 		{
 			DbType.Binary,

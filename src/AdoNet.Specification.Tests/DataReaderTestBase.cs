@@ -4,13 +4,17 @@ using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
+	[Collection("GetValue Collection")]
 	public class DataReaderTestBase<TFixture> : DbFactoryTestBase<TFixture>
-		where TFixture : class, IDbFactoryFixture
+		where TFixture : class, IGetValueFixture
 	{
 		public DataReaderTestBase(TFixture fixture)
 			: base(fixture)
 		{
+			Fixture = fixture;
 		}
+
+		protected new TFixture Fixture { get; }
 
 		[Fact]
 		public virtual void Depth_returns_zero()
@@ -23,6 +27,17 @@ namespace AdoNet.Specification.Tests
 				{
 					Assert.Equal(0, reader.Depth);
 				}
+			}
+		}
+
+		[Fact]
+		public virtual void ExecuteScalar_returns_null_when_empty()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.SelectNoRows;
+				Assert.Null(command.ExecuteScalar());
 			}
 		}
 
@@ -54,7 +69,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = $"SELECT {Fixture.CreateHexLiteral(new byte[] { 0x7E, 0x57 })};";
+				command.CommandText = Fixture.CreateSelectSql(new byte[] { 0x7E, 0x57 });
 				using (var reader = command.ExecuteReader())
 				{
 					var hasData = reader.Read();
@@ -630,7 +645,7 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = $"SELECT {Fixture.CreateHexLiteral(new byte[] { 1, 2, 3, 4 })};";
+				command.CommandText = Fixture.CreateSelectSql(new byte[] { 1, 2, 3, 4 });
 				using (var reader = command.ExecuteReader())
 				{
 					reader.Read();
@@ -786,11 +801,6 @@ namespace AdoNet.Specification.Tests
 
 				Assert.Throws<InvalidOperationException>(() => action(reader));
 			}
-		}
-
-		private enum MyEnum
-		{
-			One = 1
 		}
 	}
 }

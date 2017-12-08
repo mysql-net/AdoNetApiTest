@@ -1,11 +1,11 @@
 using System.Data.Common;
-using AdoNet.Specification.Tests.Databases;
+using AdoNet.Specification.Tests;
 
 namespace Npgsql.Tests
 {
-	public class NpgsqlDbFactoryFixture : DbFactoryFixtureBase<PostgresDatabaseBase>
+	public class NpgsqlDbFactoryFixture : IDbFactoryFixture
 	{
-		public override DbProviderFactory Factory => NpgsqlFactory.Instance;
-		public override string ConnectionString => "host=localhost;user id=root;password=test";
+		public DbProviderFactory Factory => NpgsqlFactory.Instance;
+		public string ConnectionString => "host=localhost;user id=root;password=test";
 	}
 }

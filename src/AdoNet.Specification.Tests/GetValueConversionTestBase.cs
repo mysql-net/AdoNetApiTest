@@ -6,6 +6,7 @@ using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
+	[Collection("GetValue Collection")]
 	public abstract partial class GetValueConversionTestBase<TFixture> : DbFactoryTestBase<TFixture>
 		where TFixture : class, IGetValueFixture
 	{

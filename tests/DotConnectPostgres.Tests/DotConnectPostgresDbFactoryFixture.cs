@@ -1,12 +1,12 @@
 using System.Data.Common;
-using AdoNet.Specification.Tests.Databases;
+using AdoNet.Specification.Tests;
 using Devart.Data.PostgreSql;
 
 namespace DotConnectPostgres.Tests
 {
-	public sealed class DotConnectPostgresDbFactoryFixture : DbFactoryFixtureBase<PostgresDatabaseBase>
+	public sealed class DotConnectPostgresDbFactoryFixture : IDbFactoryFixture
 	{
-		public override DbProviderFactory Factory => PgSqlProviderFactory.Instance;
-		public override string ConnectionString => "host=localhost;user id=root;password=test;";
+		public DbProviderFactory Factory => PgSqlProviderFactory.Instance;
+		public string ConnectionString => "host=localhost;user id=root;password=test;";
 	}
 }

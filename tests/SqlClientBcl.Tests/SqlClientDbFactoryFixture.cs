@@ -1,12 +1,12 @@
 using System.Data.Common;
 using System.Data.SqlClient;
-using AdoNet.Specification.Tests.Databases;
+using AdoNet.Specification.Tests;
 
 namespace SqlClientBcl.Tests
 {
-	public class SqlClientDbFactoryFixture : DbFactoryFixtureBase<MsSqlDatabaseBase>
+	public class SqlClientDbFactoryFixture : IDbFactoryFixture
 	{
-		public override DbProviderFactory Factory => SqlClientFactory.Instance;
-		public override string ConnectionString => "data source=localhost;user id=sa;password=Pa$$word";
+		public DbProviderFactory Factory => SqlClientFactory.Instance;
+		public string ConnectionString => "data source=localhost;user id=sa;password=Pa$$word";
 	}
 }
