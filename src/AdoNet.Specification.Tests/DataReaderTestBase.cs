@@ -102,10 +102,6 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void GetDateTime_throws_when_null()
-			=> GetX_throws_when_null(r => r.GetDateTime(0));
-		
-		[Fact]
 		public virtual void GetDataTypeName_throws_when_ordinal_out_of_range()
 		{
 			using (var connection = CreateOpenConnection())
@@ -122,15 +118,6 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetDataTypeName_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetDataTypeName(0));
-		
-		[Fact]
-		public virtual void GetDecimal_throws_when_null()
-			=> GetX_throws_when_null(r => r.GetDecimal(0));
-
-		[Fact]
-		public virtual void GetDouble_throws_when_null()
-			=> GetX_throws_when_null(
-				r => r.GetDouble(0));
 
 		[Fact]
 		public virtual void GetEnumerator_works()
@@ -148,11 +135,6 @@ namespace AdoNet.Specification.Tests
 				}
 			}
 		}
-
-		[Fact]
-		public virtual void GetFieldValue_of_byteArray_throws_when_null()
-			=> GetX_throws_when_null(
-				r => r.GetFieldValue<byte[]>(0));
 
 		[Fact]
 		public virtual void GetFieldValue_of_DBNull_throws_when_not_null()
@@ -210,15 +192,6 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetFieldType_throws_when_closed()
 			=> X_throws_when_closed(r => r.GetFieldType(0));
-
-		[Fact]
-		public virtual void GetGuid_throws_when_null()
-			=> GetX_throws_when_null(r => r.GetGuid(0));
-
-		[Fact]
-		public virtual void GetInt64_throws_when_null()
-			=> GetX_throws_when_null(
-				r => r.GetInt64(0));
 
 		[Fact]
 		public virtual void GetName_works()
@@ -314,11 +287,6 @@ namespace AdoNet.Specification.Tests
 				r => r.GetString(0),
 				"test");
 
-		[Fact]
-		public virtual void GetString_throws_when_null()
-			=> GetX_throws_when_null(
-				r => r.GetString(0));
-		
 		[Fact]
 		public virtual void GetValue_throws_before_read()
 			=> X_throws_before_read(r => r.GetValue(0));
@@ -738,22 +706,6 @@ namespace AdoNet.Specification.Tests
 
 					Assert.True(hasData);
 					Assert.Equal(expected, action(reader));
-				}
-			}
-		}
-
-		private void GetX_throws_when_null(Action<DbDataReader> action)
-		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT NULL;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-
-					Assert.True(hasData);
-					Assert.Throws<InvalidCastException>(() => action(reader));
 				}
 			}
 		}
