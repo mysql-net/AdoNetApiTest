@@ -36,6 +36,7 @@ namespace AdoNet.Specification.Tests
 		/// The minimum value. For numeric types, this should be <see cref="int.MinValue"/>, etc. For <see cref="DbType.Single"/>, <c>1.18e-38</c>.
 		/// For <see cref="DbType.Double"/>, <c>2.23e-308</c>. For <see cref="DbType.Decimal"/>, <c>0.000000000000001</c>.
 		/// For <see cref="DbType.DateTimeOffset"/>, <c>0001-01-01 00:00:00 +00.00</c>; other date/time values should use the corresponding part.
+		/// For <see cref="DbType.Guid"/>, <c>{33221100-5544-7766-9988-AABBCCDDEEFF}</c>.
 		/// </summary>
 		Minimum,
 
@@ -43,6 +44,7 @@ namespace AdoNet.Specification.Tests
 		/// The minimum value. For numeric types, this should be <see cref="int.MaxValue"/>, etc. For <see cref="DbType.Single"/>, <c>3.40e38</c>.
 		/// For <see cref="DbType.Double"/>, <c>1.79e308</c>. For <see cref="DbType.Decimal"/>, <c>99999999999999999999.999999999999999</c>.
 		/// For <see cref="DbType.DateTimeOffset"/>, <c>9999-12-31 23:59:59.999 +14:00</c>; other date/time values should use the corresponding part.
+		/// For <see cref="DbType.Guid"/>, <c>{CCDDEEFF-AABB-8899-7766-554433221100}</c>.
 		/// </summary>
 		Maximum,
 	}

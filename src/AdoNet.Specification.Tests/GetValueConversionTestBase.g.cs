@@ -359,6 +359,18 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetGuid_throws_for_null_Guid() => TestException(DbType.Guid, ValueKind.Null, x => x.GetGuid(0), GetNullExceptionType());
 
 		[SkippableFact]
+		public virtual void GetGuid_for_zero_Guid() => TestGetValue(DbType.Guid, ValueKind.Zero, x => x.GetGuid(0), new Guid());
+
+		[SkippableFact]
+		public virtual void GetGuid_for_one_Guid() => TestGetValue(DbType.Guid, ValueKind.One, x => x.GetGuid(0), new Guid("11111111-1111-1111-1111-111111111111"));
+
+		[SkippableFact]
+		public virtual void GetGuid_for_minimum_Guid() => TestGetValue(DbType.Guid, ValueKind.Minimum, x => x.GetGuid(0), new Guid("33221100-5544-7766-9988-aabbccddeeff"));
+
+		[SkippableFact]
+		public virtual void GetGuid_for_maximum_Guid() => TestGetValue(DbType.Guid, ValueKind.Maximum, x => x.GetGuid(0), new Guid("ccddeeff-aabb-8899-7766-554433221100"));
+
+		[SkippableFact]
 		public virtual void GetGuid_throws_for_zero_Int16() => TestException(DbType.Int16, ValueKind.Zero, x => x.GetGuid(0), typeof(InvalidCastException));
 
 		[SkippableFact]
