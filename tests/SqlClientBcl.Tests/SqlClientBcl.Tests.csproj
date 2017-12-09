@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\AdoNet.Databases\AdoNet.Databases.csproj" />
     <ProjectReference Include="..\..\src\AdoNet.Specification.Tests\AdoNet.Specification.Tests.csproj" />
   </ItemGroup>
 

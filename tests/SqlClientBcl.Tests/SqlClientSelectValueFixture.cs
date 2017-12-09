@@ -4,7 +4,7 @@ using System.Data;
 using AdoNet.Databases;
 using AdoNet.Specification.Tests;
 
-namespace SqlClient.Tests
+namespace SqlClientBcl.Tests
 {
 	public class SqlClientSelectValueFixture : SqlClientDbFactoryFixture, ISelectValueFixture, IDisposable
 	{
