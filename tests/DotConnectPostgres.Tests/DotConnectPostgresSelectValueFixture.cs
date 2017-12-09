@@ -4,11 +4,11 @@ using System.Data;
 using AdoNet.Databases;
 using AdoNet.Specification.Tests;
 
-namespace Npgsql.Tests
+namespace DotConnectPostgres.Tests
 {
-	public class NpgsqlSelectValueFixture : NpgsqlDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class DotConnectPostgresSelectValueFixture : DotConnectPostgresDbFactoryFixture, ISelectValueFixture, IDisposable
 	{
-		public NpgsqlSelectValueFixture() => PostgreSqlDatabase.CreateSelectValueTable(this);
+		public DotConnectPostgresSelectValueFixture() => PostgreSqlDatabase.CreateSelectValueTable(this);
 		public void Dispose() => PostgreSqlDatabase.DropSelectValueTable(this);
 		public string CreateSelectSql(DbType dbType, ValueKind kind) => PostgreSqlDatabase.CreateSelectSql(dbType, kind);
 		public string CreateSelectSql(byte[] value) => PostgreSqlDatabase.CreateSelectSql(value);
