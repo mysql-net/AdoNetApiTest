@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using AdoNet.Specification.Tests;
 
@@ -50,7 +51,7 @@ insert into select_value values
 
 		public static string SelectNoRows => "SELECT * FROM mysql.user WHERE 0 = 1;";
 
-		public static IReadOnlyCollection<DbType> SupportedDbTypes { get; } = new[]
+		public static IReadOnlyCollection<DbType> SupportedDbTypes { get; } = new ReadOnlyCollection<DbType>(new[]
 		{
 			DbType.Binary,
 			DbType.Boolean,
@@ -70,6 +71,6 @@ insert into select_value values
 			DbType.UInt16,
 			DbType.UInt32,
 			DbType.UInt64,
-		};
+		});
 	}
 }
