@@ -245,6 +245,18 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDecimal_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDecimal(0), GetNullExceptionType());
 
 		[SkippableFact]
+		public virtual void GetDecimal_for_zero_Currency() => TestGetValue(DbType.Currency, ValueKind.Zero, x => x.GetDecimal(0), 0m);
+
+		[SkippableFact]
+		public virtual void GetDecimal_for_one_Currency() => TestGetValue(DbType.Currency, ValueKind.One, x => x.GetDecimal(0), 1m);
+
+		[SkippableFact]
+		public virtual void GetDecimal_for_minimum_Currency() => TestGetValue(DbType.Currency, ValueKind.Minimum, x => x.GetDecimal(0), -922337203685477.5808m);
+
+		[SkippableFact]
+		public virtual void GetDecimal_for_maximum_Currency() => TestGetValue(DbType.Currency, ValueKind.Maximum, x => x.GetDecimal(0), 922337203685477.5807m);
+
+		[SkippableFact]
 		public virtual void GetDecimal_throws_for_null_Decimal() => TestException(DbType.Decimal, ValueKind.Null, x => x.GetDecimal(0), GetNullExceptionType());
 
 		[SkippableFact]
