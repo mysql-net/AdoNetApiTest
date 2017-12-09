@@ -199,6 +199,11 @@ TD A:hover {
 							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
 						break;
 
+					case "AdoNet.Specification.Tests.UnexpectedValueException":
+						testStatus = TestStatus.Fail;
+						testMessage = message.Replace("AdoNet.Specification.Tests.UnexpectedValueException : ", "");
+						break;
+
 					default:
 						// an Xunit exception indicates a test failure; any other type of exception is a crash
 						testStatus = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestStatus.Fail : TestStatus.Exception;

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace AdoNet.Specification.Tests
 {
@@ -23,7 +24,29 @@ namespace AdoNet.Specification.Tests
 		protected virtual void TestGetFieldValue<T>(DbType dbType, ValueKind kind, T expected) => DoTest(dbType, kind, reader => Assert.Equal(expected, reader.GetFieldValue<T>(0)));
 		protected virtual void TestGetValue<T>(DbType dbType, ValueKind kind, T expected) => DoTest(dbType, kind, reader => Assert.Equal(expected, reader.GetValue(0)));
 		protected virtual void TestGetValue<T>(DbType dbType, ValueKind kind, Func<DbDataReader, T> getValue, T expected) => DoTest(dbType, kind, reader => Assert.Equal(expected, getValue(reader)));
-		protected virtual void TestException<T>(DbType dbType, ValueKind kind, Func<DbDataReader, T> getValue, Type exceptionType) => DoTest(dbType, kind, reader => Assert.Throws(exceptionType, () => getValue(reader)));
+
+		protected virtual void TestException<T>(DbType dbType, ValueKind kind, Func<DbDataReader, T> getValue, Type exceptionType)
+		{
+			DoTest(dbType, kind, reader =>
+			{
+				try
+				{
+					var value = getValue(reader);
+					throw new UnexpectedValueException(value);
+				}
+				catch (UnexpectedValueException)
+				{
+					throw;
+				}
+				catch (Exception ex) when (ex.GetType() == exceptionType)
+				{
+				}
+				catch (Exception ex)
+				{
+					throw new ThrowsException(exceptionType, ex);
+				}
+			});
+		}
 
 		protected virtual void DoTest(DbType dbType, ValueKind kind, Action<DbDataReader> action)
 		{
