@@ -65,8 +65,8 @@ TD A:hover {
         <tr><td class='WRONG_EXCEPTION'>exception was not of expected type</td></tr>
         <tr><td class='SHOULD_HAVE_PASSED'>should have succeeded but failed</td></tr>
         <tr><td class='SHOULD_HAVE_FAILED'>should have failed but succeeded</td></tr>
-        <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded</td></tr>
-        <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed</td></tr>
+        <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded; OR<br>GetBoolean returns <tt>true</tt></td></tr>
+        <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed; OR<br>GetBoolean returns <tt>false</tt>; OR<br>Test skipped</td></tr>
         <tr><td class='NOT_APPLICABLE'>test not applicable to this provider</td></tr>
         <tr><td class='CRASH'>provider threw unhandled exception</td></tr>
     </table>
@@ -202,6 +202,14 @@ TD A:hover {
 					case "AdoNet.Specification.Tests.UnexpectedValueException":
 						testStatus = TestStatus.Fail;
 						testMessage = message.Replace("AdoNet.Specification.Tests.UnexpectedValueException : ", "");
+
+						if (testName.StartsWith("GetBoolean_throws_", StringComparison.Ordinal))
+						{
+							if (testMessage == "Unexpected value: True (System.Boolean)")
+								testStatus = TestStatus.ImplementationPass;
+							else if (testMessage == "Unexpected value: False (System.Boolean)")
+								testStatus = TestStatus.ImplementationFail;
+						}
 						break;
 
 					default:
