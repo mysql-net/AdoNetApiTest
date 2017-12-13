@@ -10,20 +10,25 @@ consistently (when the behaviour doesn't depend on the specific target database 
 
 Add a reference to the [NuGet package](https://www.nuget.org/packages/AdoNet.Specification.Tests) to your test project.
 
-Create a class that implements `IDbFactoryFixture`. In most cases, the easiest way to do this
-is to inherit from ` DbFactoryFixtureBase<TDatabase>` where `TDatabase` is one of the built-in
-classes from the `AdoNet.Specification.Tests.Databases` namespace. Then implement the
-`Factory` property, which returns a `DbProviderFactory` for your ADO.NET implementation,
-and the `ConnectionString` property, which must return a valid connection string that the test
+Create a class that implements `IDbFactoryFixture`: the
+`Factory` property must return a `DbProviderFactory` for your ADO.NET implementation,
+and the `ConnectionString` property must return a valid connection string that the test
 suite can use to connect to a database. See
 [this example](https://github.com/mysql-net/AdoNetApiTest/blob/master/tests/SqlClient.Tests/SqlClientDbFactoryFixture.cs) for
 `System.Data.SqlClient`.
+
+To use the tests that execute SQL statements, you must implement the `ISelectValueFixture`
+interface. Examples of doing this can be found in the `tests/*` projects and `AdoNet.Databases`.
 
 Create one public derived class from each `XTestBase<T>` test base class. Add a public
 constructor that takes an instance of your `IDbFactoryFixture` implementation and passes it
 to the base class.
 
 As necessary, override failing test methods to customize/skip them for your provider.
+
+## Version History
+
+See [Version History](VersionHistory.md).
 
 ## How to Build a Comparison Chart
 
