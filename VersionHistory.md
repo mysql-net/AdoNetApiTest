@@ -8,6 +8,7 @@
 * Add `ISelectValueFixture` interface
 * Remove methods from `IDbFactoryFixture` (they have moved to `ISelectValueFixture`)
 * Add `GetValueConversionTestBase` test class
+* Add `ParameterTestBase` test class
 
 ## 1.0.0
 
