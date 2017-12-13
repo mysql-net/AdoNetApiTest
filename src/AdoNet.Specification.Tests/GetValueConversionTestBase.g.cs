@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Data;
+using Xunit;
 
 namespace AdoNet.Specification.Tests
 {
