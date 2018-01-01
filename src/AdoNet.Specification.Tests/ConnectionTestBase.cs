@@ -226,5 +226,99 @@ namespace AdoNet.Specification.Tests
 				Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
 			}
 		}
+
+		[Fact]
+		public virtual void Commit_transaction_clears_Connection()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Commit();
+				Assert.Null(transaction.Connection);
+			}
+		}
+
+		[Fact]
+		public virtual void Commit_transaction_throws_after_Dispose()
+		{
+			using (var connection = CreateOpenConnection())
+			{
+				var transaction = connection.BeginTransaction();
+				transaction.Dispose();
+				Assert.Throws<ObjectDisposedException>(() => transaction.Commit());
+			}
+		}
+
+		[Fact]
+		public virtual void Commit_transaction_twice_throws()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Commit();
+				Assert.Throws<InvalidOperationException>(() => transaction.Commit());
+			}
+		}
+
+		[Fact]
+		public virtual void Commit_transaction_then_Rollback_throws()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Commit();
+				Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
+			}
+		}
+
+		[Fact]
+		public virtual void Rollback_transaction_clears_Connection()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Rollback();
+				Assert.Null(transaction.Connection);
+			}
+		}
+
+		[Fact]
+		public virtual void Rollback_transaction_throws_after_Dispose()
+		{
+			using (var connection = CreateOpenConnection())
+			{
+				var transaction = connection.BeginTransaction();
+				transaction.Dispose();
+				Assert.Throws<ObjectDisposedException>(() => transaction.Rollback());
+			}
+		}
+
+		[Fact]
+		public virtual void Rollback_transaction_twice_throws()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Rollback();
+				Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
+			}
+		}
+
+		[Fact]
+		public virtual void Rollback_transaction_then_Commit_throws()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+			{
+				Assert.Same(connection, transaction.Connection);
+				transaction.Rollback();
+				Assert.Throws<InvalidOperationException>(() => transaction.Commit());
+			}
+		}
 	}
 }
