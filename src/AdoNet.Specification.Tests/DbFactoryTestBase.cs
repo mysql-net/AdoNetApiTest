@@ -66,6 +66,10 @@ namespace AdoNet.Specification.Tests
 			{
 				return ex;
 			}
+			catch (Exception ex)
+			{
+				throw new ThrowsException(typeof(TException1), ex);
+			}
 		}
 
 		protected static Exception AssertThrowsAny<TException1, TException2, TException3>(Action action)
@@ -89,6 +93,10 @@ namespace AdoNet.Specification.Tests
 			catch (TException3 ex)
 			{
 				return ex;
+			}
+			catch (Exception ex)
+			{
+				throw new ThrowsException(typeof(TException1), ex);
 			}
 		}
 
