@@ -17,6 +17,24 @@ namespace AdoNet.Specification.Tests
 		protected new TFixture Fixture { get; }
 
 		[Fact]
+		public virtual void Dispose_command_before_reader()
+		{
+			using (var connection = CreateOpenConnection())
+			{
+				DbDataReader reader;
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText = "SELECT 'test';";
+					reader = command.ExecuteReader();
+				}
+
+				Assert.True(reader.Read());
+				Assert.Equal("test", reader.GetString(0));
+				Assert.False(reader.Read());
+			}
+		}
+
+		[Fact]
 		public virtual void Depth_returns_zero()
 		{
 			using (var connection = CreateOpenConnection())
