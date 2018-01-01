@@ -189,7 +189,7 @@ TD A:hover {
 					{
 					case "Xunit.Sdk.ThrowsException":
 						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
-						var actual = Regex.Match(message, @"\bActual:\s+(.*?)$").Groups[1].Value;
+						var actual = Regex.Match(message, @"\bActual:\s+(.*?)$", RegexOptions.Singleline).Groups[1].Value;
 						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
 							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
 							actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
