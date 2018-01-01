@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Sdk;
 
 namespace AdoNet.Specification.Tests
 {
@@ -517,6 +518,39 @@ namespace AdoNet.Specification.Tests
 				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
 				Assert.True(task.IsCanceled);
 			}
+		}
+
+		[Fact]
+		public virtual void Execute_throws_for_unknown_ParameterValue_type()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT @Parameter;";
+				var parameter = command.CreateParameter();
+				parameter.ParameterName = "@Parameter";
+				parameter.Value = new CustomClass();
+				command.Parameters.Add(parameter);
+
+				try
+				{
+					var value = command.ExecuteScalar();
+					if (!"custom".Equals(value))
+						throw new UnexpectedValueException(value);
+				}
+				catch (Exception ex) when (ex is NotSupportedException || ex is InvalidOperationException)
+				{
+				}
+				catch (Exception ex) when (!(ex is UnexpectedValueException))
+				{
+					throw new ThrowsException(typeof(NotSupportedException), ex);
+				}
+			}
+		}
+
+		protected class CustomClass
+		{
+			public override string ToString() => "custom";
 		}
 	}
 }
