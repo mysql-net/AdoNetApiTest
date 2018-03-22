@@ -48,8 +48,8 @@ docker exec mysql mysql -uroot -ptest -e "create schema mysqldata collate utf8mb
 docker exec mysql mysql -uroot -ptest -e "create schema mysqldata8 collate utf8mb4_bin;"
 
 docker run --name postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
-docker exec -e PGPASSWORD=test pgdb psql -U root -c "CREATE DATABASE dotconnect;"
-docker exec -e PGPASSWORD=test pgdb psql -U root -c "CREATE DATABASE npgsql;"
+docker exec -e PGPASSWORD=test postgres psql -U root -c "CREATE DATABASE dotconnect;"
+docker exec -e PGPASSWORD=test postgres psql -U root -c "CREATE DATABASE npgsql;"
 ```
 
 Run the `AdoNetApiTest` program:
