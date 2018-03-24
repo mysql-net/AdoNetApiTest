@@ -133,6 +133,18 @@ TD A:hover {
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
 			var connectorName = GetConnectorName(testFolder);
+
+			// SqlClient doesn't support SqlDataReader.GetChar; override all its test failures for this method
+			if (folderName.IndexOf("SqlClient", StringComparison.Ordinal) != -1)
+			{
+				var getCharTests = testResults
+					.Where(x => x.Key.StartsWith("GetChar_", StringComparison.Ordinal) && x.Value.Status == TestStatus.Exception && x.Value.Message.IndexOf("NotSupportedException", StringComparison.Ordinal) != -1)
+					.Select(x => x.Key)
+					.ToHashSet();
+				testResults = testResults.Select(x => getCharTests.Contains(x.Key) ? new KeyValuePair<string, TestResult>(x.Key, new TestResult(TestStatus.NotApplicable, x.Value.Message)) : x)
+					.ToDictionary(x => x.Key, x => x.Value);
+			}
+
 			return((connectorName ?? folderName, testResults));
 		}
 
