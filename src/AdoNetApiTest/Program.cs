@@ -156,7 +156,7 @@ TD A:hover {
 				StartInfo =
 				{
 					FileName = "dotnet",
-					Arguments = $"xunit -xml \"{outputXmlPath}\"",
+					Arguments = $"test --logger \"trx;LogFileName={outputXmlPath}\"",
 					CreateNoWindow = true,
 					UseShellExecute = false,
 					WorkingDirectory = testFolder,
@@ -175,43 +175,30 @@ TD A:hover {
 		private static IReadOnlyDictionary<string, TestResult> CreateTestResults(XDocument xml)
 		{
 			var testResults = new Dictionary<string, TestResult>();
-			foreach (var test in xml.Root.Element("assembly").Elements("collection").Elements("test"))
+			var teamTest = XNamespace.Get("http://microsoft.com/schemas/VisualStudio/TeamTest/2010");
+			foreach (var test in xml.Root.Element(teamTest + "Results").Elements(teamTest + "UnitTestResult"))
 			{
-				var testName = (string) test.Attribute("name");
+				var testName = (string) test.Attribute("testName");
 				testName = testName.Substring(GetNthIndexOf(testName, '.', 3) + 1);
 
 				TestStatus testStatus;
 				string testMessage = null;
-				if ((string) test.Attribute("result") == "Pass")
+				if ((string) test.Attribute("outcome") == "Passed")
 				{
 					testStatus = TestStatus.Pass;
 				}
-				else if ((string) test.Attribute("result") == "Skip")
+				else if ((string) test.Attribute("outcome") == "NotExecuted")
 				{
-					testMessage = (string) test.Element("reason");
+					testMessage = (string) test.Element(teamTest + "Output")?.Element(teamTest + "StdOut");
 					testStatus = testMessage == "Database doesn't support this data type" ? TestStatus.NotApplicable : TestStatus.ImplementationFail;
 				}
 				else
 				{
-					var failure = test.Element("failure");
-					var exceptionType = (string) failure.Attribute("exception-type");
-					var message = ((string) failure.Element("message")).Replace("\\r\\n", "\n");
+					var failure = test.Element(teamTest + "Output").Element(teamTest + "ErrorInfo");
+					var message = ((string) failure.Element(teamTest + "Message")).Replace("\\r\\n", "\n");
 
-					switch (exceptionType)
+					if (message.StartsWith("AdoNet.Specification.Tests.UnexpectedValueException :", StringComparison.Ordinal))
 					{
-					case "Xunit.Sdk.ThrowsException":
-						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
-						var actual = Regex.Match(message, @"\bActual:\s+(.*?)$", RegexOptions.Singleline).Groups[1].Value;
-						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
-							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
-							actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
-							actual.StartsWith("typeof(System.NotImplementedException)", StringComparison.Ordinal) ? TestStatus.Exception :
-							TestStatus.WrongException;
-						if (testStatus != TestStatus.NoException)
-							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
-						break;
-
-					case "AdoNet.Specification.Tests.UnexpectedValueException":
 						testStatus = TestStatus.Fail;
 						testMessage = message.Replace("AdoNet.Specification.Tests.UnexpectedValueException : ", "");
 
@@ -222,13 +209,31 @@ TD A:hover {
 							else if (testMessage == "Unexpected value: False (System.Boolean)")
 								testStatus = TestStatus.ImplementationFail;
 						}
-						break;
-
-					default:
-						// an Xunit exception indicates a test failure; any other type of exception is a crash
-						testStatus = exceptionType.StartsWith("Xunit.Sdk.", StringComparison.Ordinal) ? TestStatus.Fail : TestStatus.Exception;
+					}
+					else if (message.StartsWith("Assert.Throws() Failure", StringComparison.Ordinal))
+					{
+						// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
+						var actual = Regex.Match(message, @"\bActual:\s+(.*?)$", RegexOptions.Singleline).Groups[1].Value;
+						testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
+							actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
+							actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
+							actual.StartsWith("typeof(System.NotImplementedException)", StringComparison.Ordinal) ? TestStatus.Exception :
+							TestStatus.WrongException;
+						if (testStatus != TestStatus.NoException)
+							testMessage = Regex.Replace(actual, @"^typeof\((.*?)\)(.*)$", "$1$2");
+					}
+					else if (message.StartsWith("Assert.Equal() Failure", StringComparison.Ordinal) ||
+							 message.StartsWith("Assert.False() Failure", StringComparison.Ordinal) ||
+							message.StartsWith("Assert.Null() Failure", StringComparison.Ordinal) ||
+							message.StartsWith("Assert.True() Failure", StringComparison.Ordinal))
+					{
+						testStatus =TestStatus.Fail;
 						testMessage = message;
-						break;
+					}
+					else
+					{
+						testStatus = TestStatus.Exception;
+						testMessage = message;
 					}
 				}
 				testResults.Add(testName, new TestResult(testStatus, testMessage));
