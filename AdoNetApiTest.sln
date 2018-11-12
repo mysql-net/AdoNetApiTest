@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Specification.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlConnector.Tests", "tests\MySqlConnector.Tests\MySqlConnector.Tests.csproj", "{76515D51-B60B-4584-A9AA-7ED969736501}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql.Tests", "tests\Npgsql.Tests\Npgsql.Tests.csproj", "{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlClient.Tests", "tests\SqlClient.Tests\SqlClient.Tests.csproj", "{454AE224-F846-42B1-A7CD-DCA0478F7C9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotConnectMySql.Tests", "tests\DotConnectMySql.Tests\DotConnectMySql.Tests.csproj", "{8A1DBA85-028C-481D-B1EA-BB9FAA0A5CAF}"
@@ -31,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Databases", "src\Ado
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite21.Tests", "tests\MicrosoftSqlite21.Tests\MicrosoftSqlite21.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql3.Tests", "tests\Npgsql3.Tests\Npgsql3.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql4.Tests", "tests\Npgsql4.Tests\Npgsql4.Tests.csproj", "{220994E2-8263-4728-9B7B-BC7E1DE1265C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +51,6 @@ Global
 		{76515D51-B60B-4584-A9AA-7ED969736501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76515D51-B60B-4584-A9AA-7ED969736501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76515D51-B60B-4584-A9AA-7ED969736501}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3769FB26-9778-475E-9E8D-ACCCDF8C27C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{454AE224-F846-42B1-A7CD-DCA0478F7C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,6 +91,14 @@ Global
 		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{220994E2-8263-4728-9B7B-BC7E1DE1265C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220994E2-8263-4728-9B7B-BC7E1DE1265C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220994E2-8263-4728-9B7B-BC7E1DE1265C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220994E2-8263-4728-9B7B-BC7E1DE1265C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
