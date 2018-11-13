@@ -837,6 +837,9 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDouble_for_minimum_Double() => TestGetValue(DbType.Double, ValueKind.Minimum, x => x.GetDouble(0), 2.23E-308);
 
 		[SkippableFact]
+		public virtual void GetDouble_for_maximum_Double() => TestGetValue(DbType.Double, ValueKind.Maximum, x => x.GetDouble(0), 1.79e308);
+
+		[SkippableFact]
 		public virtual void GetFloat_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetFloat(0), GetNullExceptionType());
 
 		[SkippableFact]
@@ -850,6 +853,9 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetFloat_for_minimum_Single() => TestGetValue(DbType.Single, ValueKind.Minimum, x => x.GetFloat(0), 1.18E-38f);
+
+		[SkippableFact]
+		public virtual void GetFloat_for_maximum_Single() => TestGetValue(DbType.Single, ValueKind.Maximum, x => x.GetFloat(0), 3.40e38f);
 
 		[SkippableFact]
 		public virtual void GetGuid_throws_for_zero_Byte() => TestException(DbType.Byte, ValueKind.Zero, x => x.GetGuid(0), typeof(InvalidCastException));
