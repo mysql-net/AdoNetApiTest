@@ -25,7 +25,9 @@ namespace AdoNetApiTest
 			var assemblyTestResults = (await Task.WhenAll(Directory.GetDirectories(testsPath)
 				.Where(x => x[0] != '.')
 				.Select(RunTestsAsync)))
-				.ToDictionary(x => x.Name, x => x.Results);
+				.OrderBy(x => x.Category)
+				.ThenBy(x => x.Name)
+				.ToList();
 			Console.WriteLine("done.");
 
 			var sb = new StringBuilder(@"<!doctype html>
@@ -75,18 +77,40 @@ TD A:hover {
     <tr>
         <th></th>
 ");
-			foreach (var assemblyName in assemblyTestResults.Keys)
-				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", EscapeHtml(assemblyName));
+			string lastCategory = null;
+			foreach (var testResult in assemblyTestResults)
+			{
+				if (lastCategory != null && testResult.Category != lastCategory)
+					sb.Append("<th style='width: 4px'></th>");
+				lastCategory = testResult.Category;
+				sb.AppendFormat("<th class='vertical'><div>{0}</div></th>", EscapeHtml(testResult.Name));
+			}
+			sb.AppendLine("</tr><tr><th></th>");
+
+			var isFirst = true;
+			foreach (var category in assemblyTestResults.GroupBy(x => x.Category))
+			{
+				if (!isFirst)
+					sb.Append("<th></th>");
+				else
+					isFirst = false;
+				sb.AppendFormat("<th colspan={0} style='border: 1px solid black;'>{1}</th>", category.Count(), EscapeHtml(category.Key));
+			}
 			sb.AppendLine("</tr>");
 
-			var allTestNames = assemblyTestResults.SelectMany(x => x.Value.Keys).Distinct().OrderBy(x => x).ToList();
+			var allTestNames = assemblyTestResults.SelectMany(x => x.Results).Select(x => x.Key).Distinct().OrderBy(x => x).ToList();
 			foreach (var testName in allTestNames)
 			{
 				sb.AppendFormat("<tr><td id='{0}'><a href='#{0}'>{0}</a></td>", EscapeHtml(testName));
 
-				foreach (var testResults in assemblyTestResults.Values)
+				lastCategory = null;
+				foreach (var result in assemblyTestResults)
 				{
-					testResults.TryGetValue(testName, out var testResult);
+					if (lastCategory != null && result.Category != lastCategory)
+						sb.AppendFormat("<td></td>");
+					lastCategory = result.Category;
+
+					result.Results.TryGetValue(testName, out var testResult);
 					var status = testResult.Status;
 					var className =
 						status == TestStatus.Pass ? "EXPECTED_RESULT" :
@@ -117,7 +141,7 @@ TD A:hover {
 			});
 		}
 
-		private static async Task<(string Name, IReadOnlyDictionary<string, TestResult> Results)> RunTestsAsync(string testFolder)
+		private static async Task<(string Category, string Name, IReadOnlyDictionary<string, TestResult> Results)> RunTestsAsync(string testFolder)
 		{
 			var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
 			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
@@ -145,7 +169,20 @@ TD A:hover {
 					.ToDictionary(x => x.Key, x => x.Value);
 			}
 
-			return((connectorName ?? folderName, testResults));
+			var name = connectorName ?? folderName;
+			string category;
+			if (name.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1)
+				category = "MySQL";
+			else if (name.IndexOf("npgsql", StringComparison.OrdinalIgnoreCase) != -1 || name.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1)
+				category = "PG";
+			else if (name.IndexOf("sqlite", StringComparison.OrdinalIgnoreCase) != -1)
+				category = "SQLite";
+			else if (name.IndexOf("sqlclient", StringComparison.OrdinalIgnoreCase) != -1)
+				category = "MSSQL";
+			else
+				category = "Unknown";
+
+			return ((category, name, testResults));
 		}
 
 		private static Task RunXunitAsync(string testFolder, string outputXmlPath)
