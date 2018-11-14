@@ -5,9 +5,9 @@
     <PackageId>AdoNet.Specification.Tests</PackageId>
     <Title>ADO.NET Specification Tests</Title>
     <Description>Shared test suite for ADO.NET providers.</Description>
-    <Copyright>Copyright 2017 Bradley Grainger</Copyright>
+    <Copyright>Copyright 2017–2018 Bradley Grainger</Copyright>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>alpha2</VersionSuffix>
+    <VersionSuffix>alpha3</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <AssemblyOriginatorKeyFile>..\..\MySqlConnector.snk</AssemblyOriginatorKeyFile>
