@@ -522,6 +522,50 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void UpdateNoRowsReturns0()
+		{
+			var commandBuilder = Fixture.Factory.CreateCommandBuilder();
+			var p = commandBuilder?.QuotePrefix ?? "";
+			var s = commandBuilder?.QuoteSuffix ?? "";
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = $"UPDATE select_value SET {p}Int16{s} = 3 WHERE {p}Int16{s} = 42;";
+				Assert.Equal(0, command.ExecuteNonQuery());
+			}
+		}
+
+		[Fact]
+		public virtual void UpdateNoopReturns1()
+		{
+			var commandBuilder = Fixture.Factory.CreateCommandBuilder();
+			var p = commandBuilder?.QuotePrefix ?? "";
+			var s = commandBuilder?.QuoteSuffix ?? "";
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = $"UPDATE select_value SET {p}Int16{s} = 0 WHERE {p}Int16{s} = 0;";
+				Assert.Equal(1, command.ExecuteNonQuery());
+			}
+		}
+
+		[Fact]
+		public virtual void UpdateReturns1()
+		{
+			var commandBuilder = Fixture.Factory.CreateCommandBuilder();
+			var p = commandBuilder?.QuotePrefix ?? "";
+			var s = commandBuilder?.QuoteSuffix ?? "";
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = $"UPDATE select_value SET {p}Int16{s} = 2 WHERE {p}Int16{s} = 0;";
+				Assert.Equal(1, command.ExecuteNonQuery());
+				command.CommandText = $"UPDATE select_value SET {p}Int16{s} = 0 WHERE {p}Int16{s} = 2;";
+				Assert.Equal(1, command.ExecuteNonQuery());
+			}
+		}
+
+		[Fact]
 		public virtual void NextResult_can_be_called_more_than_once()
 		{
 			using (var connection = CreateOpenConnection())
