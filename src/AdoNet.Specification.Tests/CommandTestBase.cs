@@ -16,6 +16,13 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void Cancel_new_Command_is_no_op()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+				command.Cancel();
+		}
+
+		[Fact]
 		public virtual void CommandText_throws_when_set_when_open_reader()
 		{
 			using (var connection = CreateOpenConnection())
