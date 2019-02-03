@@ -1,3 +1,4 @@
+using System;
 using AdoNet.Specification.Tests;
 
 namespace AdoNet.Databases
@@ -8,7 +9,7 @@ namespace AdoNet.Databases
 		{
 			using (var connection = factoryFixture.Factory.CreateConnection())
 			{
-				connection.ConnectionString = factoryFixture.ConnectionString;
+				connection.ConnectionString = Environment.GetEnvironmentVariable("ConnectionString") ?? factoryFixture.ConnectionString;
 				connection.Open();
 
 				using (var command = connection.CreateCommand())

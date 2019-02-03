@@ -44,9 +44,19 @@ namespace AdoNet.Specification.Tests
 		protected virtual DbConnection CreateOpenConnection()
 		{
 			var connection = Fixture.Factory.CreateConnection();
-			connection.ConnectionString = Fixture.ConnectionString;
+			connection.ConnectionString = ConnectionString;
 			connection.Open();
 			return connection;
+		}
+
+		protected virtual string ConnectionString
+		{
+			get
+			{
+				if (m_connectionString == null)
+					m_connectionString = Environment.GetEnvironmentVariable("ConnectionString") ?? Fixture.ConnectionString;
+				return m_connectionString;
+			}
 		}
 
 		protected static Exception AssertThrowsAny<TException1, TException2>(Action action)
@@ -101,5 +111,6 @@ namespace AdoNet.Specification.Tests
 		}
 
 		readonly CancellationTokenSource m_cancellationTokenSource;
+		string m_connectionString;
 	}
 }

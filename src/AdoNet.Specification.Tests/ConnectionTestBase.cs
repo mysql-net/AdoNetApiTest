@@ -16,7 +16,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void ConnectionString_setter_throws_when_open()
 		{
 			using (var connection = CreateOpenConnection())
-				Assert.Throws<InvalidOperationException>(() => connection.ConnectionString = Fixture.ConnectionString + ";");
+				Assert.Throws<InvalidOperationException>(() => connection.ConnectionString = ConnectionString + ";");
 		}
 
 		[Fact]
@@ -24,8 +24,8 @@ namespace AdoNet.Specification.Tests
 		{
 			using (var connection = Fixture.Factory.CreateConnection())
 			{
-				connection.ConnectionString = Fixture.ConnectionString;
-				Assert.Equal(Fixture.ConnectionString, connection.ConnectionString);
+				connection.ConnectionString = ConnectionString;
+				Assert.Equal(ConnectionString, connection.ConnectionString);
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace AdoNet.Specification.Tests
 				connection.StateChange += Handler;
 				try
 				{
-					connection.ConnectionString = Fixture.ConnectionString;
+					connection.ConnectionString = ConnectionString;
 					connection.Open();
 
 					Assert.True(raised);
