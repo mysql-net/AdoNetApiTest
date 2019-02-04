@@ -15,21 +15,37 @@ namespace AdoNetApiTest
 	{
 		static bool RunXUnit = true;
 
-		static async Task Main()
+		static async Task Main(string[] args)
 		{
-			var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
-			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "..", "tests"));
+			IReadOnlyCollection<string> testResultPaths;
+			string outputPath;
+			if (args.Length == 0)
+			{
+				var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
+				var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "..", "tests"));
 
-			Console.Write("Running tests");
+				Console.Write("Running tests");
 
-			var assemblyTestResults = (await Task.WhenAll(Directory.GetDirectories(testsPath)
-				.Where(x => x[0] != '.')
-				.Select(RunTestsAsync)))
+				testResultPaths = (await Task.WhenAll(Directory.GetDirectories(testsPath)
+						.Where(x => x[0] != '.')
+						.Select(RunTestsAsync)))
+					.ToList();
+
+				Console.WriteLine("done.");
+
+				outputPath = Path.GetTempPath();
+			}
+			else
+			{
+				testResultPaths = Directory.GetFiles(args[0], "*.trx", SearchOption.AllDirectories);
+				outputPath = args[1];
+			}
+
+			var assemblyTestResults = testResultPaths
+				.Select(ProcessTests)
 				.OrderBy(x => x.Category)
 				.ThenBy(x => x.Name)
 				.ToList();
-			Console.WriteLine("done.");
-
 			var sb = new StringBuilder(@"<!doctype html>
 <html>
 <head>
@@ -132,7 +148,7 @@ TD A:hover {
 </body>
 </html>
 ");
-			var path = Path.Combine(Path.GetTempPath(), "results.html");
+			var path = Path.Combine(outputPath, "results.html");
 			File.WriteAllText(path, sb.ToString());
 			Process.Start(new ProcessStartInfo
 			{
@@ -141,9 +157,8 @@ TD A:hover {
 			});
 		}
 
-		private static async Task<(string Category, string Name, IReadOnlyDictionary<string, TestResult> Results)> RunTestsAsync(string testFolder)
+		private static async Task<string> RunTestsAsync(string testFolder)
 		{
-			var folderName = Regex.Match(Path.GetFileName(testFolder), @"^(.*?)\.Tests").Groups[1].Value;
 			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
 			if (RunXUnit)
 			{
@@ -154,9 +169,14 @@ TD A:hover {
 					Console.Write(".");
 				} while (!File.Exists(outputXmlPath));
 			}
+			return outputXmlPath;
+		}
+
+		private static (string Category, string Name, IReadOnlyDictionary<string, TestResult> Results) ProcessTests(string outputXmlPath)
+		{
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
-			var connectorName = GetConnectorName(testFolder);
+			var folderName = Regex.Match(Path.GetFileName(outputXmlPath), @"^(.*?)\.Tests").Groups[1].Value;
 
 			// SqlClient doesn't support SqlDataReader.GetChar; override all its test failures for this method
 			if (folderName.IndexOf("SqlClient", StringComparison.Ordinal) != -1)
@@ -169,7 +189,7 @@ TD A:hover {
 					.ToDictionary(x => x.Key, x => x.Value);
 			}
 
-			var name = connectorName ?? folderName;
+			var name = folderName;
 			string category;
 			if (name.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1)
 				category = "MySQL";
