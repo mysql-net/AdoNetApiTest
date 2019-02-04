@@ -28,76 +28,90 @@ jobs:
   - job: Linux_MySQL
     pool:
       vmimage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        MySqlConnector:
-          TEST_NAME: MySqlConnector.Tests
-        MySql.Data:
-          TEST_NAME: MySqlData.Tests
-        MySql.Data8:
-          TEST_NAME: MySqlData8.Tests
     services:
       mysql: mysql
+    variables:
+      ConnectionString: "Server=localhost;Port=3300;User Id=test;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
         inputs:
           version: 2.1.503
       - task: DotNetCoreCLI@2
+        displayName: MySqlConnector
         inputs:
           command: 'test'
-          workingDirectory: tests/$(TEST_NAME)
+          workingDirectory: tests/MySqlConnector.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/$(TEST_NAME).trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlConnector.Tests.trx"'
         continueOnError: true
         env:
-          ConnectionString: "Server=localhost;Port=3300;User Id=test;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: MySql.Data 6
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MySqlData.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: MySql.Data 8
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MySqlData8.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData8.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
       - task: PublishPipelineArtifact@0
         inputs:
-          artifactName: '$(TEST_NAME)'
+          artifactName: MySQL
           targetPath: $(Build.ArtifactStagingDirectory)
 
   - job: Linux_PostgreSQL
     pool:
       vmimage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        Npgsql3:
-          TEST_NAME: Npgsql3.Tests
-        Npgsql4:
-          TEST_NAME: Npgsql4.Tests
     services:
       postgres: postgres
+    variables:
+      ConnectionString: "host=localhost;user id=root;password=test;database=root"
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
         inputs:
           version: 2.1.503
       - task: DotNetCoreCLI@2
+        displayName: Npgsql 3
         inputs:
           command: 'test'
-          workingDirectory: tests/$(TEST_NAME)
+          workingDirectory: tests/Npgsql3.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/$(TEST_NAME).trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql3.Tests.trx"'
         continueOnError: true
         env:
-          ConnectionString: "host=localhost;user id=root;password=test;database=root"
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: Npgsql 4
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Npgsql4.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql4.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
       - task: PublishPipelineArtifact@0
         inputs:
-          artifactName: '$(TEST_NAME)'
+          artifactName: PostgreSQL
           targetPath: $(Build.ArtifactStagingDirectory)
 
   - job: Linux_SQLite
     pool:
       vmimage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        MicrosoftSqlite:
-          TEST_NAME: MicrosoftSqlite.Tests
-        MicrosoftSqlite21:
-          TEST_NAME: MicrosoftSqlite21.Tests
-        Sqlite:
-          TEST_NAME: Sqlite.Tests
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
@@ -106,13 +120,27 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
-          workingDirectory: tests/$(TEST_NAME)
+          workingDirectory: tests/MicrosoftSqlite.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/$(TEST_NAME).trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MicrosoftSqlite21.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite21.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Sqlite.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Sqlite.Tests.trx"'
         continueOnError: true
       - task: PublishPipelineArtifact@0
         inputs:
-          artifactName: '$(TEST_NAME)'
+          artifactName: SQLite
           targetPath: $(Build.ArtifactStagingDirectory)
 
   - job: Linux_SQLServer
@@ -177,31 +205,11 @@ jobs:
     steps:
       - task: DownloadPipelineArtifact@0
         inputs:
-          artifactName: MicrosoftSqlite.Tests
+          artifactName: MySQL
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
-          artifactName: MicrosoftSqlite21.Tests
-          targetPath: $(Agent.BuildDirectory)/tests
-      - task: DownloadPipelineArtifact@0
-        inputs:
-          artifactName: MySqlData.Tests
-          targetPath: $(Agent.BuildDirectory)/tests
-      - task: DownloadPipelineArtifact@0
-        inputs:
-          artifactName: MySqlData8.Tests
-          targetPath: $(Agent.BuildDirectory)/tests
-      - task: DownloadPipelineArtifact@0
-        inputs:
-          artifactName: MySqlConnector.Tests
-          targetPath: $(Agent.BuildDirectory)/tests
-      - task: DownloadPipelineArtifact@0
-        inputs:
-          artifactName: Npgsql3.Tests
-          targetPath: $(Agent.BuildDirectory)/tests
-      - task: DownloadPipelineArtifact@0
-        inputs:
-          artifactName: Npgsql4.Tests
+          artifactName: PostgreSQL
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
@@ -209,7 +217,7 @@ jobs:
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
-          artifactName: Sqlite.Tests
+          artifactName: SQLite
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
