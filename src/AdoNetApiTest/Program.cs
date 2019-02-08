@@ -53,20 +53,21 @@ namespace AdoNetApiTest
 <link rel='stylesheet' type='text/css' href='https://mysql-net.github.io/AdoNetResults/style.css'>
 <meta charset='utf-8'>
 </head>
-
 <body>
 <h1>ADO.NET Specification Tests</h1>
+<div style='position: fixed; top: 0; right: 16px'>
 <h4>Legend</h4>
-    <table>
-        <tr><td class='EXPECTED_RESULT'>expected result</td></tr>
-        <tr><td class='WRONG_EXCEPTION'>exception was not of expected type</td></tr>
-        <tr><td class='SHOULD_HAVE_PASSED'>should have succeeded but failed</td></tr>
-        <tr><td class='SHOULD_HAVE_FAILED'>should have failed but succeeded</td></tr>
-        <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded; OR<br>GetBoolean returns <tt>true</tt></td></tr>
-        <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed; OR<br>GetBoolean returns <tt>false</tt>; OR<br>Test skipped</td></tr>
-        <tr><td class='NOT_APPLICABLE'>test not applicable to this provider</td></tr>
-        <tr><td class='CRASH'>provider threw unhandled exception</td></tr>
-    </table>
+<table>
+    <tr><td class='EXPECTED_RESULT'>expected result</td></tr>
+    <tr><td class='WRONG_EXCEPTION'>exception was not of expected type</td></tr>
+    <tr><td class='SHOULD_HAVE_PASSED'>should have succeeded but failed</td></tr>
+    <tr><td class='SHOULD_HAVE_FAILED'>should have failed but succeeded</td></tr>
+    <tr><td class='IMPLEMENTATION_PASS'>result undefined; test succeeded; OR<br>GetBoolean returns <tt>true</tt></td></tr>
+    <tr><td class='IMPLEMENTATION_FAIL'>result undefined; test failed; OR<br>GetBoolean returns <tt>false</tt>; OR<br>Test skipped</td></tr>
+    <tr><td class='NOT_APPLICABLE'>test not applicable to this provider</td></tr>
+    <tr><td class='CRASH'>provider threw unhandled exception</td></tr>
+</table>
+</div>
 <h4>Results</h4>
 <table>
     <tr>
