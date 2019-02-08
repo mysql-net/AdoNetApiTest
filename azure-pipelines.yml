@@ -7,8 +7,6 @@ resources:
     env:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: password
   - container: postgres
     image: postgres
     ports:
@@ -31,7 +29,7 @@ jobs:
     services:
       mysql: mysql
     variables:
-      ConnectionString: "Server=localhost;Port=3300;User Id=test;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
+      ConnectionString: "Server=localhost;Port=3300;User Id=root;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
@@ -40,7 +38,7 @@ jobs:
       - bash: |
           for i in `seq 1 30`; do
             sleep 1
-            docker exec `docker container ls -n1 -q` mysql -utest -ppassword -Dtest -e "SELECT 1"
+            docker exec `docker container ls -n1 -q` mysql -uroot -ppassword -Dtest -e "SELECT 1"
             if [ $? -ne 0 ]; then continue; fi
             echo "MySQL is ready"
             exit 0
