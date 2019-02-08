@@ -229,6 +229,17 @@ jobs:
           workingDirectory: src/AdoNetApiTest
           publishTestResults: false
           arguments: '$(Agent.BuildDirectory)/tests $(Build.ArtifactStagingDirectory)'
+      - script: 'git -c http.https://github.com.extraheader="AUTHORIZATION: basic $(GitHubAuthorization)" clone --depth 1 --branch gh-pages https://github.com/mysql-net/AdoNetResults.git ../AdoNetResults'
+        displayName: Clone GitHub Pages repo
+      - script: |
+          cp $(Build.ArtifactStagingDirectory)/results.html index.html
+          git config user.name "Build Bot"
+          git config user.email "buildbot@example.com"
+          git add index.html
+          git commit -m "Update test results."
+          git -c http.https://github.com.extraheader="AUTHORIZATION: basic $(GitHubAuthorization)" push origin
+        displayName: Update GitHub Pages
+        workingDirectory: ../AdoNetResults
       - task: PublishPipelineArtifact@0
         inputs:
           artifactName: 'Results'
