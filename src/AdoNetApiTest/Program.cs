@@ -121,7 +121,7 @@ namespace AdoNetApiTest
 					sb.AppendFormat("<td class='{0}'{1}></td>", className, testResult.Message == null ? "" : $" title=\"{EscapeHtml(testResult.Message)}\"'");
 				}
 
-				sb.Append("</tr>");
+				sb.AppendLine("</tr>");
 			}
 
 			sb.Append(@"</table>
