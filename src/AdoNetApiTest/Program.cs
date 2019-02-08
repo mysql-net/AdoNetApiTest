@@ -50,28 +50,7 @@ namespace AdoNetApiTest
 <html>
 <head>
 <title>ADO.NET Specification Tests</title>
-<link rel='stylesheet' type='text/css' href='http://seriot.ch/json/style.css'>
-<style type='text/css'>
-.WRONG_EXCEPTION {
-	border: 1px solid black;
-	background-color: #ffcc33;
-}
-.SHOULD_HAVE_FAILED {
-	border: 1px solid black;
-	background-color: #f96384;
-}
-.NOT_APPLICABLE {
-	border: 1px solid black;
-	background-color: #ccc;
-}
-TD A {
-	color: black;
-	text-decoration: none;
-}
-TD A:hover {
-	text-decoration: underline;
-}
-</style>
+<link rel='stylesheet' type='text/css' href='https://mysql-net.github.io/AdoNetResults/style.css'>
 <meta charset='utf-8'>
 </head>
 
