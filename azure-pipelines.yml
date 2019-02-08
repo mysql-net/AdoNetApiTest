@@ -37,6 +37,15 @@ jobs:
         displayName: 'Install DotNet Core 2.1.7'
         inputs:
           version: 2.1.503
+      - bash: |
+          for i in `seq 1 30`; do
+            sleep 1
+            docker exec `docker container ls -n1 -q` mysql -utest -ppassword -Dtest -e "SELECT 1"
+            if [ $? -ne 0 ]; then continue; fi
+            echo "MySQL is ready"
+            exit 0
+          done
+        displayName: 'Wait for MySQL'
       - task: DotNetCoreCLI@2
         displayName: MySqlConnector
         inputs:
