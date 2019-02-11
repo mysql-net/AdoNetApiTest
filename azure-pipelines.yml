@@ -180,26 +180,30 @@ jobs:
           artifactName: '$(TEST_NAME)'
           targetPath: $(Build.ArtifactStagingDirectory)
 
-  - job: Windows
+  - job: Windows_SQLServer
     pool:
       vmimage: 'vs2017-win2016'
-    strategy:
-      matrix:
-        DotConnectMySql:
-          TEST_NAME: DotConnectMySql.Tests
-        DotConnectPostgres:
-          TEST_NAME: DotConnectPostgres.Tests
-        SqlClientBcl:
-          TEST_NAME: SqlClientBcl.Tests
+    variables:
+      ConnectionString: 'Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=tempdb;Trusted_Connection=True;'
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
         inputs:
           version: 2.1.503
       - task: DotNetCoreCLI@2
+        displayName: SqlClientBcl
         inputs:
-          command: 'build'
-          workingDirectory: tests/$(TEST_NAME)
+          command: 'test'
+          workingDirectory: tests\SqlClientBcl.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)\SqlClientBcl.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: PublishPipelineArtifact@0
+        inputs:
+          artifactName: SqlClientBcl
+          targetPath: $(Build.ArtifactStagingDirectory)
 
   - job: Results
     dependsOn:
@@ -207,6 +211,7 @@ jobs:
       - Linux_PostgreSQL
       - Linux_SQLite
       - Linux_SQLServer
+      - Windows_SQLServer
     pool:
       vmimage: 'ubuntu-16.04'
     steps:
@@ -221,6 +226,10 @@ jobs:
       - task: DownloadPipelineArtifact@0
         inputs:
           artifactName: SqlClient.Tests
+          targetPath: $(Agent.BuildDirectory)/tests
+      - task: DownloadPipelineArtifact@0
+        inputs:
+          artifactName: SqlClientBcl
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
