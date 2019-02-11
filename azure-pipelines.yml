@@ -153,12 +153,10 @@ jobs:
   - job: Linux_SQLServer
     pool:
       vmimage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        SqlClient:
-          TEST_NAME: SqlClient.Tests
     services:
       sqlserver: sqlserver
+    variables:
+      ConnectionString: 'data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient'
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Install DotNet Core 2.1.7'
@@ -166,18 +164,19 @@ jobs:
           version: 2.1.503
       - script: |
           docker exec `docker container ls -n1 -q` /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
+        displayName: 'Create sqlclient database'
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
-          workingDirectory: tests/$(TEST_NAME)
+          workingDirectory: tests/SqlClient.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/$(TEST_NAME).trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/SqlClient.trx"'
         continueOnError: true
         env:
-          ConnectionString: "data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient"
+          ConnectionString: $(ConnectionString)
       - task: PublishPipelineArtifact@0
         inputs:
-          artifactName: '$(TEST_NAME)'
+          artifactName: 'SqlClient'
           targetPath: $(Build.ArtifactStagingDirectory)
 
   - job: Windows_SQLServer
@@ -225,7 +224,7 @@ jobs:
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
-          artifactName: SqlClient.Tests
+          artifactName: SqlClient
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DownloadPipelineArtifact@0
         inputs:
