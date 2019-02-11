@@ -22,6 +22,9 @@ resources:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@ssw0rd
 
+variables:
+  DotNetCoreSdkVersion: '2.1.503'
+
 jobs:
   - job: Linux_MySQL
     pool:
@@ -32,9 +35,8 @@ jobs:
       ConnectionString: "Server=localhost;Port=3300;User Id=root;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - bash: |
           for i in `seq 1 30`; do
             sleep 1
@@ -88,9 +90,8 @@ jobs:
       ConnectionString: "host=localhost;user id=root;password=test;database=root"
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
         displayName: Npgsql 3
         inputs:
@@ -121,9 +122,8 @@ jobs:
       vmimage: 'ubuntu-16.04'
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
@@ -159,9 +159,8 @@ jobs:
       ConnectionString: 'data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient'
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - script: |
           docker exec `docker container ls -n1 -q` /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
         displayName: 'Create sqlclient database'
@@ -186,9 +185,8 @@ jobs:
       ConnectionString: 'Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=tempdb;Trusted_Connection=True;'
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
         displayName: SqlClientBcl
         inputs:
@@ -235,9 +233,8 @@ jobs:
           artifactName: SQLite
           targetPath: $(Agent.BuildDirectory)/tests
       - task: DotNetCoreInstaller@0
-        displayName: 'Install DotNet Core 2.1.7'
         inputs:
-          version: 2.1.503
+          version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
         inputs:
           command: 'run'
