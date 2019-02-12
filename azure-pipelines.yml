@@ -169,7 +169,7 @@ jobs:
           command: 'test'
           workingDirectory: tests/SqlClient.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/SqlClient.trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/SqlClient.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
