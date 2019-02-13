@@ -1,4 +1,5 @@
 using AdoNet.Specification.Tests;
+using Xunit;
 
 namespace MicrosoftSqlite.Tests
 {
@@ -8,5 +9,8 @@ namespace MicrosoftSqlite.Tests
 			: base(fixture)
 		{
 		}
+
+		[Fact(Skip = "Unordered parameters are not supported")]
+		public override void ParameterName_can_be_set_to_null() => base.ParameterName_can_be_set_to_null();
 	}
 }
