@@ -4,11 +4,11 @@ using System.Data;
 using AdoNet.Databases;
 using AdoNet.Specification.Tests;
 
-namespace MicrosoftSqlite21.Tests
+namespace MicrosoftSqlite22.Tests
 {
-	public class MicrosoftSqlite21SelectValueFixture : MicrosoftSqlite21DbFactoryFixture, ISelectValueFixture, IDisposable
+	public class MicrosoftSqlite22SelectValueFixture : MicrosoftSqlite22DbFactoryFixture, ISelectValueFixture, IDisposable
 	{
-		public MicrosoftSqlite21SelectValueFixture() => SqliteDatabase.CreateSelectValueTable(this);
+		public MicrosoftSqlite22SelectValueFixture() => SqliteDatabase.CreateSelectValueTable(this);
 		public void Dispose() => SqliteDatabase.DropSelectValueTable(this);
 		public string CreateSelectSql(DbType dbType, ValueKind kind) => SqliteDatabase.CreateSelectSql(dbType, kind);
 		public string CreateSelectSql(byte[] value) => SqliteDatabase.CreateSelectSql(value);
