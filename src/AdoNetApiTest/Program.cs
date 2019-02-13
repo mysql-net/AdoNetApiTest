@@ -157,7 +157,7 @@ namespace AdoNetApiTest
 		{
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
-			var folderName = Regex.Match(Path.GetFileName(outputXmlPath), @"^(.*?)\.Tests").Groups[1].Value;
+			var folderName = Regex.Match(Path.GetFileName(outputXmlPath.Replace(@"\bin\output.xml", "")), @"^(.*?)\.Tests").Groups[1].Value;
 
 			// SqlClient doesn't support SqlDataReader.GetChar; override all its test failures for this method
 			if (folderName.IndexOf("SqlClient", StringComparison.Ordinal) != -1)
