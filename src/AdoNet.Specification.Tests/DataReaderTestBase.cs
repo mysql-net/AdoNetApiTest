@@ -217,10 +217,10 @@ namespace AdoNet.Specification.Tests
 			using (var connection = CreateOpenConnection())
 			using (var command = connection.CreateCommand())
 			{
-				command.CommandText = "SELECT 1 AS Id;";
+				command.CommandText = "SELECT 1 AS id;";
 				using (var reader = command.ExecuteReader())
 				{
-					Assert.Equal("Id", reader.GetName(0));
+					Assert.Equal("id", reader.GetName(0));
 				}
 			}
 		}
