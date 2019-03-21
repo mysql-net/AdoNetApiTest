@@ -1,5 +1,10 @@
 # Version History
 
+## 2.0.0 Alpha 3
+
+* Test `DbCommand.Cancel`.
+* Check lowercase column name in `GetName`: [#12](https://github.com/mysql-net/AdoNetApiTest/pull/12).
+
 ## 2.0.0 Alpha 2
 
 * Add `GetChar`, `Commit_transaction`, `Rollback_transaction` tests; see [API diff](https://www.fuget.org/packages/AdoNet.Specification.Tests/2.0.0-alpha2/lib/netstandard2.0/diff/2.0.0-alpha1/)
