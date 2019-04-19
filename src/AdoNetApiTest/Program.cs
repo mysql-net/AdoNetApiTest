@@ -140,24 +140,35 @@ namespace AdoNetApiTest
 
 		private static async Task<string> RunTestsAsync(string testFolder)
 		{
-			var outputXmlPath = Path.Combine(testFolder, "bin", "output.xml");
+			var outputXmlPath = Path.Combine(testFolder, "bin", "output.trx");
+			var outputDirectory = new DirectoryInfo(Path.GetDirectoryName(outputXmlPath));
 			if (RunXUnit)
 			{
-				File.Delete(outputXmlPath);
-				do
+				foreach (var file in outputDirectory.GetFiles("output*.trx"))
+					file.Delete();
+
+				while (true)
 				{
 					await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
 					Console.Write(".");
-				} while (!File.Exists(outputXmlPath));
+					var actualOutputPath = outputDirectory.GetFiles("output*.trx").Select(x => x.FullName).FirstOrDefault();
+					if (actualOutputPath is null)
+						Console.Error.WriteLine("\nCouldn't find TRX in {0}", outputDirectory.FullName);
+					else
+						return actualOutputPath;
+				}
 			}
-			return outputXmlPath;
+			return null;
 		}
 
 		private static (string Category, string Name, IReadOnlyDictionary<string, TestResult> Results) ProcessTests(string outputXmlPath)
 		{
 			var outputXml = XDocument.Load(outputXmlPath);
 			var testResults = CreateTestResults(outputXml);
-			var folderName = Regex.Match(Path.GetFileName(outputXmlPath.Replace(@"\bin\output.xml", "")), @"^(.*?)\.Tests").Groups[1].Value;
+
+			// this needs to handle "C:\...\AdoNetApiTest\tests\MySqlConnector.Tests\bin\output_YYYY-MM-DD_HH-mm-ss-fff.trx" (local)
+			// and "$(Build.ArtifactStagingDirectory)/MySqlConnector.Tests.trx" (Azure Pipelines)
+			var folderName = Regex.Match(Path.GetFileName(Regex.Replace(outputXmlPath, @"\\bin\\output.*?\.trx$", "")), @"^(.*?)\.Tests").Groups[1].Value;
 
 			// SqlClient doesn't support SqlDataReader.GetChar; override all its test failures for this method
 			if (folderName.IndexOf("SqlClient", StringComparison.Ordinal) != -1)
