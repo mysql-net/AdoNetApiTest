@@ -6,6 +6,10 @@ classes that inherit from `DbConnection`, `DbCommand`, `DbDataReader`, etc.
 It intends to clarify ambiguous areas in the ADO.NET documenation and help ensure that various providers act
 consistently (when the behaviour doesn't depend on the specific target database server).
 
+## Current Results
+
+The results from the latest build are [published here](https://mysql-net.github.io/AdoNetResults/).
+
 ## How to Use
 
 Add a reference to the [NuGet package](https://www.nuget.org/packages/AdoNet.Specification.Tests) to your test project.
