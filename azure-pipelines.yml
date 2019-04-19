@@ -243,6 +243,7 @@ jobs:
           arguments: '$(Agent.BuildDirectory)/tests $(Build.ArtifactStagingDirectory)'
       - script: 'git -c http.https://github.com.extraheader="AUTHORIZATION: basic $(GitHubAuthorization)" clone --depth 1 --branch gh-pages https://github.com/mysql-net/AdoNetResults.git ../AdoNetResults'
         displayName: Clone GitHub Pages repo
+        condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
           cp $(Build.ArtifactStagingDirectory)/results.html index.html
           git config user.name "Build Bot"
@@ -252,6 +253,7 @@ jobs:
           git -c http.https://github.com.extraheader="AUTHORIZATION: basic $(GitHubAuthorization)" push origin
         displayName: Update GitHub Pages
         workingDirectory: ../AdoNetResults
+        condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: PublishPipelineArtifact@0
         inputs:
           artifactName: 'Results'
