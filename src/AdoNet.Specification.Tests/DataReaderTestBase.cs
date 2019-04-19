@@ -1,5 +1,6 @@
 using System;
 using System.Data.Common;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AdoNet.Specification.Tests
@@ -178,6 +179,24 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetFieldValue_throws_when_done()
 			=> X_throws_when_done(r => r.GetFieldValue<DBNull>(0));
+
+		[Fact]
+		public virtual async Task GetFieldValueAsync_is_canceled()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+
+					var task = reader.GetFieldValueAsync<int>(0, CanceledToken);
+					await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+					Assert.True(task.IsCanceled);
+				}
+			}
+		}
 
 		[Fact]
 		public virtual void GetFieldType_works()
@@ -445,6 +464,24 @@ namespace AdoNet.Specification.Tests
 
 					Assert.True(hasData);
 					Assert.True(reader.IsDBNull(0));
+				}
+			}
+		}
+
+		[Fact]
+		public virtual async Task IsDBNullAsync_is_canceled()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+
+					var task = reader.IsDBNullAsync(0, CanceledToken);
+					await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+					Assert.True(task.IsCanceled);
 				}
 			}
 		}

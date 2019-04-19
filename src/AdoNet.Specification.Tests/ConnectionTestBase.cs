@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AdoNet.Specification.Tests
@@ -110,6 +111,18 @@ namespace AdoNet.Specification.Tests
 		{
 			using (var connection = CreateOpenConnection())
 				Assert.Throws<InvalidOperationException>(() => connection.Open());
+		}
+
+		[Fact]
+		public virtual async Task OpenAsync_is_canceled()
+		{
+			using (var connection = Fixture.Factory.CreateConnection())
+			{
+				connection.ConnectionString = ConnectionString;
+				var task = connection.OpenAsync(CanceledToken);
+				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+				Assert.True(task.IsCanceled);
+			}
 		}
 
 		[Fact]
