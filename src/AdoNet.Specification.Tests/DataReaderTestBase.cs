@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -774,6 +775,37 @@ namespace AdoNet.Specification.Tests
 			}
 		}
 
+		[Fact]
+		public virtual void GetFieldValue_for_TextReader()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.One);
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+					using (var textReader = reader.GetFieldValue<TextReader>(0))
+						Assert.Equal("1", textReader.ReadToEnd());
+				}
+			}
+		}
+
+		[Fact]
+		public virtual void GetFieldValue_for_TextReader_throws_for_null_String()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+					Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<TextReader>(0));
+				}
+			}
+		}
+
 		private void TestGetTextReader(ValueKind valueKind, string expected)
 		{
 			using (var connection = CreateOpenConnection())
@@ -784,9 +816,7 @@ namespace AdoNet.Specification.Tests
 				{
 					reader.Read();
 					using (var textReader = reader.GetTextReader(0))
-					{
 						Assert.Equal(expected, textReader.ReadToEnd());
-					}
 				}
 			}
 		}
