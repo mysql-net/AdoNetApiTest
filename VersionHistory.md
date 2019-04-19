@@ -1,5 +1,11 @@
 # Version History
 
+## 2.0.0 Alpha 4
+
+* **Breaking** Add `ISelectValueFixture.NullValueExceptionType`.
+* Add more cancellation tests: [#14](https://github.com/mysql-net/AdoNetApiTest/pull/14).
+* Add `GetTextReader` tests.
+
 ## 2.0.0 Alpha 3
 
 * Test `DbCommand.Cancel`.

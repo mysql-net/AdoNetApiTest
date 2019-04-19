@@ -72,5 +72,7 @@ insert into select_value values
 			DbType.UInt32,
 			DbType.UInt64,
 		});
+
+		public static Type NullValueExceptionType => typeof(InvalidCastException);
 	}
 }

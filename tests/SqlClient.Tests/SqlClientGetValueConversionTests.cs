@@ -1,5 +1,3 @@
-using System;
-using System.Data.SqlTypes;
 using AdoNet.Specification.Tests;
 
 namespace SqlClient.Tests
@@ -10,7 +8,5 @@ namespace SqlClient.Tests
 			: base(fixture)
 		{
 		}
-
-		protected override Type GetNullExceptionType() => typeof(SqlNullValueException);
 	}
 }

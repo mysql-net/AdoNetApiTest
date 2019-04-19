@@ -18,7 +18,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetBoolean_throws_for_one_Binary() => TestException(DbType.Binary, ValueKind.One, x => x.GetBoolean(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetBoolean_throws_for_null_Boolean() => TestException(DbType.Boolean, ValueKind.Null, x => x.GetBoolean(0), GetNullExceptionType());
+		public virtual void GetBoolean_throws_for_null_Boolean() => TestException(DbType.Boolean, ValueKind.Null, x => x.GetBoolean(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetBoolean_for_zero_Boolean() => TestGetValue(DbType.Boolean, ValueKind.Zero, x => x.GetBoolean(0), false);
@@ -45,7 +45,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetBoolean_throws_for_maximum_Byte() => TestException(DbType.Byte, ValueKind.Maximum, x => x.GetBoolean(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetBoolean_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetBoolean(0), GetNullExceptionType());
+		public virtual void GetBoolean_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetBoolean(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetBoolean_throws_for_zero_Currency() => TestException(DbType.Currency, ValueKind.Zero, x => x.GetBoolean(0), typeof(InvalidCastException));
@@ -243,7 +243,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetByte_throws_for_one_Binary() => TestException(DbType.Binary, ValueKind.One, x => x.GetByte(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetByte_throws_for_null_Byte() => TestException(DbType.Byte, ValueKind.Null, x => x.GetByte(0), GetNullExceptionType());
+		public virtual void GetByte_throws_for_null_Byte() => TestException(DbType.Byte, ValueKind.Null, x => x.GetByte(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetByte_for_zero_Byte() => TestGetValue(DbType.Byte, ValueKind.Zero, x => x.GetByte(0), (byte) 0);
@@ -258,7 +258,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetByte_for_maximum_Byte() => TestGetValue(DbType.Byte, ValueKind.Maximum, x => x.GetByte(0), (byte) 255);
 
 		[SkippableFact]
-		public virtual void GetByte_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetByte(0), GetNullExceptionType());
+		public virtual void GetByte_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetByte(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetByte_throws_for_zero_Currency() => TestException(DbType.Currency, ValueKind.Zero, x => x.GetByte(0), typeof(InvalidCastException));
@@ -480,7 +480,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetChar_throws_for_maximum_Byte() => TestException(DbType.Byte, ValueKind.Maximum, x => x.GetChar(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetChar_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetChar(0), GetNullExceptionType());
+		public virtual void GetChar_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetChar(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetChar_throws_for_zero_Currency() => TestException(DbType.Currency, ValueKind.Zero, x => x.GetChar(0), typeof(InvalidCastException));
@@ -681,10 +681,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDateTime_throws_for_maximum_Byte() => TestException(DbType.Byte, ValueKind.Maximum, x => x.GetDateTime(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetDateTime_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDateTime(0), GetNullExceptionType());
+		public virtual void GetDateTime_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDateTime(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
-		public virtual void GetDateTime_throws_for_null_Date() => TestException(DbType.Date, ValueKind.Null, x => x.GetDateTime(0), GetNullExceptionType());
+		public virtual void GetDateTime_throws_for_null_Date() => TestException(DbType.Date, ValueKind.Null, x => x.GetDateTime(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetDateTime_for_one_Date() => TestGetValue(DbType.Date, ValueKind.One, x => x.GetDateTime(0), new DateTime(1111, 11, 11));
@@ -696,7 +696,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDateTime_for_maximum_Date() => TestGetValue(DbType.Date, ValueKind.Maximum, x => x.GetDateTime(0), new DateTime(9999, 12, 31));
 
 		[SkippableFact]
-		public virtual void GetDateTime_throws_for_null_DateTime() => TestException(DbType.DateTime, ValueKind.Null, x => x.GetDateTime(0), GetNullExceptionType());
+		public virtual void GetDateTime_throws_for_null_DateTime() => TestException(DbType.DateTime, ValueKind.Null, x => x.GetDateTime(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetDateTime_for_one_DateTime() => TestGetValue(DbType.DateTime, ValueKind.One, x => x.GetDateTime(0), new DateTime(1111, 11, 11, 11, 11, 11, 111));
@@ -792,7 +792,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDateTime_throws_for_maximum_Time() => TestException(DbType.Time, ValueKind.Maximum, x => x.GetDateTime(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetDecimal_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDecimal(0), GetNullExceptionType());
+		public virtual void GetDecimal_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDecimal(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetDecimal_for_zero_Currency() => TestGetValue(DbType.Currency, ValueKind.Zero, x => x.GetDecimal(0), 0m);
@@ -807,7 +807,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDecimal_for_maximum_Currency() => TestGetValue(DbType.Currency, ValueKind.Maximum, x => x.GetDecimal(0), 922337203685477.5807m);
 
 		[SkippableFact]
-		public virtual void GetDecimal_throws_for_null_Decimal() => TestException(DbType.Decimal, ValueKind.Null, x => x.GetDecimal(0), GetNullExceptionType());
+		public virtual void GetDecimal_throws_for_null_Decimal() => TestException(DbType.Decimal, ValueKind.Null, x => x.GetDecimal(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetDecimal_for_zero_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Zero, x => x.GetDecimal(0), 0m);
@@ -822,10 +822,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDecimal_for_maximum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Maximum, x => x.GetDecimal(0), 99999999999999999999.999999999999999m);
 
 		[SkippableFact]
-		public virtual void GetDouble_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDouble(0), GetNullExceptionType());
+		public virtual void GetDouble_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDouble(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
-		public virtual void GetDouble_throws_for_null_Double() => TestException(DbType.Double, ValueKind.Null, x => x.GetDouble(0), GetNullExceptionType());
+		public virtual void GetDouble_throws_for_null_Double() => TestException(DbType.Double, ValueKind.Null, x => x.GetDouble(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetDouble_for_zero_Double() => TestGetValue(DbType.Double, ValueKind.Zero, x => x.GetDouble(0), 0.0);
@@ -840,10 +840,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDouble_for_maximum_Double() => TestGetValue(DbType.Double, ValueKind.Maximum, x => x.GetDouble(0), 1.79e308);
 
 		[SkippableFact]
-		public virtual void GetFloat_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetFloat(0), GetNullExceptionType());
+		public virtual void GetFloat_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetFloat(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
-		public virtual void GetFloat_throws_for_null_Single() => TestException(DbType.Single, ValueKind.Null, x => x.GetFloat(0), GetNullExceptionType());
+		public virtual void GetFloat_throws_for_null_Single() => TestException(DbType.Single, ValueKind.Null, x => x.GetFloat(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetFloat_for_zero_Single() => TestGetValue(DbType.Single, ValueKind.Zero, x => x.GetFloat(0), 0f);
@@ -870,7 +870,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetGuid_throws_for_maximum_Byte() => TestException(DbType.Byte, ValueKind.Maximum, x => x.GetGuid(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetGuid_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetGuid(0), GetNullExceptionType());
+		public virtual void GetGuid_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetGuid(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetGuid_throws_for_one_Date() => TestException(DbType.Date, ValueKind.One, x => x.GetGuid(0), typeof(InvalidCastException));
@@ -924,7 +924,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetGuid_throws_for_maximum_Double() => TestException(DbType.Double, ValueKind.Maximum, x => x.GetGuid(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetGuid_throws_for_null_Guid() => TestException(DbType.Guid, ValueKind.Null, x => x.GetGuid(0), GetNullExceptionType());
+		public virtual void GetGuid_throws_for_null_Guid() => TestException(DbType.Guid, ValueKind.Null, x => x.GetGuid(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetGuid_for_zero_Guid() => TestGetValue(DbType.Guid, ValueKind.Zero, x => x.GetGuid(0), new Guid());
@@ -999,10 +999,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetGuid_throws_for_maximum_Time() => TestException(DbType.Time, ValueKind.Maximum, x => x.GetGuid(0), typeof(InvalidCastException));
 
 		[SkippableFact]
-		public virtual void GetInt16_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt16(0), GetNullExceptionType());
+		public virtual void GetInt16_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt16(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
-		public virtual void GetInt16_throws_for_null_Int16() => TestException(DbType.Int16, ValueKind.Null, x => x.GetInt16(0), GetNullExceptionType());
+		public virtual void GetInt16_throws_for_null_Int16() => TestException(DbType.Int16, ValueKind.Null, x => x.GetInt16(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetInt16_for_zero_Int16() => TestGetValue(DbType.Int16, ValueKind.Zero, x => x.GetInt16(0), (short) 0);
@@ -1053,7 +1053,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt16_throws_for_maximum_UInt16() => TestException(DbType.UInt16, ValueKind.Maximum, x => x.GetInt16(0), typeof(OverflowException));
 
 		[SkippableFact]
-		public virtual void GetInt32_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt32(0), GetNullExceptionType());
+		public virtual void GetInt32_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt32(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetInt32_for_zero_Int16() => TestGetValue(DbType.Int16, ValueKind.Zero, x => x.GetInt32(0), 0);
@@ -1068,7 +1068,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt32_for_maximum_Int16() => TestGetValue(DbType.Int16, ValueKind.Maximum, x => x.GetInt32(0), 32767);
 
 		[SkippableFact]
-		public virtual void GetInt32_throws_for_null_Int32() => TestException(DbType.Int32, ValueKind.Null, x => x.GetInt32(0), GetNullExceptionType());
+		public virtual void GetInt32_throws_for_null_Int32() => TestException(DbType.Int32, ValueKind.Null, x => x.GetInt32(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetInt32_for_zero_Int32() => TestGetValue(DbType.Int32, ValueKind.Zero, x => x.GetInt32(0), 0);
@@ -1119,7 +1119,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt32_throws_for_maximum_UInt32() => TestException(DbType.UInt32, ValueKind.Maximum, x => x.GetInt32(0), typeof(OverflowException));
 
 		[SkippableFact]
-		public virtual void GetInt64_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt64(0), GetNullExceptionType());
+		public virtual void GetInt64_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt64(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetInt64_for_zero_Int16() => TestGetValue(DbType.Int16, ValueKind.Zero, x => x.GetInt64(0), 0L);
@@ -1146,7 +1146,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt64_for_maximum_Int32() => TestGetValue(DbType.Int32, ValueKind.Maximum, x => x.GetInt64(0), 2147483647L);
 
 		[SkippableFact]
-		public virtual void GetInt64_throws_for_null_Int64() => TestException(DbType.Int64, ValueKind.Null, x => x.GetInt64(0), GetNullExceptionType());
+		public virtual void GetInt64_throws_for_null_Int64() => TestException(DbType.Int64, ValueKind.Null, x => x.GetInt64(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetInt64_for_zero_Int64() => TestGetValue(DbType.Int64, ValueKind.Zero, x => x.GetInt64(0), 0L);
@@ -1185,10 +1185,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt64_throws_for_maximum_UInt64() => TestException(DbType.UInt64, ValueKind.Maximum, x => x.GetInt64(0), typeof(OverflowException));
 
 		[SkippableFact]
-		public virtual void GetString_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetString(0), GetNullExceptionType());
+		public virtual void GetString_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetString(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
-		public virtual void GetString_throws_for_null_String() => TestException(DbType.String, ValueKind.Null, x => x.GetString(0), GetNullExceptionType());
+		public virtual void GetString_throws_for_null_String() => TestException(DbType.String, ValueKind.Null, x => x.GetString(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
 		public virtual void GetString_for_empty_String() => TestGetValue(DbType.String, ValueKind.Empty, x => x.GetString(0), "");

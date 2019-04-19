@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 
 namespace AdoNet.Specification.Tests
 {
@@ -32,5 +34,13 @@ namespace AdoNet.Specification.Tests
 		/// Returns a <c>SELECT</c> statement that selects no rows.
 		/// </summary>
 		string SelectNoRows { get; }
+
+		/// <summary>
+		/// Returns the <see cref="Type"/> of the exception that is thrown when <see cref="DbDataReader.GetValue"/> (and similar methods)
+		/// are called for a field that is <c>NULL</c>, i.e., <see cref="DbDataReader.IsDBNull"/> return <c>true</c>. This is typically
+		/// <see cref="InvalidCastException"/> but some providers may use a different exception type.
+		/// </summary>
+		/// <returns></returns>
+		Type NullValueExceptionType { get; }
 	}
 }

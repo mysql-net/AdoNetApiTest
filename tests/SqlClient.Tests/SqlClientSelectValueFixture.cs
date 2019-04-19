@@ -22,5 +22,7 @@ namespace SqlClient.Tests
 		public string SelectNoRows => SqlServerDatabase.SelectNoRows;
 
 		public IReadOnlyCollection<DbType> SupportedDbTypes => SqlServerDatabase.SupportedDbTypes;
+
+		public Type NullValueExceptionType => SqlServerDatabase.NullValueExceptionType;
 	}
 }

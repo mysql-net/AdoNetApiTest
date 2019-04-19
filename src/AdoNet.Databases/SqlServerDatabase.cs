@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.SqlTypes;
 using AdoNet.Specification.Tests;
 
 namespace AdoNet.Databases
@@ -68,5 +69,7 @@ insert into select_value values
 			DbType.String,
 			DbType.Time,
 		});
+
+		public static Type NullValueExceptionType => typeof(SqlNullValueException);
 	}
 }

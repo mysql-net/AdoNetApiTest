@@ -14,5 +14,6 @@ namespace Npgsql3.Tests
 		public string CreateSelectSql(byte[] value) => PostgreSqlDatabase.CreateSelectSql(value);
 		public string SelectNoRows => PostgreSqlDatabase.SelectNoRows;
 		public IReadOnlyCollection<DbType> SupportedDbTypes => PostgreSqlDatabase.SupportedDbTypes;
+		public Type NullValueExceptionType => PostgreSqlDatabase.NullValueExceptionType;
 	}
 }

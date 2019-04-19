@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using AdoNet.Databases;
@@ -18,5 +19,7 @@ namespace DotConnectMySql.Tests
 		public string SelectNoRows => MySqlDatabase.SelectNoRows;
 
 		public IReadOnlyCollection<DbType> SupportedDbTypes => MySqlDatabase.SupportedDbTypes;
+
+		public Type NullValueExceptionType => MySqlDatabase.NullValueExceptionType;
 	}
 }

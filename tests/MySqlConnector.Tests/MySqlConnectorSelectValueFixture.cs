@@ -19,5 +19,7 @@ namespace MySqlConnector.Tests
 		public string SelectNoRows => MySqlDatabase.SelectNoRows;
 
 		public IReadOnlyCollection<DbType> SupportedDbTypes => MySqlDatabase.SupportedDbTypes;
+
+		public Type NullValueExceptionType => MySqlDatabase.NullValueExceptionType;
 	}
 }

@@ -21,5 +21,7 @@ namespace MicrosoftSqlite.Tests
 			DbType.Int64,
 			DbType.String,
 		};
+
+		public Type NullValueExceptionType => SqliteDatabase.NullValueExceptionType;
 	}
 }

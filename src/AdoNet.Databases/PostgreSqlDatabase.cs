@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -64,5 +65,7 @@ insert into select_value values
 			DbType.String,
 			DbType.Time,
 		});
+
+		public static Type NullValueExceptionType => typeof(InvalidCastException);
 	}
 }

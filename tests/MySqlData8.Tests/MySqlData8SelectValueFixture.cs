@@ -20,5 +20,6 @@ namespace MySqlData8.Tests
 
 		public IReadOnlyCollection<DbType> SupportedDbTypes => MySqlDatabase.SupportedDbTypes;
 
+		public Type NullValueExceptionType => MySqlDatabase.NullValueExceptionType;
 	}
 }

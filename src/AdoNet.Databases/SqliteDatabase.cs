@@ -60,5 +60,7 @@ insert into select_value values
 			DbType.Single,
 			DbType.String,
 		});
+
+		public static Type NullValueExceptionType => typeof(InvalidCastException);
 	}
 }

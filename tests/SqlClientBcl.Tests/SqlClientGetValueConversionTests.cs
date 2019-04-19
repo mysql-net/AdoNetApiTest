@@ -10,7 +10,5 @@ namespace SqlClientBcl.Tests
 			: base(fixture)
 		{
 		}
-
-		protected override Type GetNullExceptionType() => typeof(SqlNullValueException);
 	}
 }

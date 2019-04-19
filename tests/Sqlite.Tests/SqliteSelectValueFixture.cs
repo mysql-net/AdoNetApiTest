@@ -14,5 +14,6 @@ namespace Sqlite.Tests
 		public string CreateSelectSql(byte[] value) => SqliteDatabase.CreateSelectSql(value);
 		public string SelectNoRows => SqliteDatabase.SelectNoRows;
 		public IReadOnlyCollection<DbType> SupportedDbTypes => SqliteDatabase.SupportedDbTypes;
+		public Type NullValueExceptionType => SqliteDatabase.NullValueExceptionType;
 	}
 }
