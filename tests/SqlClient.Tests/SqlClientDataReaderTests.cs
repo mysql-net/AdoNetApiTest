@@ -1,4 +1,5 @@
 using AdoNet.Specification.Tests;
+using Xunit;
 
 namespace SqlClient.Tests
 {
@@ -8,5 +9,8 @@ namespace SqlClient.Tests
 			: base(fixture)
 		{
 		}
+
+		[Fact(Skip = "Deliberately returns empty StringReader")]
+		public override void GetTextReader_throws_for_null_String() { }
 	}
 }
