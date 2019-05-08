@@ -167,6 +167,15 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
+          workingDirectory: tests/MicrosoftSqlClient.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
           workingDirectory: tests/SqlClient.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/SqlClient.Tests.trx"'
