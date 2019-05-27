@@ -3,8 +3,10 @@
 This library provides a suit of [xUnit.net](https://xunit.github.io/)-based tests for ADO.NET providers, i.e.,
 classes that inherit from `DbConnection`, `DbCommand`, `DbDataReader`, etc.
 
-It intends to clarify ambiguous areas in the ADO.NET documenation and help ensure that various providers act
+It intends to clarify ambiguous areas in the ADO.NET documentation and help ensure that various providers act
 consistently (when the behaviour doesn't depend on the specific target database server).
+
+[![Build Status](https://dev.azure.com/mysqlnet/AdoNetApiTest/_apis/build/status/mysql-net.AdoNetApiTest?branchName=master)](https://dev.azure.com/mysqlnet/AdoNetApiTest/_build/latest?definitionId=1&branchName=master) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mysql-net/AdoNetApiTest)](https://dependabot.com)
 
 ## Current Results
 
