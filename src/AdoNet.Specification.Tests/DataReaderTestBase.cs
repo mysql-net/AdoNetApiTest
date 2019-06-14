@@ -577,7 +577,7 @@ namespace AdoNet.Specification.Tests
 				}
 			}
 		}
-		
+
 		[Fact]
 		public virtual void Read_works()
 		{
@@ -597,6 +597,23 @@ namespace AdoNet.Specification.Tests
 
 					hasData = reader.Read();
 					Assert.False(hasData);
+				}
+			}
+		}
+
+		[Fact]
+		public virtual void Read_keeps_returning_false()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Empty);
+				using (var reader = command.ExecuteReader())
+				{
+					Assert.True(reader.Read());
+					Assert.False(reader.Read());
+					Assert.False(reader.Read());
+					Assert.False(reader.Read());
 				}
 			}
 		}
