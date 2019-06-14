@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace MySqlConnector.Tests
 {
-	public class MySqlConnectorSelectValueFixture : MySqlConnectorDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class MySqlConnectorSelectValueFixture : MySqlConnectorDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public MySqlConnectorSelectValueFixture() => MySqlDatabase.CreateSelectValueTable(this);
 
@@ -21,5 +21,7 @@ namespace MySqlConnector.Tests
 		public IReadOnlyCollection<DbType> SupportedDbTypes => MySqlDatabase.SupportedDbTypes;
 
 		public Type NullValueExceptionType => MySqlDatabase.NullValueExceptionType;
+
+		public string DeleteNoRows => MySqlDatabase.DeleteNoRows;
 	}
 }

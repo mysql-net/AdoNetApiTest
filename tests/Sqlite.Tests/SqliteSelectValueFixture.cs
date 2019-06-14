@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace Sqlite.Tests
 {
-	public class SqliteSelectValueFixture : SqliteDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class SqliteSelectValueFixture : SqliteDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public SqliteSelectValueFixture() => SqliteDatabase.CreateSelectValueTable(this);
 		public void Dispose() => SqliteDatabase.DropSelectValueTable(this);
@@ -15,5 +15,6 @@ namespace Sqlite.Tests
 		public string SelectNoRows => SqliteDatabase.SelectNoRows;
 		public IReadOnlyCollection<DbType> SupportedDbTypes => SqliteDatabase.SupportedDbTypes;
 		public Type NullValueExceptionType => SqliteDatabase.NullValueExceptionType;
+		public string DeleteNoRows => SqliteDatabase.DeleteNoRows;
 	}
 }

@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace Npgsql4.Tests
 {
-	public class Npgsql4SelectValueFixture : Npgsql4DbFactoryFixture, ISelectValueFixture, IDisposable
+	public class Npgsql4SelectValueFixture : Npgsql4DbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public Npgsql4SelectValueFixture() => PostgreSqlDatabase.CreateSelectValueTable(this);
 		public void Dispose() => PostgreSqlDatabase.DropSelectValueTable(this);
@@ -15,5 +15,6 @@ namespace Npgsql4.Tests
 		public string SelectNoRows => PostgreSqlDatabase.SelectNoRows;
 		public IReadOnlyCollection<DbType> SupportedDbTypes => PostgreSqlDatabase.SupportedDbTypes;
 		public Type NullValueExceptionType => PostgreSqlDatabase.NullValueExceptionType;
+		public string DeleteNoRows => PostgreSqlDatabase.DeleteNoRows;
 	}
 }

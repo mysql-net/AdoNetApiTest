@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace MicrosoftSqlite.Tests
 {
-	public class MicrosoftSqliteSelectValueFixture : MicrosoftSqliteDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class MicrosoftSqliteSelectValueFixture : MicrosoftSqliteDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public MicrosoftSqliteSelectValueFixture() => SqliteDatabase.CreateSelectValueTable(this);
 		public void Dispose() => SqliteDatabase.DropSelectValueTable(this);
@@ -23,5 +23,6 @@ namespace MicrosoftSqlite.Tests
 		};
 
 		public Type NullValueExceptionType => SqliteDatabase.NullValueExceptionType;
+		public string DeleteNoRows => SqliteDatabase.DeleteNoRows;
 	}
 }

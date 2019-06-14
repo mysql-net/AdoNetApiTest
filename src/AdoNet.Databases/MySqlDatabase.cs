@@ -51,6 +51,8 @@ insert into select_value values
 
 		public static string SelectNoRows => "SELECT * FROM mysql.user WHERE 0 = 1;";
 
+		public static string DeleteNoRows => "DELETE FROM select_value WHERE 0 = 1;";
+
 		public static IReadOnlyCollection<DbType> SupportedDbTypes { get; } = new ReadOnlyCollection<DbType>(new[]
 		{
 			DbType.Binary,

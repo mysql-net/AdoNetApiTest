@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace SqlClient.Tests
 {
-	public class SqlClientSelectValueFixture : SqlClientDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class SqlClientSelectValueFixture : SqlClientDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public SqlClientSelectValueFixture()
 		{
@@ -24,5 +24,7 @@ namespace SqlClient.Tests
 		public IReadOnlyCollection<DbType> SupportedDbTypes => SqlServerDatabase.SupportedDbTypes;
 
 		public Type NullValueExceptionType => SqlServerDatabase.NullValueExceptionType;
+
+		public string DeleteNoRows => SqlServerDatabase.DeleteNoRows;
 	}
 }

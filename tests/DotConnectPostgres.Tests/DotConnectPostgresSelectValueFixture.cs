@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace DotConnectPostgres.Tests
 {
-	public class DotConnectPostgresSelectValueFixture : DotConnectPostgresDbFactoryFixture, ISelectValueFixture, IDisposable
+	public class DotConnectPostgresSelectValueFixture : DotConnectPostgresDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public DotConnectPostgresSelectValueFixture() => PostgreSqlDatabase.CreateSelectValueTable(this);
 		public void Dispose() => PostgreSqlDatabase.DropSelectValueTable(this);
@@ -15,5 +15,6 @@ namespace DotConnectPostgres.Tests
 		public string SelectNoRows => PostgreSqlDatabase.SelectNoRows;
 		public IReadOnlyCollection<DbType> SupportedDbTypes => PostgreSqlDatabase.SupportedDbTypes;
 		public Type NullValueExceptionType => PostgreSqlDatabase.NullValueExceptionType;
+		public string DeleteNoRows => PostgreSqlDatabase.DeleteNoRows;
 	}
 }

@@ -6,7 +6,7 @@ using AdoNet.Specification.Tests;
 
 namespace DotConnectMySql.Tests
 {
-	public class DotConnectMySqlSelectValueFixture : DotConnectMySqlDbFactoryFixture, ISelectValueFixture
+	public class DotConnectMySqlSelectValueFixture : DotConnectMySqlDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
 		public DotConnectMySqlSelectValueFixture() => MySqlDatabase.CreateSelectValueTable(this);
 
@@ -21,5 +21,7 @@ namespace DotConnectMySql.Tests
 		public IReadOnlyCollection<DbType> SupportedDbTypes => MySqlDatabase.SupportedDbTypes;
 
 		public Type NullValueExceptionType => MySqlDatabase.NullValueExceptionType;
+
+		public string DeleteNoRows => MySqlDatabase.DeleteNoRows;
 	}
 }

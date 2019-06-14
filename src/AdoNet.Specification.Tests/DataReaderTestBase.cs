@@ -9,7 +9,7 @@ namespace AdoNet.Specification.Tests
 {
 	[Collection("ISelectValueFixture Collection")]
 	public class DataReaderTestBase<TFixture> : DbFactoryTestBase<TFixture>
-		where TFixture : class, ISelectValueFixture
+		where TFixture : class, ISelectValueFixture, IDeleteFixture
 	{
 		public DataReaderTestBase(TFixture fixture)
 			: base(fixture)
@@ -806,6 +806,114 @@ namespace AdoNet.Specification.Tests
 			}
 		}
 
+		[Fact]
+		public virtual void FieldCount_is_zero_after_Delete() => Test_X_after_Delete(x => Assert.Equal(0, x.FieldCount));
+
+		[Fact]
+		public virtual void IsDBNull_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.IsDBNull(0)));
+
+		[Fact]
+		public virtual async Task IsDBNullAsync_throws_after_Delete() => await Test_X_after_Delete(async x => await Assert.ThrowsAsync<InvalidOperationException>(async () => await x.IsDBNullAsync(0)));
+
+		[Fact]
+		public virtual void Read_returns_false_after_Delete() => Test_X_after_Delete(x => Assert.False(x.Read()));
+
+		[Fact]
+		public virtual void NextResult_returns_false_after_Delete() => Test_X_after_Delete(x => Assert.False(x.NextResult()));
+
+		[Fact]
+		public virtual void GetDataTypeName_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetDataTypeName(0)));
+
+		[Fact]
+		public virtual void GetFieldType_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetFieldType(0)));
+
+		[Fact]
+		public virtual void GetFieldValue_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetFieldValue<object>(0)));
+
+		[Fact]
+		public virtual async Task GetFieldValueAsync_throws_after_Delete() => await Test_X_after_Delete(async x => await Assert.ThrowsAsync<InvalidOperationException>(async () => await x.GetFieldValueAsync<object>(0)));
+
+		[Fact]
+		public virtual void GetBoolean_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetBoolean(0)));
+
+		[Fact]
+		public virtual void GetByte_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetByte(0)));
+
+		[Fact]
+		public virtual void GetBytes_throws_after_Delete()
+		{
+			Test_X_after_Delete(x =>
+			{
+				var bytes = new byte[1];
+				Assert.Throws<InvalidOperationException>(() => x.GetBytes(0, 0, bytes, 0, 1));
+			});
+		}
+
+		[Fact]
+		public virtual void GetChar_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetChar(0)));
+
+		[Fact]
+		public virtual void GetChars_throws_after_Delete()
+		{
+			Test_X_after_Delete(x =>
+			{
+				var chars = new char[1];
+				Assert.Throws<InvalidOperationException>(() => x.GetChars(0, 0, chars, 0, 1));
+			});
+		}
+
+		[Fact]
+		public virtual void GetDataTime_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetDateTime(0)));
+
+		[Fact]
+		public virtual void GetDecimal_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetDecimal(0)));
+
+		[Fact]
+		public virtual void GetDouble_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetDouble(0)));
+
+		[Fact]
+		public virtual void GetFloat_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetFloat(0)));
+
+		[Fact]
+		public virtual void GetGuid_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetGuid(0)));
+
+		[Fact]
+		public virtual void GetInt16_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetInt16(0)));
+
+		[Fact]
+		public virtual void GetInt32_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetInt32(0)));
+
+		[Fact]
+		public virtual void GetInt64_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetInt64(0)));
+
+		[Fact]
+		public virtual void GetSchemaTable_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetSchemaTable()));
+
+		[Fact]
+		public virtual void GetStream_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetStream(0)));
+
+		[Fact]
+		public virtual void GetString_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetString(0)));
+
+		[Fact]
+		public virtual void GetTextReader_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetTextReader(0)));
+
+		[Fact]
+		public virtual void GetName_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetName(0)));
+
+		[Fact]
+		public virtual void GetValue_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() =>x.GetValue(0)));
+
+		[Fact]
+		public virtual void GetValues_throws_after_Delete()
+		{
+			Test_X_after_Delete(x => 
+			{
+				var values = new object[1];
+				Assert.Throws<InvalidOperationException>(() => x.GetValues(values));
+			});
+		}
+
 		private void TestGetTextReader(ValueKind valueKind, string expected)
 		{
 			using (var connection = CreateOpenConnection())
@@ -879,6 +987,32 @@ namespace AdoNet.Specification.Tests
 				((IDisposable) reader).Dispose();
 
 				Assert.Throws<InvalidOperationException>(() => action(reader));
+			}
+		}
+
+		private void Test_X_after_Delete(Action<DbDataReader> action)
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.DeleteNoRows;
+				using (var reader = command.ExecuteReader())
+				{
+					action(reader);
+				}
+			}
+		}
+
+		private async Task Test_X_after_Delete(Func<DbDataReader, Task> action)
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = Fixture.DeleteNoRows;
+				using (var reader = command.ExecuteReader())
+				{
+					await action(reader);
+				}
 			}
 		}
 	}
