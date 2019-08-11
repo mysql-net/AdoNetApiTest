@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.Data.Common;
 using Xunit;
@@ -168,6 +169,182 @@ namespace AdoNet.Specification.Tests
 		public virtual void ParameterName_can_be_set_to_null()
 		{
 			Fixture.Factory.CreateParameter().ParameterName = null;
+		}
+
+		[Fact]
+		public virtual void ParameterName_default_is_empty_string()
+		{
+			Assert.Equal("", Fixture.Factory.CreateParameter().ParameterName);
+		}
+
+		[Fact]
+		public virtual void ParameterName_set_to_null_is_empty_string()
+		{
+			var parameter = Fixture.Factory.CreateParameter();
+			parameter.ParameterName = null;
+			Assert.Equal("", parameter.ParameterName);
+		}
+
+		[Fact]
+		public virtual void SourceColumn_can_be_set_to_null()
+		{
+			Fixture.Factory.CreateParameter().SourceColumn = null;
+		}
+
+		[Fact]
+		public virtual void SourceColumn_default_is_empty_string()
+		{
+			Assert.Equal("", Fixture.Factory.CreateParameter().SourceColumn);
+		}
+
+		[Fact]
+		public virtual void SourceColumn_set_to_null_is_empty_string()
+		{
+			var parameter = Fixture.Factory.CreateParameter();
+			parameter.SourceColumn = null;
+			Assert.Equal("", parameter.SourceColumn);
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Add_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Throws<ArgumentNullException>(() => command.Parameters.Add(default));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_string_indexer_setter_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				parameter.ParameterName = "@param";
+				command.Parameters.Add(parameter);
+				Assert.Throws<ArgumentNullException>(() => command.Parameters["@param"] = null);
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_int_indexer_setter_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				command.Parameters.Add(parameter);
+				Assert.Throws<ArgumentNullException>(() => command.Parameters[0] = null);
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_IList_indexer_setter_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				command.Parameters.Add(parameter);
+				Assert.Throws<ArgumentNullException>(() => ((IList) command.Parameters)[0] = null);
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_IDataParameterCollection_indexer_setter_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				parameter.ParameterName = "@param";
+				command.Parameters.Add(parameter);
+				Assert.Throws<ArgumentNullException>(() => ((IDataParameterCollection) command.Parameters)["@param"] = null);
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Contains_object_returns_false_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.False(command.Parameters.Contains(default(object)));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Contains_string_returns_false_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.False(command.Parameters.Contains(default(string)));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_IndexOf_object_returns_negative_one_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Equal(-1, command.Parameters.IndexOf(default(object)));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_IndexOf_string_returns_negative_one_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Equal(-1, command.Parameters.IndexOf(default(string)));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Remove_throws_for_null()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Throws<ArgumentNullException>(() => command.Parameters.Remove(null));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_RemoveAt_negative_one_throws()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(-1));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_RemoveAt_zero_throws_when_empty()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(0));
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Remove_succeeds()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				command.Parameters.Add(parameter);
+				command.Parameters.Remove(parameter);
+				Assert.Empty(command.Parameters);
+			}
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_RemoveAt_succeeds()
+		{
+			using (var command = Fixture.Factory.CreateCommand())
+			{
+				var parameter = command.CreateParameter();
+				command.Parameters.Add(parameter);
+				command.Parameters.RemoveAt(0);
+				Assert.Empty(command.Parameters);
+			}
 		}
 	}
 }
