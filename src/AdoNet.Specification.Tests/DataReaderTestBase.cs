@@ -380,6 +380,21 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void GetValues_throws_for_null()
+		{
+			using (var connection = CreateOpenConnection())
+			using (var command = connection.CreateCommand())
+			{
+				command.CommandText = "SELECT 1;";
+				using (var reader = command.ExecuteReader())
+				{
+					reader.Read();
+					Assert.Throws<ArgumentNullException>(() => reader.GetValues(default(object[])));
+				}
+			}
+		}
+
+		[Fact]
 		public virtual void HasRows_returns_true_when_rows()
 		{
 			using (var connection = CreateOpenConnection())
