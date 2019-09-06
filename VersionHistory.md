@@ -1,10 +1,23 @@
 # Version History
 
+## 2.0.0 Alpha 5
+
+* Add conversion tests:
+  * `GetDecimal` for float and double columns (should fail)
+  * `GetDouble` for decimal columns (should pass)
+  * `GetFloat` for decimal columns (should pass)
+
 ## 2.0.0 Alpha 4
 
 * **Breaking** Add `ISelectValueFixture.NullValueExceptionType`.
 * Add more cancellation tests: [#14](https://github.com/mysql-net/AdoNetApiTest/pull/14).
 * Add `GetTextReader` tests.
+* Add tests for `DbParameter` and `DbParameterCollection`.
+* Test `GetString` for numeric columns (should fail).
+* Test `GetFieldValue<TextReader>`.
+* Test `DbDataReader` methods after executing a `DELETE` statement: [#28](https://github.com/mysql-net/AdoNetApiTest/issues/28).
+* Test `DbDataReader.Read` continues returning `false`: [#24](https://github.com/mysql-net/AdoNetApiTest/issues/24).
+* Test `DbDataReader.GetValues` with null argument.
 
 ## 2.0.0 Alpha 3
 
