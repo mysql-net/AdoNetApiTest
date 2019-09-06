@@ -822,6 +822,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDecimal_for_maximum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Maximum, x => x.GetDecimal(0), 99999999999999999999.999999999999999m);
 
 		[SkippableFact]
+		public virtual void GetDecimal_throws_for_zero_Double() => TestException(DbType.Double, ValueKind.Zero, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_one_Double() => TestException(DbType.Double, ValueKind.One, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_minimum_Double() => TestException(DbType.Double, ValueKind.Minimum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_maximum_Double() => TestException(DbType.Double, ValueKind.Maximum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_zero_Single() => TestException(DbType.Single, ValueKind.Zero, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_one_Single() => TestException(DbType.Single, ValueKind.One, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_minimum_Single() => TestException(DbType.Single, ValueKind.Minimum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_maximum_Single() => TestException(DbType.Single, ValueKind.Maximum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetDecimal_throws_for_empty_String() => TestException(DbType.String, ValueKind.Empty, x => x.GetDecimal(0), typeof(InvalidCastException));
 
 		[SkippableFact]
@@ -832,6 +856,18 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetDouble_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDouble(0), Fixture.NullValueExceptionType);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_zero_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Zero, x => x.GetDouble(0), 0.0);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_one_Decimal() => TestGetValue(DbType.Decimal, ValueKind.One, x => x.GetDouble(0), 1.0);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_minimum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Minimum, x => x.GetDouble(0), 0.000000000000001);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_maximum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Maximum, x => x.GetDouble(0), 1e20);
 
 		[SkippableFact]
 		public virtual void GetDouble_throws_for_null_Double() => TestException(DbType.Double, ValueKind.Null, x => x.GetDouble(0), Fixture.NullValueExceptionType);
@@ -849,6 +885,18 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDouble_for_maximum_Double() => TestGetValue(DbType.Double, ValueKind.Maximum, x => x.GetDouble(0), 1.79e308);
 
 		[SkippableFact]
+		public virtual void GetDouble_for_zero_Single() => TestGetValue(DbType.Single, ValueKind.Zero, x => x.GetDouble(0), 0.0);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_one_Single() => TestGetValue(DbType.Single, ValueKind.One, x => x.GetDouble(0), 1.0);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_minimum_Single() => TestGetValue(DbType.Single, ValueKind.Minimum, x => x.GetDouble(0), 1.1799999457746311E-38);
+
+		[SkippableFact]
+		public virtual void GetDouble_for_maximum_Single() => TestGetValue(DbType.Single, ValueKind.Maximum, x => x.GetDouble(0), 3.3999999521443642E+38);
+
+		[SkippableFact]
 		public virtual void GetDouble_throws_for_empty_String() => TestException(DbType.String, ValueKind.Empty, x => x.GetDouble(0), typeof(InvalidCastException));
 
 		[SkippableFact]
@@ -859,6 +907,30 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetFloat_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetFloat(0), Fixture.NullValueExceptionType);
+
+		[SkippableFact]
+		public virtual void GetFloat_for_zero_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Zero, x => x.GetFloat(0), 0f);
+
+		[SkippableFact]
+		public virtual void GetFloat_for_one_Decimal() => TestGetValue(DbType.Decimal, ValueKind.One, x => x.GetFloat(0), 1f);
+
+		[SkippableFact]
+		public virtual void GetFloat_for_minimum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Minimum, x => x.GetFloat(0), 0.000000000000001f);
+
+		[SkippableFact]
+		public virtual void GetFloat_for_maximum_Decimal() => TestGetValue(DbType.Decimal, ValueKind.Maximum, x => x.GetFloat(0), 1e20f);
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_zero_Double() => TestException(DbType.Double, ValueKind.Zero, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_one_Double() => TestException(DbType.Double, ValueKind.One, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_minimum_Double() => TestException(DbType.Double, ValueKind.Minimum, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_maximum_Double() => TestException(DbType.Double, ValueKind.Maximum, x => x.GetFloat(0), typeof(InvalidCastException));
 
 		[SkippableFact]
 		public virtual void GetFloat_throws_for_null_Single() => TestException(DbType.Single, ValueKind.Null, x => x.GetFloat(0), Fixture.NullValueExceptionType);
