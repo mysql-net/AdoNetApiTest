@@ -15,7 +15,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PackageTags>ado.net;database;test</PackageTags>
     <PackageReleaseNotes>https://github.com/mysql-net/AdoNetApiTest/blob/master/VersionHistory.md</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/mysql-net/AdoNetApiTest</PackageProjectUrl>
+    <PackageProjectUrl>https://mysql-net.github.io/AdoNetResults/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/mysql-net/AdoNetApiTest.git</RepositoryUrl>
