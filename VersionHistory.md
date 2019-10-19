@@ -1,5 +1,11 @@
 # Version History
 
+## 2.0.0 Alpha 6
+
+* Add `DataReaderTestBase.GetValues_throws_for_null`.
+* For each `DataReader.GetX` test, add a parallel `GetFieldValue<x>` test for the return type.
+  * For example, added tests of `GetFieldValue<byte>` alongside `GetByte` and `GetFieldValue<short>` alongside `GetInt16`.
+
 ## 2.0.0 Alpha 5
 
 * Add conversion tests:
