@@ -608,6 +608,22 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void SingleResult_returns_one_result_set()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1; SELECT 2; SELECT 3;";
+
+			using var reader = command.ExecuteReader(CommandBehavior.SingleResult);
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
+			Assert.False(reader.Read());
+
+			Assert.False(reader.NextResult());
+		}
+
+		[Fact]
 		public virtual void NextResult_can_be_called_more_than_once()
 		{
 			using (var connection = CreateOpenConnection())
