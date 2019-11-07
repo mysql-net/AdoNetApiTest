@@ -23,7 +23,7 @@ resources:
       SA_PASSWORD: P@ssw0rd
 
 variables:
-  DotNetCoreSdkVersion: '2.2.401'
+  DotNetCoreSdkVersion: '3.0.100'
 
 jobs:
   - job: Linux_MySQL
@@ -34,7 +34,7 @@ jobs:
     variables:
       ConnectionString: "Server=localhost;Port=3300;User Id=root;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
     steps:
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - bash: |
@@ -89,7 +89,7 @@ jobs:
     variables:
       ConnectionString: "host=localhost;user id=root;password=test;database=root"
     steps:
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
@@ -121,7 +121,7 @@ jobs:
     pool:
       vmimage: 'ubuntu-16.04'
     steps:
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
@@ -158,7 +158,7 @@ jobs:
     variables:
       ConnectionString: 'data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient'
     steps:
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - script: |
@@ -193,7 +193,7 @@ jobs:
     variables:
       ConnectionString: 'Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=tempdb;Trusted_Connection=True;'
     steps:
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
@@ -241,7 +241,7 @@ jobs:
         inputs:
           artifactName: SQLite
           targetPath: $(Agent.BuildDirectory)/tests
-      - task: DotNetCoreInstaller@0
+      - task: UseDotNet@2
         inputs:
           version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2

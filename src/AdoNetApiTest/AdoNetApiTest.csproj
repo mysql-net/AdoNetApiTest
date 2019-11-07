@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <AssemblyName>AdoNetApiTest</AssemblyName>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
