@@ -16,161 +16,149 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void ConnectionString_setter_throws_when_open()
 		{
-			using (var connection = CreateOpenConnection())
-				Assert.Throws<InvalidOperationException>(() => connection.ConnectionString = ConnectionString + ";");
+			using var connection = CreateOpenConnection();
+			Assert.Throws<InvalidOperationException>(() => connection.ConnectionString = ConnectionString + ";");
 		}
 
 		[Fact]
 		public virtual void ConnectionString_gets_and_sets_value()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-			{
-				connection.ConnectionString = ConnectionString;
-				Assert.Equal(ConnectionString, connection.ConnectionString);
-			}
+			using var connection = Fixture.Factory.CreateConnection();
+			connection.ConnectionString = ConnectionString;
+			Assert.Equal(ConnectionString, connection.ConnectionString);
 		}
 
 		[Fact]
 		public virtual void Database_returns_value()
 		{
-			using (var connection = CreateOpenConnection())
-				Assert.NotNull(connection.Database);
+			using var connection = CreateOpenConnection();
+			Assert.NotNull(connection.Database);
 		}
 
 		[Fact]
 		public virtual void ServerVersion_returns_value()
 		{
-			using (var connection = CreateOpenConnection())
-			{
-				Assert.NotNull(connection.ServerVersion);
-				Assert.NotEmpty(connection.ServerVersion);
-			}
+			using var connection = CreateOpenConnection();
+			Assert.NotNull(connection.ServerVersion);
+			Assert.NotEmpty(connection.ServerVersion);
 		}
 
 		[Fact]
 		public virtual void State_closed_by_default()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-				Assert.Equal(ConnectionState.Closed, connection.State);
+			using var connection = Fixture.Factory.CreateConnection();
+			Assert.Equal(ConnectionState.Closed, connection.State);
 		}
 
 		[Fact]
 		public virtual void Open_throws_when_no_connection_string()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-				Assert.Throws<InvalidOperationException>(() => connection.Open());
+			using var connection = Fixture.Factory.CreateConnection();
+			Assert.Throws<InvalidOperationException>(() => connection.Open());
 		}
 
 		[Fact]
 		public virtual void Set_ConnectionString_throws_when_invalid()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-				Assert.ThrowsAny<ArgumentException>(() => connection.ConnectionString = "xyzzy=Invalid");
+			using var connection = Fixture.Factory.CreateConnection();
+			Assert.ThrowsAny<ArgumentException>(() => connection.ConnectionString = "xyzzy=Invalid");
 		}
 
 		[Fact]
 		public virtual void Open_works()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
+			using var connection = Fixture.Factory.CreateConnection();
+			var raised = false;
+			var previousState = ConnectionState.Closed;
+
+			void Handler(object sender, StateChangeEventArgs e)
 			{
-				var raised = false;
-				var previousState = ConnectionState.Closed;
+				raised = true;
 
-				void Handler(object sender, StateChangeEventArgs e)
-				{
-					raised = true;
+				Assert.Equal(connection, sender);
+				Assert.Equal(previousState, e.OriginalState);
+				if (previousState == ConnectionState.Closed && (e.CurrentState == ConnectionState.Connecting || e.CurrentState == ConnectionState.Open))
+					previousState = e.CurrentState;
+				else if (previousState == ConnectionState.Connecting && e.CurrentState == ConnectionState.Open)
+					previousState = e.CurrentState;
+				else
+					Assert.Equal(ConnectionState.Open, e.CurrentState);
+			}
 
-					Assert.Equal(connection, sender);
-					Assert.Equal(previousState, e.OriginalState);
-					if (previousState == ConnectionState.Closed && (e.CurrentState == ConnectionState.Connecting || e.CurrentState == ConnectionState.Open))
-						previousState = e.CurrentState;
-					else if (previousState == ConnectionState.Connecting && e.CurrentState == ConnectionState.Open)
-						previousState = e.CurrentState;
-					else
-						Assert.Equal(ConnectionState.Open, e.CurrentState);
-				}
+			connection.StateChange += Handler;
+			try
+			{
+				connection.ConnectionString = ConnectionString;
+				connection.Open();
 
-				connection.StateChange += Handler;
-				try
-				{
-					connection.ConnectionString = ConnectionString;
-					connection.Open();
-
-					Assert.True(raised);
-					Assert.Equal(ConnectionState.Open, connection.State);
-				}
-				finally
-				{
-					connection.StateChange -= Handler;
-				}
+				Assert.True(raised);
+				Assert.Equal(ConnectionState.Open, connection.State);
+			}
+			finally
+			{
+				connection.StateChange -= Handler;
 			}
 		}
 
 		[Fact]
 		public virtual void Open_cannot_be_called_twice()
 		{
-			using (var connection = CreateOpenConnection())
-				Assert.Throws<InvalidOperationException>(() => connection.Open());
+			using var connection = CreateOpenConnection();
+			Assert.Throws<InvalidOperationException>(() => connection.Open());
 		}
 
 		[Fact]
 		public virtual async Task OpenAsync_is_canceled()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-			{
-				connection.ConnectionString = ConnectionString;
-				var task = connection.OpenAsync(CanceledToken);
-				await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
-				Assert.True(task.IsCanceled);
-			}
+			using var connection = Fixture.Factory.CreateConnection();
+			connection.ConnectionString = ConnectionString;
+			var task = connection.OpenAsync(CanceledToken);
+			await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+			Assert.True(task.IsCanceled);
 		}
 
 		[Fact]
 		public virtual void Close_works()
 		{
-			using (var connection = CreateOpenConnection())
+			using var connection = CreateOpenConnection();
+			var raised = false;
+
+			void Handler(object sender, StateChangeEventArgs e)
 			{
-				var raised = false;
+				raised = true;
 
-				void Handler(object sender, StateChangeEventArgs e)
-				{
-					raised = true;
+				Assert.Equal(connection, sender);
+				Assert.Equal(ConnectionState.Open, e.OriginalState);
+				Assert.Equal(ConnectionState.Closed, e.CurrentState);
+			}
 
-					Assert.Equal(connection, sender);
-					Assert.Equal(ConnectionState.Open, e.OriginalState);
-					Assert.Equal(ConnectionState.Closed, e.CurrentState);
-				}
+			connection.StateChange += Handler;
+			try
+			{
+				connection.Close();
 
-				connection.StateChange += Handler;
-				try
-				{
-					connection.Close();
-
-					Assert.True(raised);
-					Assert.Equal(ConnectionState.Closed, connection.State);
-				}
-				finally
-				{
-					connection.StateChange -= Handler;
-				}
+				Assert.True(raised);
+				Assert.Equal(ConnectionState.Closed, connection.State);
+			}
+			finally
+			{
+				connection.StateChange -= Handler;
 			}
 		}
 
 		[Fact]
 		public virtual void Close_can_be_called_before_open()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-				connection.Close();
+			using var connection = Fixture.Factory.CreateConnection();
+			connection.Close();
 		}
 
 		[Fact]
 		public virtual void Close_can_be_called_more_than_once()
 		{
-			using (var connection = CreateOpenConnection())
-			{
-				connection.Close();
-				connection.Close();
-			}
+			using var connection = CreateOpenConnection();
+			connection.Close();
+			connection.Close();
 		}
 
 		[Fact]
@@ -192,36 +180,32 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void CreateCommand_returns_command()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				Assert.NotNull(command);
-				Assert.Same(connection, command.Connection);
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			Assert.NotNull(command);
+			Assert.Same(connection, command.Connection);
 		}
 
 		[Fact]
 		public virtual void CreateCommand_does_not_set_Transaction_property()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction())
-			using (var command = connection.CreateCommand())
-			{
-				Assert.Null(command.Transaction);
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction();
+			using var command = connection.CreateCommand();
+			Assert.Null(command.Transaction);
 		}
 
 		[Fact]
 		public virtual void BeginTransaction_throws_when_closed()
 		{
-			using (var connection = Fixture.Factory.CreateConnection())
-				Assert.Throws<InvalidOperationException>(() => connection.BeginTransaction());
+			using var connection = Fixture.Factory.CreateConnection();
+			Assert.Throws<InvalidOperationException>(() => connection.BeginTransaction());
 		}
 
 		[Fact]
 		public virtual void BeginTransaction_throws_when_parallel_transaction()
 		{
-			using (var connection = CreateOpenConnection())
+			using var connection = CreateOpenConnection();
 			using (connection.BeginTransaction())
 			{
 				Assert.Throws<InvalidOperationException>(() => connection.BeginTransaction());
@@ -231,107 +215,89 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void BeginTransaction_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.NotNull(transaction);
-				Assert.Equal(connection, transaction.Connection);
-				Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.NotNull(transaction);
+			Assert.Equal(connection, transaction.Connection);
+			Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
 		}
 
 		[Fact]
 		public virtual void Commit_transaction_clears_Connection()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Commit();
-				Assert.Null(transaction.Connection);
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Commit();
+			Assert.Null(transaction.Connection);
 		}
 
 		[Fact]
 		public virtual void Commit_transaction_throws_after_Dispose()
 		{
-			using (var connection = CreateOpenConnection())
-			{
-				var transaction = connection.BeginTransaction();
-				transaction.Dispose();
-				Assert.Throws<ObjectDisposedException>(() => transaction.Commit());
-			}
+			using var connection = CreateOpenConnection();
+			var transaction = connection.BeginTransaction();
+			transaction.Dispose();
+			Assert.Throws<ObjectDisposedException>(() => transaction.Commit());
 		}
 
 		[Fact]
 		public virtual void Commit_transaction_twice_throws()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Commit();
-				Assert.Throws<InvalidOperationException>(() => transaction.Commit());
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Commit();
+			Assert.Throws<InvalidOperationException>(() => transaction.Commit());
 		}
 
 		[Fact]
 		public virtual void Commit_transaction_then_Rollback_throws()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Commit();
-				Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Commit();
+			Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
 		}
 
 		[Fact]
 		public virtual void Rollback_transaction_clears_Connection()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Rollback();
-				Assert.Null(transaction.Connection);
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Rollback();
+			Assert.Null(transaction.Connection);
 		}
 
 		[Fact]
 		public virtual void Rollback_transaction_throws_after_Dispose()
 		{
-			using (var connection = CreateOpenConnection())
-			{
-				var transaction = connection.BeginTransaction();
-				transaction.Dispose();
-				Assert.Throws<ObjectDisposedException>(() => transaction.Rollback());
-			}
+			using var connection = CreateOpenConnection();
+			var transaction = connection.BeginTransaction();
+			transaction.Dispose();
+			Assert.Throws<ObjectDisposedException>(() => transaction.Rollback());
 		}
 
 		[Fact]
 		public virtual void Rollback_transaction_twice_throws()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Rollback();
-				Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Rollback();
+			Assert.Throws<InvalidOperationException>(() => transaction.Rollback());
 		}
 
 		[Fact]
 		public virtual void Rollback_transaction_then_Commit_throws()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
-			{
-				Assert.Same(connection, transaction.Connection);
-				transaction.Rollback();
-				Assert.Throws<InvalidOperationException>(() => transaction.Commit());
-			}
+			using var connection = CreateOpenConnection();
+			using var transaction = connection.BeginTransaction(IsolationLevel.Serializable);
+			Assert.Same(connection, transaction.Connection);
+			transaction.Rollback();
+			Assert.Throws<InvalidOperationException>(() => transaction.Commit());
 		}
 	}
 }

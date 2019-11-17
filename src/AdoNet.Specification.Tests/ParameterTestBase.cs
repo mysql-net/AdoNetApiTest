@@ -88,81 +88,71 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void Bind_requires_set_name()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT @Parameter;";
-				var parameter = command.CreateParameter();
-				parameter.Value = 1;
-				command.Parameters.Add(parameter);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.Value = 1;
+			command.Parameters.Add(parameter);
 
-				AssertThrowsAny<InvalidOperationException, DbException>(() => command.ExecuteNonQuery());
-			}
+			AssertThrowsAny<InvalidOperationException, DbException>(() => command.ExecuteNonQuery());
 		}
 
 		[Fact]
 		public virtual void Bind_requires_set_value()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT @Parameter;";
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@Parameter";
-				command.Parameters.Add(parameter);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Parameter";
+			command.Parameters.Add(parameter);
 
-				// When you send a null parameter value to the server, you must specify DBNull, not null. The null value in the system is an empty object that has no value. DBNull is used to represent null values.
-				Assert.Throws<InvalidOperationException>(() => command.ExecuteNonQuery());
-			}
+			// When you send a null parameter value to the server, you must specify DBNull, not null. The null value in the system is an empty object that has no value. DBNull is used to represent null values.
+			Assert.Throws<InvalidOperationException>(() => command.ExecuteNonQuery());
 		}
 
 		[Fact]
 		public virtual void Bind_is_noop_on_unknown_parameter()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@Unknown";
-				parameter.Value = 1;
-				command.Parameters.Add(parameter);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Unknown";
+			parameter.Value = 1;
+			command.Parameters.Add(parameter);
 
-				command.ExecuteNonQuery();
-			}
+			command.ExecuteNonQuery();
 		}
 		
 		[Fact]
 		public virtual void Bind_throws_when_unknown()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT @Parameter;";
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@Parameter";
-				parameter.Value = new object();
-				command.Parameters.Add(parameter);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Parameter";
+			parameter.Value = new object();
+			command.Parameters.Add(parameter);
 
-				AssertThrowsAny<InvalidOperationException, NotSupportedException>(() => command.ExecuteScalar());
-			}
+			AssertThrowsAny<InvalidOperationException, NotSupportedException>(() => command.ExecuteScalar());
 		}
 
 		[Fact]
 		public virtual void Bind_works_with_string()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT @Parameter;";
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@Parameter";
-				parameter.Value = "test";
-				command.Parameters.Add(parameter);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Parameter";
+			parameter.Value = "test";
+			command.Parameters.Add(parameter);
 
-				var result = command.ExecuteScalar();
-				Assert.Equal("test", result);
-			}
+			var result = command.ExecuteScalar();
+			Assert.Equal("test", result);
 		}
 
 		[Fact]
@@ -208,143 +198,115 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void ParameterCollection_Add_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Throws<ArgumentNullException>(() => command.Parameters.Add(default));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Throws<ArgumentNullException>(() => command.Parameters.Add(default));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_string_indexer_setter_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@param";
-				command.Parameters.Add(parameter);
-				Assert.Throws<ArgumentNullException>(() => command.Parameters["@param"] = null);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@param";
+			command.Parameters.Add(parameter);
+			Assert.Throws<ArgumentNullException>(() => command.Parameters["@param"] = null);
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_int_indexer_setter_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				command.Parameters.Add(parameter);
-				Assert.Throws<ArgumentNullException>(() => command.Parameters[0] = null);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			command.Parameters.Add(parameter);
+			Assert.Throws<ArgumentNullException>(() => command.Parameters[0] = null);
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_IList_indexer_setter_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				command.Parameters.Add(parameter);
-				Assert.Throws<ArgumentNullException>(() => ((IList) command.Parameters)[0] = null);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			command.Parameters.Add(parameter);
+			Assert.Throws<ArgumentNullException>(() => ((IList) command.Parameters)[0] = null);
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_IDataParameterCollection_indexer_setter_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				parameter.ParameterName = "@param";
-				command.Parameters.Add(parameter);
-				Assert.Throws<ArgumentNullException>(() => ((IDataParameterCollection) command.Parameters)["@param"] = null);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@param";
+			command.Parameters.Add(parameter);
+			Assert.Throws<ArgumentNullException>(() => ((IDataParameterCollection) command.Parameters)["@param"] = null);
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_Contains_object_returns_false_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.False(command.Parameters.Contains(default(object)));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.False(command.Parameters.Contains(default(object)));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_Contains_string_returns_false_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.False(command.Parameters.Contains(default(string)));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.False(command.Parameters.Contains(default(string)));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_IndexOf_object_returns_negative_one_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Equal(-1, command.Parameters.IndexOf(default(object)));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Equal(-1, command.Parameters.IndexOf(default(object)));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_IndexOf_string_returns_negative_one_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Equal(-1, command.Parameters.IndexOf(default(string)));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Equal(-1, command.Parameters.IndexOf(default(string)));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_Remove_throws_for_null()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Throws<ArgumentNullException>(() => command.Parameters.Remove(null));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Throws<ArgumentNullException>(() => command.Parameters.Remove(null));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_RemoveAt_negative_one_throws()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(-1));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(-1));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_RemoveAt_zero_throws_when_empty()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(0));
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.RemoveAt(0));
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_Remove_succeeds()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				command.Parameters.Add(parameter);
-				command.Parameters.Remove(parameter);
-				Assert.Empty(command.Parameters);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			command.Parameters.Add(parameter);
+			command.Parameters.Remove(parameter);
+			Assert.Empty(command.Parameters);
 		}
 
 		[Fact]
 		public virtual void ParameterCollection_RemoveAt_succeeds()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-			{
-				var parameter = command.CreateParameter();
-				command.Parameters.Add(parameter);
-				command.Parameters.RemoveAt(0);
-				Assert.Empty(command.Parameters);
-			}
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			command.Parameters.Add(parameter);
+			command.Parameters.RemoveAt(0);
+			Assert.Empty(command.Parameters);
 		}
 	}
 }

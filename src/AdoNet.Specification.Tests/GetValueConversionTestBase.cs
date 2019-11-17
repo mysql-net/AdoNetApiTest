@@ -52,16 +52,12 @@ namespace AdoNet.Specification.Tests
 			if (!Fixture.SupportedDbTypes.Contains(dbType))
 				throw new SkipException("Database doesn't support this data type");
 
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(dbType, kind);
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.True(reader.Read());
-					action(reader);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(dbType, kind);
+			using var reader = command.ExecuteReader();
+			Assert.True(reader.Read());
+			action(reader);
 		}
 	}
 }

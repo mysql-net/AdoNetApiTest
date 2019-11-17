@@ -22,58 +22,46 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void Dispose_command_before_reader()
 		{
-			using (var connection = CreateOpenConnection())
+			using var connection = CreateOpenConnection();
+			DbDataReader reader;
+			using (var command = connection.CreateCommand())
 			{
-				DbDataReader reader;
-				using (var command = connection.CreateCommand())
-				{
-					command.CommandText = "SELECT 'test';";
-					reader = command.ExecuteReader();
-				}
-
-				Assert.True(reader.Read());
-				Assert.Equal("test", reader.GetString(0));
-				Assert.False(reader.Read());
+				command.CommandText = "SELECT 'test';";
+				reader = command.ExecuteReader();
 			}
+
+			Assert.True(reader.Read());
+			Assert.Equal("test", reader.GetString(0));
+			Assert.False(reader.Read());
 		}
 
 		[Fact]
 		public virtual void Depth_returns_zero()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Equal(0, reader.Depth);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Equal(0, reader.Depth);
 		}
 
 		[Fact]
 		public virtual void ExecuteScalar_returns_null_when_empty()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.SelectNoRows;
-				Assert.Null(command.ExecuteScalar());
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows;
+			Assert.Null(command.ExecuteScalar());
 		}
 
 		[Fact]
 		public virtual void FieldCount_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Equal(1, reader.FieldCount);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Equal(1, reader.FieldCount);
 		}
 
 		[Fact]
@@ -87,53 +75,41 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetBytes_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(new byte[] { 0x7E, 0x57 });
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(new byte[] { 0x7E, 0x57 });
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					var buffer = new byte[2];
-					Assert.Equal(2, reader.GetBytes(0, 0, buffer, 0, buffer.Length));
-					Assert.Equal(new byte[] { 0x7E, 0x57 }, buffer);
-				}
-			}
+			var buffer = new byte[2];
+			Assert.Equal(2, reader.GetBytes(0, 0, buffer, 0, buffer.Length));
+			Assert.Equal(new byte[] { 0x7E, 0x57 }, buffer);
 		}
 
 		[Fact]
 		public virtual void GetChars_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'test';";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'test';";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					var buffer = new char[4];
-					Assert.Equal(4, reader.GetChars(0, 0, buffer, 0, buffer.Length));
-					Assert.Equal(new[] { 't', 'e', 's', 't' }, buffer);
-				}
-			}
+			var buffer = new char[4];
+			Assert.Equal(4, reader.GetChars(0, 0, buffer, 0, buffer.Length));
+			Assert.Equal(new[] { 't', 'e', 's', 't' }, buffer);
 		}
 
 		[Fact]
 		public virtual void GetDataTypeName_throws_when_ordinal_out_of_range()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Throws<IndexOutOfRangeException>(() => reader.GetDataTypeName(1));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<IndexOutOfRangeException>(() => reader.GetDataTypeName(1));
 		}
 
 		[Fact]
@@ -143,35 +119,27 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetEnumerator_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					Assert.NotNull(reader.GetEnumerator());
-				}
-			}
+			Assert.NotNull(reader.GetEnumerator());
 		}
 
 		[Fact]
 		public virtual void GetFieldValue_of_DBNull_throws_when_not_null()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
 
-					Assert.True(hasData);
-					Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<DBNull>(0));
-				}
-			}
+			Assert.True(hasData);
+			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<DBNull>(0));
 		}
 
 		[Fact]
@@ -185,47 +153,35 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual async Task GetFieldValueAsync_is_canceled()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			reader.Read();
 
-					var task = reader.GetFieldValueAsync<int>(0, CanceledToken);
-					await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
-					Assert.True(task.IsCanceled);
-				}
-			}
+			var task = reader.GetFieldValueAsync<int>(0, CanceledToken);
+			await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+			Assert.True(task.IsCanceled);
 		}
 
 		[Fact]
 		public virtual void GetFieldType_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'test';";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Equal(typeof(string), reader.GetFieldType(0));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'test';";
+			using var reader = command.ExecuteReader();
+			Assert.Equal(typeof(string), reader.GetFieldType(0));
 		}
 
 		[Fact]
 		public virtual void GetFieldType_throws_when_ordinal_out_of_range()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Throws<IndexOutOfRangeException>(() => reader.GetFieldType(1));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<IndexOutOfRangeException>(() => reader.GetFieldType(1));
 		}
 
 		[Fact]
@@ -235,29 +191,21 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetName_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1 AS id;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Equal("id", reader.GetName(0));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 AS id;";
+			using var reader = command.ExecuteReader();
+			Assert.Equal("id", reader.GetName(0));
 		}
 
 		[Fact]
 		public virtual void GetName_throws_when_ordinal_out_of_range()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Throws<IndexOutOfRangeException>(() => reader.GetName(1));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<IndexOutOfRangeException>(() => reader.GetName(1));
 		}
 
 		[Fact]
@@ -267,29 +215,21 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetOrdinal_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1 AS Id;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Equal(0, reader.GetOrdinal("Id"));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 AS Id;";
+			using var reader = command.ExecuteReader();
+			Assert.Equal(0, reader.GetOrdinal("Id"));
 		}
 
 		[Fact]
 		public virtual void GetOrdinal_throws_when_out_of_range()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Throws<IndexOutOfRangeException>(() => reader.GetOrdinal("Name"));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<IndexOutOfRangeException>(() => reader.GetOrdinal("Name"));
 		}
 
 		[Fact]
@@ -341,166 +281,128 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetValues_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'a', 'b';";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'a', 'b';";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					// Array may be wider than row
-					var values = new object[3];
-					var result = reader.GetValues(values);
+			// Array may be wider than row
+			var values = new object[3];
+			var result = reader.GetValues(values);
 
-					Assert.Equal(2, result);
-					Assert.Equal("a", values[0]);
-					Assert.Equal("b", values[1]);
-				}
-			}
+			Assert.Equal(2, result);
+			Assert.Equal("a", values[0]);
+			Assert.Equal("b", values[1]);
 		}
 
 		[Fact]
 		public virtual void GetValues_when_too_narrow()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					var values = new object[0];
-					Assert.Equal(0, reader.GetValues(values));
-				}
-			}
+			var values = new object[0];
+			Assert.Equal(0, reader.GetValues(values));
 		}
 
 		[Fact]
 		public virtual void GetValues_throws_for_null()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					Assert.Throws<ArgumentNullException>(() => reader.GetValues(default(object[])));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			Assert.Throws<ArgumentNullException>(() => reader.GetValues(default(object[])));
 		}
 
 		[Fact]
 		public virtual void HasRows_returns_true_when_rows()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.True(reader.HasRows);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.True(reader.HasRows);
 		}
 
 		[Fact]
 		public virtual void HasRows_returns_false_when_no_rows()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.SelectNoRows;
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.False(reader.HasRows);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows;
+			using var reader = command.ExecuteReader();
+			Assert.False(reader.HasRows);
 		}
 
 		[Fact]
 		public virtual void HasRows_works_when_batching()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.SelectNoRows + "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.False(reader.HasRows);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows + "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.False(reader.HasRows);
 
-					reader.NextResult();
+			reader.NextResult();
 
-					Assert.True(reader.HasRows);
-				}
-			}
+			Assert.True(reader.HasRows);
 		}
 
 		[Fact]
 		public virtual void IsClosed_returns_false_when_active()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.False(reader.IsClosed);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			Assert.False(reader.IsClosed);
 		}
 
 		[Fact]
 		public virtual void IsClosed_returns_true_when_closed()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				var reader = command.ExecuteReader();
-				reader.Close();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			var reader = command.ExecuteReader();
+			reader.Close();
 
-				Assert.True(reader.IsClosed);
-			}
+			Assert.True(reader.IsClosed);
 		}
 
 		[Fact]
 		public virtual void IsDBNull_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT NULL;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT NULL;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
 
-					Assert.True(hasData);
-					Assert.True(reader.IsDBNull(0));
-				}
-			}
+			Assert.True(hasData);
+			Assert.True(reader.IsDBNull(0));
 		}
 
 		[Fact]
 		public virtual async Task IsDBNullAsync_is_canceled()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			reader.Read();
 
-					var task = reader.IsDBNullAsync(0, CanceledToken);
-					await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
-					Assert.True(task.IsCanceled);
-				}
-			}
+			var task = reader.IsDBNullAsync(0, CanceledToken);
+			await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+			Assert.True(task.IsCanceled);
 		}
 
 		[Fact]
@@ -518,179 +420,143 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void Item_by_ordinal_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'test';";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'test';";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					Assert.Equal("test", reader[0]);
-				}
-			}
+			Assert.Equal("test", reader[0]);
 		}
 
 		[Fact]
 		public virtual void Item_by_name_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'test' AS Id;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'test' AS Id;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					Assert.Equal("test", reader["Id"]);
-				}
-			}
+			Assert.Equal("test", reader["Id"]);
 		}
 
 		[Fact]
 		public virtual void NextResult_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1; SELECT 2";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(1L, reader.GetInt64(0));
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1; SELECT 2";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, reader.GetInt64(0));
 
-					var hasResults = reader.NextResult();
-					Assert.True(hasResults);
+			var hasResults = reader.NextResult();
+			Assert.True(hasResults);
 
-					hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(2L, reader.GetInt64(0));
+			hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(2L, reader.GetInt64(0));
 
-					hasResults = reader.NextResult();
-					Assert.False(hasResults);
-				}
-			}
+			hasResults = reader.NextResult();
+			Assert.False(hasResults);
 		}
 
 		[Fact]
 		public virtual void SingleRow_returns_one_row()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1 UNION SELECT 2;";
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 UNION SELECT 2;";
 
-				using (var reader = command.ExecuteReader(CommandBehavior.SingleRow))
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
-					Assert.False(reader.Read());
+			using var reader = command.ExecuteReader(CommandBehavior.SingleRow);
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
+			Assert.False(reader.Read());
 
-					Assert.False(reader.NextResult());
-				}
-			}
+			Assert.False(reader.NextResult());
 		}
 
 		[Fact]
 		public virtual void SingleRow_returns_one_result_set()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1; SELECT 2; SELECT 3;";
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1; SELECT 2; SELECT 3;";
 
-				using (var reader = command.ExecuteReader(CommandBehavior.SingleRow))
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
-					Assert.False(reader.Read());
+			using var reader = command.ExecuteReader(CommandBehavior.SingleRow);
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
+			Assert.False(reader.Read());
 
-					Assert.False(reader.NextResult());
-				}
-			}
+			Assert.False(reader.NextResult());
 		}
 
 		[Fact]
 		public virtual void SingleResult_returns_one_result_set()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1; SELECT 2; SELECT 3;";
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1; SELECT 2; SELECT 3;";
 
-				using (var reader = command.ExecuteReader(CommandBehavior.SingleResult))
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
-					Assert.False(reader.Read());
+			using var reader = command.ExecuteReader(CommandBehavior.SingleResult);
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, Convert.ToInt64(reader.GetValue(0)));
+			Assert.False(reader.Read());
 
-					Assert.False(reader.NextResult());
-				}
-			}
+			Assert.False(reader.NextResult());
 		}
 
 		[Fact]
 		public virtual void NextResult_can_be_called_more_than_once()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasResults = reader.NextResult();
-					Assert.False(hasResults);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			using var reader = command.ExecuteReader();
+			var hasResults = reader.NextResult();
+			Assert.False(hasResults);
 
-					hasResults = reader.NextResult();
-					Assert.False(hasResults);
-				}
-			}
+			hasResults = reader.NextResult();
+			Assert.False(hasResults);
 		}
 
 		[Fact]
 		public virtual void Read_works()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1 UNION SELECT 2;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(1L, reader.GetInt64(0));
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 UNION SELECT 2;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(1L, reader.GetInt64(0));
 
-					hasData = reader.Read();
-					Assert.True(hasData);
-					Assert.Equal(2L, reader.GetInt64(0));
+			hasData = reader.Read();
+			Assert.True(hasData);
+			Assert.Equal(2L, reader.GetInt64(0));
 
-					hasData = reader.Read();
-					Assert.False(hasData);
-				}
-			}
+			hasData = reader.Read();
+			Assert.False(hasData);
 		}
 
 		[Fact]
 		public virtual void Read_keeps_returning_false()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Empty);
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.True(reader.Read());
-					Assert.False(reader.Read());
-					Assert.False(reader.Read());
-					Assert.False(reader.Read());
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Empty);
+			using var reader = command.ExecuteReader();
+			Assert.True(reader.Read());
+			Assert.False(reader.Read());
+			Assert.False(reader.Read());
+			Assert.False(reader.Read());
 		}
 
 		[Fact]
@@ -759,16 +625,12 @@ namespace AdoNet.Specification.Tests
 
 		private void TestGetBytes(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(new byte[] { 1, 2, 3, 4 });
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					action(reader);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(new byte[] { 1, 2, 3, 4 });
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			action(reader);
 		}
 
 		[Fact]
@@ -831,16 +693,12 @@ namespace AdoNet.Specification.Tests
 
 		private void TestGetChars(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 'abcd';";
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					action(reader);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 'abcd';";
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			action(reader);
 		}
 
 		[Fact]
@@ -855,47 +713,35 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetTextReader_throws_for_null_String()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					Assert.Throws<InvalidCastException>(() => reader.GetTextReader(0));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			Assert.Throws<InvalidCastException>(() => reader.GetTextReader(0));
 		}
 
 		[Fact]
 		public virtual void GetFieldValue_for_TextReader()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.One);
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					using (var textReader = reader.GetFieldValue<TextReader>(0))
-						Assert.Equal("1", textReader.ReadToEnd());
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.One);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			using var textReader = reader.GetFieldValue<TextReader>(0);
+			Assert.Equal("1", textReader.ReadToEnd());
 		}
 
 		[Fact]
 		public virtual void GetFieldValue_for_TextReader_throws_for_null_String()
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<TextReader>(0));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<TextReader>(0));
 		}
 
 		[Fact]
@@ -999,7 +845,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void GetValues_throws_after_Delete()
 		{
-			Test_X_after_Delete(x => 
+			Test_X_after_Delete(x =>
 			{
 				var values = new object[1];
 				Assert.Throws<InvalidOperationException>(() => x.GetValues(values));
@@ -1008,104 +854,78 @@ namespace AdoNet.Specification.Tests
 
 		private void TestGetTextReader(ValueKind valueKind, string expected)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.CreateSelectSql(DbType.String, valueKind);
-				using (var reader = command.ExecuteReader())
-				{
-					reader.Read();
-					using (var textReader = reader.GetTextReader(0))
-						Assert.Equal(expected, textReader.ReadToEnd());
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, valueKind);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			using var textReader = reader.GetTextReader(0);
+			Assert.Equal(expected, textReader.ReadToEnd());
 		}
 
 		private void GetX_works<T>(string sql, Func<DbDataReader, T> action, T expected)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = sql;
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = sql;
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
 
-					Assert.True(hasData);
-					Assert.Equal(expected, action(reader));
-				}
-			}
+			Assert.True(hasData);
+			Assert.Equal(expected, action(reader));
 		}
 
 		private void X_throws_before_read(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT NULL;";
-				using (var reader = command.ExecuteReader())
-				{
-					Assert.Throws<InvalidOperationException>(() => action(reader));
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT NULL;";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<InvalidOperationException>(() => action(reader));
 		}
 
 		private void X_throws_when_done(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT NULL;";
-				using (var reader = command.ExecuteReader())
-				{
-					var hasData = reader.Read();
-					Assert.True(hasData);
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT NULL;";
+			using var reader = command.ExecuteReader();
+			var hasData = reader.Read();
+			Assert.True(hasData);
 
-					hasData = reader.Read();
-					Assert.False(hasData);
+			hasData = reader.Read();
+			Assert.False(hasData);
 
-					Assert.Throws<InvalidOperationException>(() => action(reader));
-				}
-			}
+			Assert.Throws<InvalidOperationException>(() => action(reader));
 		}
 
 		private void X_throws_when_closed(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = "SELECT 1;";
-				var reader = command.ExecuteReader();
-				((IDisposable) reader).Dispose();
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			var reader = command.ExecuteReader();
+			((IDisposable) reader).Dispose();
 
-				Assert.Throws<InvalidOperationException>(() => action(reader));
-			}
+			Assert.Throws<InvalidOperationException>(() => action(reader));
 		}
 
 		private void Test_X_after_Delete(Action<DbDataReader> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.DeleteNoRows;
-				using (var reader = command.ExecuteReader())
-				{
-					action(reader);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.DeleteNoRows;
+			using var reader = command.ExecuteReader();
+			action(reader);
 		}
 
 		private async Task Test_X_after_Delete(Func<DbDataReader, Task> action)
 		{
-			using (var connection = CreateOpenConnection())
-			using (var command = connection.CreateCommand())
-			{
-				command.CommandText = Fixture.DeleteNoRows;
-				using (var reader = command.ExecuteReader())
-				{
-					await action(reader);
-				}
-			}
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.DeleteNoRows;
+			using var reader = command.ExecuteReader();
+			await action(reader);
 		}
 	}
 }
