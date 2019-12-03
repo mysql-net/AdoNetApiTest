@@ -283,7 +283,7 @@ namespace AdoNet.Specification.Tests
 		{
 			using var connection = CreateOpenConnection();
 			using var command = connection.CreateCommand();
-			command.CommandText = "SELECT 'a', 'b';";
+			command.CommandText = "SELECT 'a', NULL;";
 			using var reader = command.ExecuteReader();
 			var hasData = reader.Read();
 			Assert.True(hasData);
@@ -294,7 +294,7 @@ namespace AdoNet.Specification.Tests
 
 			Assert.Equal(2, result);
 			Assert.Equal("a", values[0]);
-			Assert.Equal("b", values[1]);
+			Assert.Same(DBNull.Value, values[1]);
 		}
 
 		[Fact]
@@ -843,6 +843,26 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetValue_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() =>x.GetValue(0)));
 
 		[Fact]
+		public virtual void GetStream_throws_for_non_binary_type()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<InvalidOperationException>(() => reader.GetStream(0));
+		}
+
+		[Fact]
+		public virtual void GetTextReader_throws_for_non_text_type()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1";
+			using var reader = command.ExecuteReader();
+			Assert.Throws<InvalidOperationException>(() => reader.GetTextReader(0));
+		}
+
+		[Fact]
 		public virtual void GetValues_throws_after_Delete()
 		{
 			Test_X_after_Delete(x =>
@@ -850,6 +870,60 @@ namespace AdoNet.Specification.Tests
 				var values = new object[1];
 				Assert.Throws<InvalidOperationException>(() => x.GetValues(values));
 			});
+		}
+
+		[Fact]
+		public virtual void GetColumnSchema_ColumnName()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 AS id;";
+			using var reader = command.ExecuteReader();
+			if (!reader.CanGetColumnSchema())
+				return;
+			var columns = reader.GetColumnSchema();
+			var column = Assert.Single(columns);
+			Assert.Equal("id", column.ColumnName);
+		}
+
+		[Fact]
+		public virtual void GetColumnSchema_DataTypeName()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 AS id;";
+			using var reader = command.ExecuteReader();
+			if (!reader.CanGetColumnSchema())
+				return;
+			var columns = reader.GetColumnSchema();
+			var column = Assert.Single(columns);
+			Assert.NotNull(column.DataTypeName);
+		}
+
+		[Fact]
+		public virtual void GetColumnSchema_DataType()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1 AS id;";
+			using var reader = command.ExecuteReader();
+			if (!reader.CanGetColumnSchema())
+				return;
+			var columns = reader.GetColumnSchema();
+			var column = Assert.Single(columns);
+			switch (Type.GetTypeCode(column.DataType))
+			{
+			case TypeCode.Byte:
+			case TypeCode.Int16:
+			case TypeCode.Int32:
+			case TypeCode.Int64:
+			case TypeCode.SByte:
+			case TypeCode.UInt16:
+			case TypeCode.UInt32:
+			case TypeCode.UInt64:
+				return;
+			}
+			Assert.True(false, "DataType isn't numeric");
 		}
 
 		private void TestGetTextReader(ValueKind valueKind, string expected)

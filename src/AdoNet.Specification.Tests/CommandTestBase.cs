@@ -55,7 +55,14 @@ namespace AdoNet.Specification.Tests
 			using var reader = command.ExecuteReader();
 			reader.Read();
 
-			Assert.Throws<InvalidOperationException>(() => command.Connection = Fixture.Factory.CreateConnection());
+			Assert.Throws<InvalidOperationException>(() => command.Connection = CreateConnection());
+		}
+
+		[Fact]
+		public virtual void CommandText_empty_by_default()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Equal(string.Empty, command.CommandText);
 		}
 
 		[Fact]
@@ -120,7 +127,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void Prepare_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			Assert.Throws<InvalidOperationException>(() => command.Prepare());
 		}
@@ -143,7 +150,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void ExecuteReader_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			Assert.Throws<InvalidOperationException>(() => command.ExecuteReader());
 		}
@@ -277,7 +284,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void ExecuteScalar_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			Assert.Throws<InvalidOperationException>(() => command.ExecuteScalar());
 		}
@@ -371,7 +378,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void ExecuteNonQuery_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			Assert.Throws<InvalidOperationException>(() => command.ExecuteNonQuery());
 		}
@@ -403,7 +410,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual async Task ExecuteReaderAsync_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			await Assert.ThrowsAsync<InvalidOperationException>(command.ExecuteReaderAsync);
 		}
@@ -435,7 +442,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual async Task ExecuteScalarAsync_throws_when_connection_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			using var command = connection.CreateCommand();
 			await Assert.ThrowsAsync<InvalidOperationException>(command.ExecuteScalarAsync);
 		}

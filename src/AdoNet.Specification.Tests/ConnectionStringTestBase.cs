@@ -22,7 +22,7 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void ConnectionString_can_set_null_but_returns_empty()
+		public virtual void ConnectionString_set_to_null_is_empty_string()
 		{
 			var builder = CreateConnectionStringBuilder();
 			builder.ConnectionString = null;

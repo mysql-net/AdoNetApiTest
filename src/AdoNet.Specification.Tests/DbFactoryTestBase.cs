@@ -41,13 +41,18 @@ namespace AdoNet.Specification.Tests
 
 		protected virtual Task OnDisposeAsync() => Task.CompletedTask;
 
+		protected virtual DbConnection CreateConnection() => Fixture.Factory.CreateConnection();
+
 		protected virtual DbConnection CreateOpenConnection()
 		{
-			var connection = Fixture.Factory.CreateConnection();
+			var connection = CreateConnection();
 			connection.ConnectionString = ConnectionString;
 			connection.Open();
 			return connection;
 		}
+
+		protected virtual DbConnectionStringBuilder CreateConnectionStringBuilder()
+			=> Fixture.Factory.CreateConnectionStringBuilder();
 
 		protected virtual string ConnectionString
 		{

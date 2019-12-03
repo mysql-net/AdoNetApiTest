@@ -75,6 +75,12 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void Parameter_Value_can_be_set_to_null()
+		{
+			Assert.Null(Fixture.Factory.CreateParameter().Value);
+		}
+
+		[Fact]
 		public virtual void ResetDbType_works()
 		{
 			var parameter = Fixture.Factory.CreateParameter();
@@ -125,7 +131,7 @@ namespace AdoNet.Specification.Tests
 
 			command.ExecuteNonQuery();
 		}
-		
+
 		[Fact]
 		public virtual void Bind_throws_when_unknown()
 		{
@@ -178,7 +184,10 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void SourceColumn_can_be_set_to_null()
 		{
-			Fixture.Factory.CreateParameter().SourceColumn = null;
+			//Fixture.Factory.CreateParameter().SourceColumn = null;
+			var parameter = Fixture.Factory.CreateParameter();
+			parameter.SourceColumn = null;
+			Assert.Equal("", parameter.SourceColumn);
 		}
 
 		[Fact]
@@ -200,6 +209,13 @@ namespace AdoNet.Specification.Tests
 		{
 			using var command = Fixture.Factory.CreateCommand();
 			Assert.Throws<ArgumentNullException>(() => command.Parameters.Add(default));
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Insert_throws_for_null()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Throws<ArgumentNullException>(() => command.Parameters.Insert(0, default));
 		}
 
 		[Fact]

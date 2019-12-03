@@ -18,7 +18,7 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void BeginTransaction_throws_when_closed()
 		{
-			using var connection = Fixture.Factory.CreateConnection();
+			using var connection = CreateConnection();
 			Assert.Throws<InvalidOperationException>(() => connection.BeginTransaction());
 		}
 
