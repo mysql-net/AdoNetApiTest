@@ -68,8 +68,8 @@ namespace AdoNet.Specification.Tests
 		[Fact]
 		public virtual void CommandType_text_by_default()
 		{
-			using (var command = Fixture.Factory.CreateCommand())
-				Assert.Equal(CommandType.Text, command.CommandType);;
+			using var command = Fixture.Factory.CreateCommand();
+			Assert.Equal(CommandType.Text, command.CommandType);
 		}
 
 		[Fact]
