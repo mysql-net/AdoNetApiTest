@@ -28,7 +28,7 @@ variables:
 jobs:
   - job: Linux_MySQL
     pool:
-      vmimage: 'ubuntu-16.04'
+      vmimage: 'ubuntu-18.04'
     services:
       mysql: mysql
     variables:
@@ -83,7 +83,7 @@ jobs:
 
   - job: Linux_PostgreSQL
     pool:
-      vmimage: 'ubuntu-16.04'
+      vmimage: 'ubuntu-18.04'
     services:
       postgres: postgres
     variables:
@@ -119,7 +119,7 @@ jobs:
 
   - job: Linux_SQLite
     pool:
-      vmimage: 'ubuntu-16.04'
+      vmimage: 'ubuntu-18.04'
     steps:
       - task: UseDotNet@2
         inputs:
@@ -152,7 +152,7 @@ jobs:
 
   - job: Linux_SQLServer
     pool:
-      vmimage: 'ubuntu-16.04'
+      vmimage: 'ubuntu-18.04'
     services:
       sqlserver: sqlserver
     variables:
@@ -219,7 +219,7 @@ jobs:
       - Linux_SQLServer
       - Windows_SQLServer
     pool:
-      vmimage: 'ubuntu-16.04'
+      vmimage: 'ubuntu-18.04'
     steps:
       - task: DownloadPipelineArtifact@0
         inputs:
