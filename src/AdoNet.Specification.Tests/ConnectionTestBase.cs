@@ -14,6 +14,13 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void ConnectionString_is_empty_string_by_default()
+		{
+			using var connection = Fixture.Factory.CreateConnection();
+			Assert.Equal("", connection.ConnectionString);
+		}
+
+		[Fact]
 		public virtual void ConnectionString_setter_throws_when_open()
 		{
 			using var connection = CreateOpenConnection();
