@@ -4,7 +4,7 @@ namespace DotConnectMySql.Tests
 {
 	public sealed class DotConnectMySqlTransactionTests : TransactionTestBase<DotConnectMySqlDbFactoryFixture>
 	{
-		public DotConnectMySqlTransactionTests(DotConnectMySqlSelectValueFixture fixture)
+		public DotConnectMySqlTransactionTests(DotConnectMySqlDbFactoryFixture fixture)
 			: base(fixture)
 		{
 		}
