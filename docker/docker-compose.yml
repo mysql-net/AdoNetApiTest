@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mssql:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    image: mcr.microsoft.com/mssql/server:2017-CU17-ubuntu
     ports:
       - "1433:1433"
     environment:

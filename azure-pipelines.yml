@@ -1,21 +1,21 @@
 resources:
   containers:
   - container: mysql
-    image: mysql:5.7.24
+    image: mysql:5.7.28
     ports:
     - "3300:3306"
     env:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: test
   - container: postgres
-    image: postgres
+    image: postgres:11.6-alpine
     ports:
     - 5432:5432
     env:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: test
   - container: sqlserver
-    image: mcr.microsoft.com/mssql/server:2017-CU12-ubuntu
+    image: mcr.microsoft.com/mssql/server:2017-CU17-ubuntu
     ports:
     - "1433:1433"
     env:
