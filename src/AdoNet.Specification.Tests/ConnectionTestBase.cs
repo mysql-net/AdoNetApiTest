@@ -21,6 +21,22 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public void ConnectionString_is_coerced_to_empty_string()
+		{
+			using var connection = Fixture.Factory.CreateConnection();
+			connection.ConnectionString = null;
+			Assert.Equal("", connection.ConnectionString);
+		}
+
+		[Fact]
+		public void ConnectionString_can_be_set_to_empty_string()
+		{
+			using var connection = Fixture.Factory.CreateConnection();
+			connection.ConnectionString = "";
+			Assert.Equal("", connection.ConnectionString);
+		}
+
+		[Fact]
 		public virtual void ConnectionString_setter_throws_when_open()
 		{
 			using var connection = CreateOpenConnection();

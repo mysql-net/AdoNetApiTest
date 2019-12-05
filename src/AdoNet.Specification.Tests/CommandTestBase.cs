@@ -66,6 +66,22 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public void CommandText_is_coerced_to_empty_string()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			command.CommandText = null;
+			Assert.Equal("", command.CommandText);
+		}
+
+		[Fact]
+		public void CommandText_can_be_set_to_empty_string()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			command.CommandText = "";
+			Assert.Equal("", command.CommandText);
+		}
+
+		[Fact]
 		public virtual void CommandType_text_by_default()
 		{
 			using var command = Fixture.Factory.CreateCommand();
