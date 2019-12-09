@@ -1,5 +1,13 @@
 # Version History
 
+## 2.0.0 Alpha 7
+
+* Add nullability tests.
+* Add connection string tests.
+* Add `CommandBehavior` tests.
+* **Breaking** Move tests to new `TransactionTestBase` class.
+* Thanks to [Shay Rojansky](https://github.com/roji) for contributions to this release.
+
 ## 2.0.0 Alpha 6
 
 * Add `DataReaderTestBase.GetValues_throws_for_null`.
