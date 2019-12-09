@@ -4,7 +4,7 @@ namespace DotConnectPostgres.Tests
 {
 	public sealed class DotConnectConnectionStringBuilderTests : ConnectionStringTestBase<DotConnectPostgresDbFactoryFixture>
 	{
-		public DotConnectConnectionStringBuilderTests(DotConnectPostgresSelectValueFixture fixture)
+		public DotConnectConnectionStringBuilderTests(DotConnectPostgresDbFactoryFixture fixture)
 			: base(fixture)
 		{
 		}
