@@ -59,10 +59,11 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
-		public virtual void CommandText_empty_by_default()
+		public virtual void CommandText_does_not_throw_when_disposed()
 		{
-			using var command = Fixture.Factory.CreateCommand();
-			Assert.Equal(string.Empty, command.CommandText);
+			var command = Fixture.Factory.CreateCommand();
+			command.Dispose();
+			Assert.Equal("", command.CommandText);
 		}
 
 		[Fact]
@@ -96,6 +97,14 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void CommandType_does_not_throw_when_disposed()
+		{
+			var command = Fixture.Factory.CreateCommand();
+			command.Dispose();
+			Assert.Equal(CommandType.Text, command.CommandType);
+		}
+
+		[Fact]
 		public virtual void Parameters_is_not_null()
 		{
 			using var command = Fixture.Factory.CreateCommand();
@@ -108,6 +117,14 @@ namespace AdoNet.Specification.Tests
 			using var command = Fixture.Factory.CreateCommand();
 			var parameters = command.Parameters;
 			Assert.Same(parameters, command.Parameters);
+		}
+
+		[Fact]
+		public virtual void Parameters_does_not_throw_when_disposed()
+		{
+			var command = Fixture.Factory.CreateCommand();
+			command.Dispose();
+			Assert.NotNull(command.Parameters);
 		}
 
 		[Fact]
