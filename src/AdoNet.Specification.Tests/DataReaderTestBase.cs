@@ -801,6 +801,9 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void GetColumnSchema_is_empty_after_Delete() => Test_X_after_Delete(x => Assert.Empty(x.GetColumnSchema()));
+
+		[Fact]
 		public virtual void GetDataTime_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetDateTime(0)));
 
 		[Fact]
@@ -825,7 +828,13 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt64_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetInt64(0)));
 
 		[Fact]
-		public virtual void GetSchemaTable_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetSchemaTable()));
+		public virtual void GetSchemaTable_is_empty_after_Delete() => Test_X_after_Delete(x =>
+		{
+			var table = x.GetSchemaTable();
+			Assert.NotNull(table);
+			Assert.Empty(table.Rows);
+			Assert.Empty(table.Columns);
+		});
 
 		[Fact]
 		public virtual void GetStream_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetStream(0)));

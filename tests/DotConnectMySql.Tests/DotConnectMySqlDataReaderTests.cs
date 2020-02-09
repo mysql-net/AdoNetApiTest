@@ -1,4 +1,5 @@
 using AdoNet.Specification.Tests;
+using Xunit;
 
 namespace DotConnectMySql.Tests
 {
@@ -8,5 +9,8 @@ namespace DotConnectMySql.Tests
 			: base(fixture)
 		{
 		}
+
+		[Fact(Skip = "Not supported")]
+		public override void GetColumnSchema_is_empty_after_Delete() { }
 	}
 }

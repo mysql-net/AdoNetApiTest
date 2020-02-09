@@ -12,5 +12,8 @@ namespace SqlClientBcl.Tests
 
 		[Fact(Skip = "Deliberately returns empty StringReader")]
 		public override void GetTextReader_throws_for_null_String() { }
+
+		[Fact(Skip = "Not supported")]
+		public override void GetColumnSchema_is_empty_after_Delete() { }
 	}
 }
