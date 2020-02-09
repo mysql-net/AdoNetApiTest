@@ -888,8 +888,6 @@ namespace AdoNet.Specification.Tests
 			using var command = connection.CreateCommand();
 			command.CommandText = "SELECT 1 AS id;";
 			using var reader = command.ExecuteReader();
-			if (!reader.CanGetColumnSchema())
-				return;
 			var columns = reader.GetColumnSchema();
 			var column = Assert.Single(columns);
 			Assert.Equal("id", column.ColumnName);
@@ -902,8 +900,6 @@ namespace AdoNet.Specification.Tests
 			using var command = connection.CreateCommand();
 			command.CommandText = "SELECT 1 AS id;";
 			using var reader = command.ExecuteReader();
-			if (!reader.CanGetColumnSchema())
-				return;
 			var columns = reader.GetColumnSchema();
 			var column = Assert.Single(columns);
 			Assert.NotNull(column.DataTypeName);
@@ -916,8 +912,6 @@ namespace AdoNet.Specification.Tests
 			using var command = connection.CreateCommand();
 			command.CommandText = "SELECT 1 AS id;";
 			using var reader = command.ExecuteReader();
-			if (!reader.CanGetColumnSchema())
-				return;
 			var columns = reader.GetColumnSchema();
 			var column = Assert.Single(columns);
 			switch (Type.GetTypeCode(column.DataType))
