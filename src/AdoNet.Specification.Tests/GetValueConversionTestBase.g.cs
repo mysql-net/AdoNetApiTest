@@ -477,6 +477,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetByte_throws_for_one_Binary_with_GetFieldValue() => TestException(DbType.Binary, ValueKind.One, x => x.GetFieldValue<byte>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetByte_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetByte(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<byte>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetByte(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<byte>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetByte(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<byte>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetByte(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetByte_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<byte>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetByte_throws_for_null_Byte() => TestException(DbType.Byte, ValueKind.Null, x => x.GetByte(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
@@ -1329,6 +1353,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetChar_throws_for_maximum_UInt64_with_GetFieldValue() => TestException(DbType.UInt64, ValueKind.Maximum, x => x.GetFieldValue<char>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetDateTime_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetDateTime(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<DateTime>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetDateTime(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<DateTime>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetDateTime(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<DateTime>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetDateTime(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDateTime_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<DateTime>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetDateTime_throws_for_zero_Byte() => TestException(DbType.Byte, ValueKind.Zero, x => x.GetDateTime(0), typeof(InvalidCastException));
 
 		[SkippableFact]
@@ -1575,6 +1623,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDateTime_throws_for_maximum_Time_with_GetFieldValue() => TestException(DbType.Time, ValueKind.Maximum, x => x.GetFieldValue<DateTime>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetDecimal_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<decimal>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<decimal>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<decimal>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetDecimal(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDecimal_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<decimal>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetDecimal_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDecimal(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
@@ -1701,6 +1773,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDecimal_throws_for_one_String_with_GetFieldValue() => TestException(DbType.String, ValueKind.One, x => x.GetFieldValue<decimal>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetDouble_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetDouble(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<double>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetDouble(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<double>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetDouble(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<double>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetDouble(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetDouble_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<double>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetDouble_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetDouble(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
@@ -1803,6 +1899,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetDouble_throws_for_one_String_with_GetFieldValue() => TestException(DbType.String, ValueKind.One, x => x.GetFieldValue<double>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetFloat_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<float>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<float>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<float>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFloat(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetFloat_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<float>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetFloat_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetFloat(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
@@ -1903,6 +2023,30 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetFloat_throws_for_one_String_with_GetFieldValue() => TestException(DbType.String, ValueKind.One, x => x.GetFieldValue<float>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetGuid(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<Guid>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetGuid(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<Guid>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetGuid(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<Guid>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetGuid(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetGuid_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<Guid>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
 		public virtual void GetGuid_throws_for_zero_Byte() => TestException(DbType.Byte, ValueKind.Zero, x => x.GetGuid(0), typeof(InvalidCastException));
@@ -2187,6 +2331,30 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetGuid_throws_for_maximum_Time_with_GetFieldValue() => TestException(DbType.Time, ValueKind.Maximum, x => x.GetFieldValue<Guid>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
+		public virtual void GetInt16_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetInt16(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<short>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetInt16(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<short>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetInt16(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<short>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetInt16(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt16_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<short>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
 		public virtual void GetInt16_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt16(0), Fixture.NullValueExceptionType);
 
 		[SkippableFact]
@@ -2311,6 +2479,30 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetInt16_throws_for_maximum_UInt16_with_GetFieldValue() => TestException(DbType.UInt16, ValueKind.Maximum, x => x.GetFieldValue<short>(0), typeof(OverflowException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetInt32(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<int>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetInt32(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<int>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetInt32(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<int>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetInt32(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt32_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<int>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
 		public virtual void GetInt32_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt32(0), Fixture.NullValueExceptionType);
@@ -2461,6 +2653,30 @@ namespace AdoNet.Specification.Tests
 
 		[SkippableFact]
 		public virtual void GetInt32_throws_for_maximum_UInt32_with_GetFieldValue() => TestException(DbType.UInt32, ValueKind.Maximum, x => x.GetFieldValue<int>(0), typeof(OverflowException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_zero_Boolean() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetInt64(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_zero_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Zero, x => x.GetFieldValue<long>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_one_Boolean() => TestException(DbType.Boolean, ValueKind.One, x => x.GetInt64(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_one_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.One, x => x.GetFieldValue<long>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_minimum_Boolean() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetInt64(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_minimum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Minimum, x => x.GetFieldValue<long>(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_maximum_Boolean() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetInt64(0), typeof(InvalidCastException));
+
+		[SkippableFact]
+		public virtual void GetInt64_throws_for_maximum_Boolean_with_GetFieldValue() => TestException(DbType.Boolean, ValueKind.Maximum, x => x.GetFieldValue<long>(0), typeof(InvalidCastException));
 
 		[SkippableFact]
 		public virtual void GetInt64_throws_for_null_Currency() => TestException(DbType.Currency, ValueKind.Null, x => x.GetInt64(0), Fixture.NullValueExceptionType);
