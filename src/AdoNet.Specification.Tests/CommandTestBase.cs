@@ -30,7 +30,6 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = "SELECT 1;";
 
 			using var reader = command.ExecuteReader();
-			reader.Read();
 
 			Assert.Throws<InvalidOperationException>(() => command.CommandText = "SELECT 2;");
 		}
@@ -53,9 +52,20 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = "SELECT 1;";
 
 			using var reader = command.ExecuteReader();
-			reader.Read();
 
 			Assert.Throws<InvalidOperationException>(() => command.Connection = CreateConnection());
+		}
+
+		[Fact]
+		public virtual void Connection_throws_when_set_to_null_when_open_reader()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+
+			using var reader = command.ExecuteReader();
+
+			Assert.Throws<InvalidOperationException>(() => command.Connection = null);
 		}
 
 		[Fact]
