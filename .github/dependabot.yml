@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  assignees:
+  - bgrainger
+  ignore:
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - ">= 16.3.a, < 16.4"
+  - dependency-name: MySql.Data
+    versions:
+    - ">= 8.0.a, < 8.1"
+  - dependency-name: Npgsql
+    versions:
+    - ">= 4.1.a, < 4.2"
