@@ -239,7 +239,7 @@ namespace AdoNetApiTest
 				else if ((string) test.Attribute("outcome") == "NotExecuted")
 				{
 					testMessage = (string) test.Element(teamTest + "Output")?.Element(teamTest + "StdOut");
-					testStatus = testMessage == "Database doesn't support this data type" ? TestStatus.NotApplicable : TestStatus.ImplementationFail;
+					testStatus = testMessage == "Database doesn't support this data type" || testMessage == "Not supported on this TargetFramework" ? TestStatus.NotApplicable : TestStatus.ImplementationFail;
 				}
 				else
 				{
