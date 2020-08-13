@@ -306,6 +306,31 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void ParameterCollection_Insert_throws_for_negative_one()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.Insert(-1, parameter));
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Insert_succeeds()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			command.Parameters.Insert(0, parameter);
+			Assert.Same(parameter, Assert.Single(command.Parameters));
+		}
+
+		[Fact]
+		public virtual void ParameterCollection_Insert_throws_for_one()
+		{
+			using var command = Fixture.Factory.CreateCommand();
+			var parameter = command.CreateParameter();
+			Assert.Throws<ArgumentOutOfRangeException>(() => command.Parameters.Insert(1, parameter));
+		}
+
+		[Fact]
 		public virtual void ParameterCollection_Remove_succeeds()
 		{
 			using var command = Fixture.Factory.CreateCommand();
