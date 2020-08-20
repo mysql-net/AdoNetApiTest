@@ -828,13 +828,7 @@ namespace AdoNet.Specification.Tests
 		public virtual void GetInt64_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetInt64(0)));
 
 		[Fact]
-		public virtual void GetSchemaTable_is_empty_after_Delete() => Test_X_after_Delete(x =>
-		{
-			var table = x.GetSchemaTable();
-			Assert.NotNull(table);
-			Assert.Empty(table.Rows);
-			Assert.Empty(table.Columns);
-		});
+		public virtual void GetSchemaTable_is_null_after_Delete() => Test_X_after_Delete(x => Assert.Null(x.GetSchemaTable()));
 
 		[Fact]
 		public virtual void GetStream_throws_after_Delete() => Test_X_after_Delete(x => Assert.Throws<InvalidOperationException>(() => x.GetStream(0)));
