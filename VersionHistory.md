@@ -1,5 +1,10 @@
 # Version History
 
+## 2.0.0 Alpha 8
+
+* Add `DbProviderFactoryTestBase`.
+* Test that `GetSchemaTable` returns `null`.
+
 ## 2.0.0 Alpha 7
 
 * Add nullability tests.
