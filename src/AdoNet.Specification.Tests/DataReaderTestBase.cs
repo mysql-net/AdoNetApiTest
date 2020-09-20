@@ -745,6 +745,29 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void GetFieldValue_for_Stream()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.One);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			using var stream = reader.GetFieldValue<Stream>(0);
+			Assert.Equal(1, stream.ReadByte());
+		}
+
+		[Fact]
+		public virtual void GetFieldValue_for_Stream_throws_for_null_Binary()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.Null);
+			using var reader = command.ExecuteReader();
+			reader.Read();
+			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<Stream>(0));
+		}
+
+		[Fact]
 		public virtual void FieldCount_is_zero_after_Delete() => Test_X_after_Delete(x => Assert.Equal(0, x.FieldCount));
 
 		[Fact]
