@@ -734,6 +734,18 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual async Task GetFieldValueAsync_for_TextReader()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.One);
+			using var reader = await command.ExecuteReaderAsync();
+			await reader.ReadAsync();
+			using var textReader = await reader.GetFieldValueAsync<TextReader>(0);
+			Assert.Equal("1", textReader.ReadToEnd());
+		}
+
+		[Fact]
 		public virtual void GetFieldValue_for_TextReader_throws_for_null_String()
 		{
 			using var connection = CreateOpenConnection();
@@ -745,6 +757,17 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual async Task GetFieldValueAsync_for_TextReader_throws_for_null_String()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
+			using var reader = await command.ExecuteReaderAsync();
+			await reader.ReadAsync();
+			await Assert.ThrowsAsync<InvalidCastException>(async () => await reader.GetFieldValueAsync<TextReader>(0));
+		}
+
+		[Fact]
 		public virtual void GetFieldValue_for_Stream()
 		{
 			using var connection = CreateOpenConnection();
@@ -753,7 +776,19 @@ namespace AdoNet.Specification.Tests
 			using var reader = command.ExecuteReader();
 			reader.Read();
 			using var stream = reader.GetFieldValue<Stream>(0);
-			Assert.Equal(1, stream.ReadByte());
+			Assert.Equal(0x11, stream.ReadByte());
+		}
+
+		[Fact]
+		public virtual async Task GetFieldValueAsync_for_Stream()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.One);
+			using var reader = await command.ExecuteReaderAsync();
+			await reader.ReadAsync();
+			using var stream = await reader.GetFieldValueAsync<Stream>(0);
+			Assert.Equal(0x11, stream.ReadByte());
 		}
 
 		[Fact]
@@ -765,6 +800,17 @@ namespace AdoNet.Specification.Tests
 			using var reader = command.ExecuteReader();
 			reader.Read();
 			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<Stream>(0));
+		}
+
+		[Fact]
+		public virtual async Task GetFieldValueAsync_for_Stream_throws_for_null_Binary()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.Null);
+			using var reader = await command.ExecuteReaderAsync();
+			await reader.ReadAsync();
+			await Assert.ThrowsAsync<InvalidCastException>(async () => await reader.GetFieldValueAsync<Stream>(0));
 		}
 
 		[Fact]
