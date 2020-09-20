@@ -718,7 +718,7 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
 			using var reader = command.ExecuteReader();
 			reader.Read();
-			Assert.Throws<InvalidCastException>(() => reader.GetTextReader(0));
+			Assert.Throws(Fixture.NullValueExceptionType, () => reader.GetTextReader(0));
 		}
 
 		[Fact]
@@ -753,7 +753,7 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
 			using var reader = command.ExecuteReader();
 			reader.Read();
-			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<TextReader>(0));
+			Assert.Throws(Fixture.NullValueExceptionType, () => reader.GetFieldValue<TextReader>(0));
 		}
 
 		[Fact]
@@ -764,7 +764,7 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = Fixture.CreateSelectSql(DbType.String, ValueKind.Null);
 			using var reader = await command.ExecuteReaderAsync();
 			await reader.ReadAsync();
-			await Assert.ThrowsAsync<InvalidCastException>(async () => await reader.GetFieldValueAsync<TextReader>(0));
+			await Assert.ThrowsAsync(Fixture.NullValueExceptionType, async () => await reader.GetFieldValueAsync<TextReader>(0));
 		}
 
 		[Fact]
@@ -799,7 +799,7 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.Null);
 			using var reader = command.ExecuteReader();
 			reader.Read();
-			Assert.Throws<InvalidCastException>(() => reader.GetFieldValue<Stream>(0));
+			Assert.Throws(Fixture.NullValueExceptionType, () => reader.GetFieldValue<Stream>(0));
 		}
 
 		[Fact]
@@ -810,7 +810,7 @@ namespace AdoNet.Specification.Tests
 			command.CommandText = Fixture.CreateSelectSql(DbType.Binary, ValueKind.Null);
 			using var reader = await command.ExecuteReaderAsync();
 			await reader.ReadAsync();
-			await Assert.ThrowsAsync<InvalidCastException>(async () => await reader.GetFieldValueAsync<Stream>(0));
+			await Assert.ThrowsAsync(Fixture.NullValueExceptionType, async () => await reader.GetFieldValueAsync<Stream>(0));
 		}
 
 		[Fact]
