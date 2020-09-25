@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData8.Tests", "tests\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Databases", "src\AdoNet.Databases\AdoNet.Databases.csproj", "{72764D9F-37B6-48F4-8510-4E37164E5EE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite22.Tests", "tests\MicrosoftSqlite22.Tests\MicrosoftSqlite22.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite5.Tests", "tests\MicrosoftSqlite5.Tests\MicrosoftSqlite5.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql3.Tests", "tests\Npgsql3.Tests\Npgsql3.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
 EndProject
