@@ -205,7 +205,7 @@ namespace AdoNetApiTest
 				StartInfo =
 				{
 					FileName = "dotnet",
-					Arguments = $"test --logger \"trx;LogFileName={outputXmlPath}\"",
+					Arguments = $"test -c Release --logger \"trx;LogFileName={outputXmlPath}\"",
 					CreateNoWindow = true,
 					UseShellExecute = false,
 					WorkingDirectory = testFolder,
