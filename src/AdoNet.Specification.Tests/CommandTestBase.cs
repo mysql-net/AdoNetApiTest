@@ -23,6 +23,45 @@ namespace AdoNet.Specification.Tests
 		}
 
 		[Fact]
+		public virtual void Cancel_executed_Command_is_no_op()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			command.ExecuteNonQuery();
+			command.Cancel();
+		}
+
+		[Fact]
+		public virtual void Cancel_Command_twice_is_no_op()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT 1;";
+			command.ExecuteNonQuery();
+			command.Cancel();
+			command.Cancel();
+		}
+
+		[Fact]
+		public virtual void Cancel_disposed_Command_is_no_op()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.Dispose();
+			command.Cancel();
+		}
+
+		[Fact]
+		public virtual void Cancel_disposed_Connection_is_no_op()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			connection.Dispose();
+			command.Cancel();
+		}
+
+		[Fact]
 		public virtual void CommandText_throws_when_set_when_open_reader()
 		{
 			using var connection = CreateOpenConnection();
