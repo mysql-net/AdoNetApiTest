@@ -9,6 +9,6 @@ docker exec ado_mysql_1 mysql -uroot -ptest -e "create schema mysqlconnector col
 docker exec ado_mysql_1 mysql -uroot -ptest -e "create schema mysqldata collate utf8mb4_bin;"
 docker exec ado_mysql_1 mysql -uroot -ptest -e "create schema mysqldata8 collate utf8mb4_bin;"
 docker exec -e PGPASSWORD=test ado_postgres_1 psql -U root -c "CREATE DATABASE dotconnect;"
-docker exec -e PGPASSWORD=test ado_postgres_1 psql -U root -c "CREATE DATABASE npgsql3;"
 docker exec -e PGPASSWORD=test ado_postgres_1 psql -U root -c "CREATE DATABASE npgsql4;"
+docker exec -e PGPASSWORD=test ado_postgres_1 psql -U root -c "CREATE DATABASE npgsql5;"
 echo 'done'

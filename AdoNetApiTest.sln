@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Databases", "src\Ado
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite5.Tests", "tests\MicrosoftSqlite5.Tests\MicrosoftSqlite5.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql3.Tests", "tests\Npgsql3.Tests\Npgsql3.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql5.Tests", "tests\Npgsql5.Tests\Npgsql5.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql4.Tests", "tests\Npgsql4.Tests\Npgsql4.Tests.csproj", "{220994E2-8263-4728-9B7B-BC7E1DE1265C}"
 EndProject

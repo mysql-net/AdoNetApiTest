@@ -96,9 +96,9 @@ jobs:
         displayName: Npgsql 3
         inputs:
           command: 'test'
-          workingDirectory: tests/Npgsql3.Tests
+          workingDirectory: tests/Npgsql5.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql3.Tests.trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql5.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)

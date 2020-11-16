@@ -1,11 +1,11 @@
 using AdoNet.Specification.Tests;
 using Xunit;
 
-namespace Npgsql3.Tests
+namespace Npgsql5.Tests
 {
-	public sealed class Npgsql3DataReaderTests : DataReaderTestBase<Npgsql3SelectValueFixture>
+	public sealed class Npgsql5DataReaderTests : DataReaderTestBase<Npgsql5SelectValueFixture>
 	{
-		public Npgsql3DataReaderTests(Npgsql3SelectValueFixture fixture)
+		public Npgsql5DataReaderTests(Npgsql5SelectValueFixture fixture)
 			: base(fixture)
 		{
 		}
