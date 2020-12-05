@@ -10,4 +10,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 COPY setup.sh /setup.sh
 RUN chmod +x /setup.sh
 
-CMD dockerize -wait tcp://postgres:5432 -wait tcp://mysql:3306 -wait tcp://mssql:1433 /setup.sh
+CMD dockerize -timeout 60s -wait tcp://postgres:5432 -wait tcp://mysql:3306 -wait tcp://mssql:1433 /setup.sh
