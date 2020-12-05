@@ -584,6 +584,12 @@ namespace AdoNet.Specification.Tests
 		});
 
 		[Fact]
+		public virtual void GetBytes_returns_length_when_buffer_is_null_and_dataIndex_specified() => TestGetBytes(reader =>
+		{
+			Assert.Equal(4, reader.GetBytes(0, 1, null, 0, 0));
+		});
+
+		[Fact]
 		public virtual void GetBytes_throws_when_bufferOffset_is_negative() => TestGetBytes(reader =>
 		{
 			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetBytes(0, 0, new byte[4], -1, 4));
@@ -652,6 +658,12 @@ namespace AdoNet.Specification.Tests
 		});
 
 		[Fact]
+		public virtual void GetChars_returns_length_when_buffer_is_null_and_dataOffset_is_specified() => TestGetChars(reader =>
+		{
+			Assert.Equal(4, reader.GetChars(0, 1, null, 0, 0));
+		});
+
+		[Fact]
 		public virtual void GetChars_throws_when_bufferOffset_is_negative() => TestGetChars(reader =>
 		{
 			AssertThrowsAny<ArgumentOutOfRangeException, IndexOutOfRangeException>(() => reader.GetChars(0, 0, new char[4], -1, 4));
@@ -680,7 +692,7 @@ namespace AdoNet.Specification.Tests
 		{
 			var buffer = new char[6];
 			Assert.Equal(4, reader.GetChars(0, 0, buffer, 0, 6));
-			Assert.Equal(new[] { 'a', 'b', 'c', 'd', '\0', '\0' }, buffer);
+			Assert.Equal(new[] { 'a', 'b', '¢', 'd', '\0', '\0' }, buffer);
 		});
 
 		[Fact]
@@ -688,14 +700,15 @@ namespace AdoNet.Specification.Tests
 		{
 			var buffer = new char[5];
 			Assert.Equal(2, reader.GetChars(0, 1, buffer, 2, 2));
-			Assert.Equal(new[] { '\0', '\0', 'b', 'c', '\0' }, buffer);
+			Assert.Equal(new[] { '\0', '\0', 'b', '¢', '\0' }, buffer);
 		});
 
 		private void TestGetChars(Action<DbDataReader> action)
 		{
 			using var connection = CreateOpenConnection();
 			using var command = connection.CreateCommand();
-			command.CommandText = "SELECT 'abcd';";
+			// NB: Intentionally using a multi-byte UTF-8 character
+			command.CommandText = "SELECT 'ab¢d';";
 			using var reader = command.ExecuteReader();
 			reader.Read();
 			action(reader);
