@@ -11,7 +11,7 @@ env:
 
 jobs:
 
-  publish:
+  build:
     runs-on: 'windows-latest'
 
     steps:
