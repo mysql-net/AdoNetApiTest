@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using Xunit;
 
 namespace AdoNet.Specification.Tests
@@ -159,6 +160,37 @@ namespace AdoNet.Specification.Tests
 
 			var result = command.ExecuteScalar();
 			Assert.Equal("test", result);
+		}
+
+		[Fact]
+		public virtual void Bind_works_with_byte_array()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Parameter";
+			parameter.Value = new byte[] { 1, 2, 3, 4 };
+			command.Parameters.Add(parameter);
+
+			var result = command.ExecuteScalar();
+			Assert.Equal(new byte[] { 1, 2, 3, 4 }, result);
+		}
+
+		[Fact]
+		public virtual void Bind_works_with_stream()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT @Parameter;";
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = "@Parameter";
+			using var stream = new MemoryStream(new byte[] { 1, 2, 3, 4 });
+			parameter.Value = stream;
+			command.Parameters.Add(parameter);
+
+			var result = command.ExecuteScalar();
+			Assert.Equal(new byte[] { 1, 2, 3, 4 }, result);
 		}
 
 		[Fact]
