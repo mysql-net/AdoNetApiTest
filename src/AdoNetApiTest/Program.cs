@@ -21,7 +21,7 @@ namespace AdoNetApiTest
 			string outputPath;
 			if (args.Length == 0)
 			{
-				var assemblyPath = new Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
+				var assemblyPath = new Uri(Assembly.GetEntryAssembly().Location).AbsolutePath;
 				var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "..", "tests"));
 
 				Console.Write("Running tests");
