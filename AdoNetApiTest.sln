@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient2.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaithlifeSqlite.Tests", "tests\FaithlifeSqlite.Tests\FaithlifeSqlite.Tests.csproj", "{9A5B7D2E-55D6-4053-94D6-BB83CF313276}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient3.Tests", "tests\MicrosoftSqlClient3.Tests\MicrosoftSqlClient3.Tests.csproj", "{CA0F1D91-B432-40BD-A2A2-A840A63B954C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
