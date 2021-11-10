@@ -23,7 +23,7 @@ resources:
       SA_PASSWORD: P@ssw0rd
 
 variables:
-  DotNetCoreSdkVersion: '5.0.x'
+  DotNetCoreSdkVersion: '6.0.x'
 
 jobs:
   - job: Linux_MySQL
