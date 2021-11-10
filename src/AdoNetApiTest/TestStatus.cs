@@ -1,15 +1,14 @@
-namespace AdoNetApiTest
+namespace AdoNetApiTest;
+
+public enum TestStatus
 {
-	public enum TestStatus
-	{
-		None,
-		Pass,
-		Fail,
-		Exception,
-		NoException,
-		WrongException,
-		ImplementationPass,
-		ImplementationFail,
-		NotApplicable,
-	}
+	None,
+	Pass,
+	Fail,
+	Exception,
+	NoException,
+	WrongException,
+	ImplementationPass,
+	ImplementationFail,
+	NotApplicable,
 }
