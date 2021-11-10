@@ -280,7 +280,7 @@ class Program
 					testMessage = message;
 				}
 			}
-			testResults.Add(testName, new TestResult(testStatus, testMessage));
+			testResults.Add(testName, new(testStatus, testMessage));
 		}
 
 		return testResults;

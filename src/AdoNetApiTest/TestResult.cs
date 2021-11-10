@@ -1,13 +1,4 @@
 namespace AdoNetApiTest;
 
-public struct TestResult
-{
-	public TestResult(TestStatus status, string message)
-	{
-		Status = status;
-		Message = message;
-	}
+public readonly record struct TestResult(TestStatus Status, string Message);
 
-	public TestStatus Status { get; }
-	public string Message { get; }
-}
