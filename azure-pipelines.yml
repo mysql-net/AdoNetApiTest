@@ -93,7 +93,17 @@ jobs:
         inputs:
           version: $(DotNetCoreSdkVersion)
       - task: DotNetCoreCLI@2
-        displayName: Npgsql 3
+        displayName: Npgsql 4
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Npgsql4.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql4.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: Npgsql 5
         inputs:
           command: 'test'
           workingDirectory: tests/Npgsql5.Tests
@@ -103,12 +113,12 @@ jobs:
         env:
           ConnectionString: $(ConnectionString)
       - task: DotNetCoreCLI@2
-        displayName: Npgsql 4
+        displayName: Npgsql 6
         inputs:
           command: 'test'
-          workingDirectory: tests/Npgsql4.Tests
+          workingDirectory: tests/Npgsql6.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql4.Tests.trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql6.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
