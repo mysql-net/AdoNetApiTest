@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNetApiTest", "src\AdoNetApiTest\AdoNetApiTest.csproj", "{D043AFD3-3834-4710-8C45-05586DFA1478}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaithlifeSqlite.Tests", "tests\FaithlifeSqlite.Tests\FaithlifeSqlite.Tests.csproj", "{9A5B7D2E-55D6-4053-94D6-BB83CF313276}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient3.Tests", "tests\MicrosoftSqlClient3.Tests\MicrosoftSqlClient3.Tests.csproj", "{CA0F1D91-B432-40BD-A2A2-A840A63B954C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql6.Tests", "tests\Npgsql6.Tests\Npgsql6.Tests.csproj", "{AEF85E25-B126-48A7-97D4-774D39349327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF85E25-B126-48A7-97D4-774D39349327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF85E25-B126-48A7-97D4-774D39349327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF85E25-B126-48A7-97D4-774D39349327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF85E25-B126-48A7-97D4-774D39349327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

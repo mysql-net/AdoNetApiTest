@@ -12,4 +12,5 @@ docker exec ado-mysql-1 mysql -uroot -ptest -e "create schema mysqldata8 collate
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE dotconnect;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql4;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql5;"
+docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql6;"
 echo 'done'
