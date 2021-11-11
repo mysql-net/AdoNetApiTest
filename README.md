@@ -44,7 +44,7 @@ Run the required database servers locally:
 
 ```
 cd docker
-docker-compose up
+docker compose up
 ```
 
 Run the `AdoNetApiTest` program:
