@@ -563,6 +563,38 @@ namespace AdoNet.Specification.Tests
 		public virtual void Read_throws_when_closed() => X_throws_when_closed(r => r.Read());
 
 		[Fact]
+		public virtual void RecordsAffected_returns_negative_1_when_no_rows()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows;
+			using var reader = command.ExecuteReader();
+			Assert.Equal(-1, reader.RecordsAffected);
+		}
+
+		[Fact]
+		public virtual void RecordsAffected_returns_negative_1_after_close_when_no_rows()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows;
+			using var reader = command.ExecuteReader();
+			reader.Close();
+			Assert.Equal(-1, reader.RecordsAffected);
+		}
+
+		[Fact]
+		public virtual void RecordsAffected_returns_negative_1_after_dispose_when_no_rows()
+		{
+			using var connection = CreateOpenConnection();
+			using var command = connection.CreateCommand();
+			command.CommandText = Fixture.SelectNoRows;
+			using var reader = command.ExecuteReader();
+			reader.Dispose();
+			Assert.Equal(-1, reader.RecordsAffected);
+		}
+
+		[Fact]
 		public virtual void NextResult_throws_when_closed() => X_throws_when_closed(r => r.NextResult());
 
 		[Fact]
