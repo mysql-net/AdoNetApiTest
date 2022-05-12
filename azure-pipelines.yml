@@ -28,7 +28,7 @@ variables:
 jobs:
   - job: Linux_MySQL
     pool:
-      vmimage: 'ubuntu-18.04'
+      vmimage: 'ubuntu-20.04'
     services:
       mysql: mysql
     variables:
@@ -83,7 +83,7 @@ jobs:
 
   - job: Linux_PostgreSQL
     pool:
-      vmimage: 'ubuntu-18.04'
+      vmimage: 'ubuntu-20.04'
     services:
       postgres: postgres
     variables:
@@ -129,7 +129,7 @@ jobs:
 
   - job: Linux_SQLite
     pool:
-      vmimage: 'ubuntu-18.04'
+      vmimage: 'ubuntu-20.04'
     steps:
       - task: UseDotNet@2
         inputs:
@@ -162,7 +162,7 @@ jobs:
 
   - job: Linux_SQLServer
     pool:
-      vmimage: 'ubuntu-18.04'
+      vmimage: 'ubuntu-20.04'
     services:
       sqlserver: sqlserver
     variables:
@@ -199,7 +199,7 @@ jobs:
 
   - job: Windows_SQLServer
     pool:
-      vmimage: 'vs2017-win2016'
+      vmimage: 'windows-2022'
     variables:
       ConnectionString: 'Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=tempdb;Trusted_Connection=True;'
     steps:
@@ -229,7 +229,7 @@ jobs:
       - Linux_SQLServer
       - Windows_SQLServer
     pool:
-      vmimage: 'ubuntu-18.04'
+      vmimage: 'ubuntu-20.04'
     steps:
       - task: DownloadPipelineArtifact@0
         inputs:
