@@ -44,10 +44,10 @@ namespace AdoNet.Specification.Tests
 		public virtual void DbProviderFactory_CanCreateDataSourceEnumerator_is_accurate() => Assert.Equal(Fixture.Factory.CanCreateDataSourceEnumerator, Fixture.Factory.CreateDataSourceEnumerator() is object);
 
 #if NETSTANDARD2_0
-		[SkippableFact]
+		[Fact]
 		public virtual void DbProviderFactory_CanCreateCommandBuilder_is_true() => throw new SkipException("Not supported on this TargetFramework");
 
-		[SkippableFact]
+		[Fact]
 		public virtual void DbProviderFactory_CanCreateDataAdapter_is_true() => throw new SkipException("Not supported on this TargetFramework");
 #else
 		[Fact]
