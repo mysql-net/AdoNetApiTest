@@ -1,5 +1,11 @@
 # Version History
 
+## 2.0.0 Alpha 9
+
+* Add many new test methods, including hundreds for `GetFieldValueAsync`.
+* Update Xunit to 2.4.2.
+* Remove dependency on Xunit.SkippableFact.
+
 ## 2.0.0 Alpha 8
 
 * Add `DbProviderFactoryTestBase`.
