@@ -1,5 +1,9 @@
 # Version History
 
+## 2.0.0 Beta 1
+
+* Revert to using Xunit.SkippableFact for skippable tests.
+
 ## 2.0.0 Alpha 9
 
 * Add many new test methods, including hundreds for `GetFieldValueAsync`.
