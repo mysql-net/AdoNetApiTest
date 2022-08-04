@@ -241,12 +241,7 @@ class Program
 				var failure = test.Element(teamTest + "Output").Element(teamTest + "ErrorInfo");
 				var message = ((string) failure.Element(teamTest + "Message")).Replace("\\r\\n", "\n");
 
-				if (message.StartsWith("$XunitDynamicSkip$", StringComparison.Ordinal))
-				{
-					testMessage = message.Replace("$XunitDynamicSkip$", "");
-					testStatus = TestStatus.NotApplicable;
-				}
-				else if (message.StartsWith("AdoNet.Specification.Tests.UnexpectedValueException :", StringComparison.Ordinal))
+				if (message.StartsWith("AdoNet.Specification.Tests.UnexpectedValueException :", StringComparison.Ordinal))
 				{
 					testStatus = TestStatus.Fail;
 					testMessage = message.Replace("AdoNet.Specification.Tests.UnexpectedValueException : ", "");

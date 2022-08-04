@@ -72,7 +72,7 @@ namespace AdoNet.Specification.Tests
 		protected virtual void DoTest(DbType dbType, ValueKind kind, Action<DbDataReader> action)
 		{
 			if (!Fixture.SupportedDbTypes.Contains(dbType))
-				throw new SkipException("Database doesn't support this data type");
+				throw new Xunit.SkipException("Database doesn't support this data type");
 
 			using var connection = CreateOpenConnection();
 			using var command = connection.CreateCommand();
@@ -85,7 +85,7 @@ namespace AdoNet.Specification.Tests
 		protected virtual async Task DoTestAsync(DbType dbType, ValueKind kind, Func<DbDataReader, Task> action)
 		{
 			if (!Fixture.SupportedDbTypes.Contains(dbType))
-				throw new SkipException("Database doesn't support this data type");
+				throw new Xunit.SkipException("Database doesn't support this data type");
 
 			using var connection = CreateOpenConnection();
 			using var command = connection.CreateCommand();
