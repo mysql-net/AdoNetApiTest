@@ -17,10 +17,12 @@ class Program
 		if (args.Length == 0)
 		{
 			var assemblyPath = new Uri(Assembly.GetEntryAssembly().Location).AbsolutePath;
-			var testsPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", "..", "tests"));
+			var solutionPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(assemblyPath), "..", "..", "..", "..", ".."));
+			Console.Write("Building...");
+			await RunDotnetAsync("build -c Release", solutionPath);
 
 			Console.Write("Running tests");
-
+			var testsPath = Path.Combine(solutionPath, "tests");
 			testResultPaths = (await Task.WhenAll(Directory.GetDirectories(testsPath)
 					.Where(x => x[0] != '.')
 					.Select(RunTestsAsync)))
@@ -144,7 +146,7 @@ class Program
 
 			while (true)
 			{
-				await RunXunitAsync(testFolder, outputXmlPath).ConfigureAwait(false);
+				await RunDotnetAsync($"test -c Release --no-build --logger \"trx;LogFileName={outputXmlPath}\"", testFolder).ConfigureAwait(false);
 				Console.Write(".");
 				var actualOutputPath = outputDirectory.GetFiles("output*.trx").Select(x => x.FullName).FirstOrDefault();
 				if (actualOutputPath is null)
@@ -192,7 +194,7 @@ class Program
 		return ((category, name, testResults));
 	}
 
-	private static Task RunXunitAsync(string testFolder, string outputXmlPath)
+	private static Task RunDotnetAsync(string arguments, string workingDirectory)
 	{
 		var taskCompletionSource = new TaskCompletionSource<object>();
 		var process = new Process
@@ -200,10 +202,10 @@ class Program
 			StartInfo =
 				{
 					FileName = "dotnet",
-					Arguments = $"test -c Release --logger \"trx;LogFileName={outputXmlPath}\"",
+					Arguments = arguments,
 					CreateNoWindow = true,
 					UseShellExecute = false,
-					WorkingDirectory = testFolder,
+					WorkingDirectory = workingDirectory,
 				},
 			EnableRaisingEvents = true,
 		};
