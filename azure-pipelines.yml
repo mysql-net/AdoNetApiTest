@@ -166,7 +166,7 @@ jobs:
     services:
       sqlserver: sqlserver
     variables:
-      ConnectionString: 'data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient'
+      ConnectionString: 'data source=localhost;user id=sa;password=P@ssw0rd;initial catalog=sqlclient;TrustServerCertificate=True;'
     steps:
       - task: UseDotNet@2
         inputs:
@@ -177,9 +177,18 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
-          workingDirectory: tests/MicrosoftSqlClient.Tests
+          workingDirectory: tests/MicrosoftSqlClient4.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient.Tests.trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient4.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MicrosoftSqlClient5.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient5.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
