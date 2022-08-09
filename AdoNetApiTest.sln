@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql5.Tests", "tests\Npgs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql4.Tests", "tests\Npgsql4.Tests\Npgsql4.Tests.csproj", "{220994E2-8263-4728-9B7B-BC7E1DE1265C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient.Tests", "tests\MicrosoftSqlClient.Tests\MicrosoftSqlClient.Tests.csproj", "{E9F423D2-72CE-407E-B404-94423F4F4E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient5.Tests", "tests\MicrosoftSqlClient5.Tests\MicrosoftSqlClient5.Tests.csproj", "{E9F423D2-72CE-407E-B404-94423F4F4E91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient2.Tests", "tests\MicrosoftSqlClient2.Tests\MicrosoftSqlClient2.Tests.csproj", "{53710A2D-EA5B-4C4D-9E71-11C5F8326DBC}"
 EndProject

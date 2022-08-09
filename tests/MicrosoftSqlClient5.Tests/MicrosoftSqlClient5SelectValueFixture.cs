@@ -4,11 +4,11 @@ using System.Data;
 using AdoNet.Databases;
 using AdoNet.Specification.Tests;
 
-namespace MicrosoftSqlClient.Tests
+namespace MicrosoftSqlClient5.Tests
 {
-	public class MicrosoftSqlClientSelectValueFixture : MicrosoftSqlClientDbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
+	public class MicrosoftSqlClient5SelectValueFixture : MicrosoftSqlClient5DbFactoryFixture, ISelectValueFixture, IDeleteFixture, IDisposable
 	{
-		public MicrosoftSqlClientSelectValueFixture()
+		public MicrosoftSqlClient5SelectValueFixture()
 		{
 			SqlServerDatabase.CreateSelectValueTable(this);
 		}

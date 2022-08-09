@@ -1,9 +1,9 @@
 #!/bin/bash
 echo 'setup.sh'
-docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient;"
 docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient2;"
 docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient3;"
 docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient4;"
+docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient5;"
 docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
 docker exec ado-mssql-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclientbcl;"
 docker exec ado-mysql-1 mysql -uroot -ptest -e "create schema dotconnect collate utf8mb4_bin;"
