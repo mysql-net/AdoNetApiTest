@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace Sqlite.Tests
+namespace Sqlite.Tests;
+
+public sealed class SqliteConnectionTests : ConnectionTestBase<SqliteDbFactoryFixture>
 {
-	public sealed class SqliteConnectionTests : ConnectionTestBase<SqliteDbFactoryFixture>
+	public SqliteConnectionTests(SqliteDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public SqliteConnectionTests(SqliteDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

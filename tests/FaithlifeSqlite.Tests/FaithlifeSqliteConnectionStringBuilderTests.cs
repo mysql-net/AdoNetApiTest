@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace FaithlifeSqlite.Tests
+namespace FaithlifeSqlite.Tests;
+
+public sealed class FaithlifeSqliteConnectionStringBuilderTests : ConnectionStringTestBase<FaithlifeSqliteDbFactoryFixture>
 {
-	public sealed class FaithlifeSqliteConnectionStringBuilderTests : ConnectionStringTestBase<FaithlifeSqliteDbFactoryFixture>
+	public FaithlifeSqliteConnectionStringBuilderTests(FaithlifeSqliteDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public FaithlifeSqliteConnectionStringBuilderTests(FaithlifeSqliteDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

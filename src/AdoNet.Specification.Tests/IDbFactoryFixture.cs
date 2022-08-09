@@ -1,10 +1,9 @@
 using System.Data.Common;
 
-namespace AdoNet.Specification.Tests
+namespace AdoNet.Specification.Tests;
+
+public interface IDbFactoryFixture
 {
-	public interface IDbFactoryFixture
-	{
-		DbProviderFactory Factory { get; }
-		string ConnectionString { get; }
-	}
+	DbProviderFactory Factory { get; }
+	string ConnectionString { get; }
 }

@@ -2,11 +2,10 @@ using System.Data.Common;
 using AdoNet.Specification.Tests;
 using MySql.Data.MySqlClient;
 
-namespace MySqlData.Tests
+namespace MySqlData.Tests;
+
+public class MySqlDataDbFactoryFixture : IDbFactoryFixture
 {
-	public class MySqlDataDbFactoryFixture : IDbFactoryFixture
-	{
-		public DbProviderFactory Factory => MySqlClientFactory.Instance;
-		public string ConnectionString => "server=localhost;user id=root;password=test;characterset=utf8mb4;database=mysqldata";
-	}
+	public DbProviderFactory Factory => MySqlClientFactory.Instance;
+	public string ConnectionString => "server=localhost;user id=root;password=test;characterset=utf8mb4;database=mysqldata";
 }

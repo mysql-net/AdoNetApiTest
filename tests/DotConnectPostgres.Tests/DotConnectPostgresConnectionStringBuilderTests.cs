@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace DotConnectPostgres.Tests
+namespace DotConnectPostgres.Tests;
+
+public sealed class DotConnectConnectionStringBuilderTests : ConnectionStringTestBase<DotConnectPostgresDbFactoryFixture>
 {
-	public sealed class DotConnectConnectionStringBuilderTests : ConnectionStringTestBase<DotConnectPostgresDbFactoryFixture>
+	public DotConnectConnectionStringBuilderTests(DotConnectPostgresDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public DotConnectConnectionStringBuilderTests(DotConnectPostgresDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

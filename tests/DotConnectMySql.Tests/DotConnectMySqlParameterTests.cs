@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace DotConnectMySql.Tests
+namespace DotConnectMySql.Tests;
+
+public sealed class DotConnectMySqlParameterTests : ParameterTestBase<DotConnectMySqlDbFactoryFixture>
 {
-	public sealed class DotConnectMySqlParameterTests : ParameterTestBase<DotConnectMySqlDbFactoryFixture>
+	public DotConnectMySqlParameterTests(DotConnectMySqlDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public DotConnectMySqlParameterTests(DotConnectMySqlDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

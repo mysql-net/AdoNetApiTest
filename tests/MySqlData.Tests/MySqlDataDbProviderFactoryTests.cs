@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace MySqlData.Tests
+namespace MySqlData.Tests;
+
+public sealed class MySqlDataDbProviderFactoryTests : DbProviderFactoryTestBase<MySqlDataDbFactoryFixture>
 {
-	public sealed class MySqlDataDbProviderFactoryTests : DbProviderFactoryTestBase<MySqlDataDbFactoryFixture>
+	public MySqlDataDbProviderFactoryTests(MySqlDataDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public MySqlDataDbProviderFactoryTests(MySqlDataDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

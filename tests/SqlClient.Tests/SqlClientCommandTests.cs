@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace SqlClient.Tests
+namespace SqlClient.Tests;
+
+public sealed class SqlClientCommandTests : CommandTestBase<SqlClientDbFactoryFixture>
 {
-	public sealed class SqlClientCommandTests : CommandTestBase<SqlClientDbFactoryFixture>
+	public SqlClientCommandTests(SqlClientDbFactoryFixture fixture)
+		: base(fixture)
 	{
-		public SqlClientCommandTests(SqlClientDbFactoryFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

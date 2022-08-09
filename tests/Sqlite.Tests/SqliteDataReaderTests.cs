@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace Sqlite.Tests
+namespace Sqlite.Tests;
+
+public sealed class SqliteDataReaderTests : DataReaderTestBase<SqliteSelectValueFixture>
 {
-	public sealed class SqliteDataReaderTests : DataReaderTestBase<SqliteSelectValueFixture>
+	public SqliteDataReaderTests(SqliteSelectValueFixture fixture)
+		: base(fixture)
 	{
-		public SqliteDataReaderTests(SqliteSelectValueFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }

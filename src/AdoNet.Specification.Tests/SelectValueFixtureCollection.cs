@@ -1,9 +1,8 @@
 using Xunit;
 
-namespace AdoNet.Specification.Tests
+namespace AdoNet.Specification.Tests;
+
+[CollectionDefinition("ISelectValueFixture Collection")]
+public class SelectValueFixtureCollection : IClassFixture<ISelectValueFixture>
 {
-	[CollectionDefinition("ISelectValueFixture Collection")]
-	public class SelectValueFixtureCollection : IClassFixture<ISelectValueFixture>
-	{
-	}
 }

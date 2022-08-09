@@ -1,12 +1,11 @@
 using AdoNet.Specification.Tests;
 
-namespace MicrosoftSqlite.Tests
+namespace MicrosoftSqlite.Tests;
+
+public class MicrosoftSqliteGetValueConversionTests : GetValueConversionTestBase<MicrosoftSqliteSelectValueFixture>
 {
-	public class MicrosoftSqliteGetValueConversionTests : GetValueConversionTestBase<MicrosoftSqliteSelectValueFixture>
+	public MicrosoftSqliteGetValueConversionTests(MicrosoftSqliteSelectValueFixture fixture)
+		: base(fixture)
 	{
-		public MicrosoftSqliteGetValueConversionTests(MicrosoftSqliteSelectValueFixture fixture)
-			: base(fixture)
-		{
-		}
 	}
 }
