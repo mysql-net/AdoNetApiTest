@@ -231,6 +231,28 @@ public abstract class ConnectionTestBase<TFixture> : DbFactoryTestBase<TFixture>
 	}
 
 	[Fact]
+	public virtual void Dispose_raises_Disposed()
+	{
+		var connection = CreateOpenConnection();
+		var disposedCount = 0;
+		connection.Disposed += (s, e) => disposedCount++;
+		connection.Dispose();
+		Assert.Equal(1, disposedCount);
+	}
+
+#if NETSTANDARD2_1_OR_GREATER
+	[Fact]
+	public virtual async Task DisposeAsync_raises_Disposed()
+	{
+		var connection = CreateOpenConnection();
+		var disposedCount = 0;
+		connection.Disposed += (s, e) => disposedCount++;
+		await connection.DisposeAsync().ConfigureAwait(false);
+		Assert.Equal(1, disposedCount);
+	}
+#endif
+
+	[Fact]
 	public virtual void CreateCommand_returns_command()
 	{
 		using var connection = CreateOpenConnection();
