@@ -10,14 +10,14 @@ services:
       SA_PASSWORD: P@ssw0rd
 
   mysql:
-    image: mysql:5.7.28
+    image: mysql:8
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: test
 
   postgres:
-    image: postgres:11.6-alpine
+    image: postgres:15-alpine
     ports:
       - "5432:5432"
     environment:
