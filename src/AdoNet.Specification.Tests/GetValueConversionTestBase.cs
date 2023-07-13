@@ -43,7 +43,7 @@ public abstract partial class GetValueConversionTestBase<TFixture> : DbFactoryTe
 			}
 			catch (Exception ex)
 			{
-				throw new ThrowsException(exceptionType, ex);
+				throw ThrowsException.ForIncorrectExceptionType(exceptionType, ex);
 			}
 		});
 
@@ -65,7 +65,7 @@ public abstract partial class GetValueConversionTestBase<TFixture> : DbFactoryTe
 			}
 			catch (Exception ex)
 			{
-				throw new ThrowsException(exceptionType, ex);
+				throw ThrowsException.ForIncorrectExceptionType(exceptionType, ex);
 			}
 		});
 

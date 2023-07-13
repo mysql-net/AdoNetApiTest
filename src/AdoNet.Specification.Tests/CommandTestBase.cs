@@ -583,9 +583,9 @@ public abstract class CommandTestBase<TFixture> : DbFactoryTestBase<TFixture>
 		catch (Exception ex) when (ex is NotSupportedException || ex is InvalidOperationException)
 		{
 		}
-		catch (Exception ex) when (!(ex is UnexpectedValueException))
+		catch (Exception ex) when (ex is not UnexpectedValueException)
 		{
-			throw new ThrowsException(typeof(NotSupportedException), ex);
+			throw ThrowsException.ForIncorrectExceptionType(typeof(NotSupportedException), ex);
 		}
 	}
 

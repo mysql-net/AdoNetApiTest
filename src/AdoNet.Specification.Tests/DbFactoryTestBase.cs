@@ -71,7 +71,7 @@ public abstract class DbFactoryTestBase<TFixture> : IAsyncLifetime, IDisposable,
 		try
 		{
 			action();
-			throw new ThrowsException(typeof(TException1));
+			throw ThrowsException.ForNoException(typeof(TException1));
 		}
 		catch (TException1 ex)
 		{
@@ -83,7 +83,7 @@ public abstract class DbFactoryTestBase<TFixture> : IAsyncLifetime, IDisposable,
 		}
 		catch (Exception ex)
 		{
-			throw new ThrowsException(typeof(TException1), ex);
+			throw ThrowsException.ForIncorrectExceptionType(typeof(TException1), ex);
 		}
 	}
 
@@ -95,7 +95,7 @@ public abstract class DbFactoryTestBase<TFixture> : IAsyncLifetime, IDisposable,
 		try
 		{
 			action();
-			throw new ThrowsException(typeof(TException1));
+			throw ThrowsException.ForNoException(typeof(TException1));
 		}
 		catch (TException1 ex)
 		{
@@ -111,7 +111,7 @@ public abstract class DbFactoryTestBase<TFixture> : IAsyncLifetime, IDisposable,
 		}
 		catch (Exception ex)
 		{
-			throw new ThrowsException(typeof(TException1), ex);
+			throw ThrowsException.ForIncorrectExceptionType(typeof(TException1), ex);
 		}
 	}
 

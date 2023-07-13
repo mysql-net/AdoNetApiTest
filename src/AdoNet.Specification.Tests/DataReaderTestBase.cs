@@ -1034,7 +1034,7 @@ public class DataReaderTestBase<TFixture> : DbFactoryTestBase<TFixture>
 		case TypeCode.UInt64:
 			return;
 		}
-		Assert.True(false, "DataType isn't numeric");
+		Assert.Fail("DataType isn't numeric");
 	}
 
 	private void TestGetTextReader(ValueKind valueKind, string expected)
