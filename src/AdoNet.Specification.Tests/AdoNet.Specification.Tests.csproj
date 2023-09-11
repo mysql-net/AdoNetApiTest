@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.5.1-pre.4" />
+    <PackageReference Include="xunit" Version="2.5.1-pre.33" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.5.1-pre.4" />
     <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
