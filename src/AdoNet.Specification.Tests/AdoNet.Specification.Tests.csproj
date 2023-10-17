@@ -26,6 +26,11 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true' OR '$(APPVEYOR)' == 'True' OR '$(TF_BUILD)' == 'True' ">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.5.3" />
