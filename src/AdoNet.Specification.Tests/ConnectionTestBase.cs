@@ -247,7 +247,7 @@ public abstract class ConnectionTestBase<TFixture> : DbFactoryTestBase<TFixture>
 		var connection = CreateOpenConnection();
 		var disposedCount = 0;
 		connection.Disposed += (s, e) => disposedCount++;
-		await connection.DisposeAsync().ConfigureAwait(false);
+		await connection.DisposeAsync().ConfigureAwait(true);
 		Assert.Equal(1, disposedCount);
 	}
 #endif
