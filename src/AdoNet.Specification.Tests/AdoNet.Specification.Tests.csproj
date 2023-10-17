@@ -5,7 +5,7 @@
     <PackageId>AdoNet.Specification.Tests</PackageId>
     <Title>ADO.NET Specification Tests</Title>
     <Description>Shared test suite for ADO.NET providers.</Description>
-    <Copyright>Copyright 2017–2022 Bradley Grainger</Copyright>
+    <Copyright>Copyright 2017–2023 Bradley Grainger</Copyright>
     <Version>2.0.0-beta.2</Version>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
@@ -23,8 +23,7 @@
     <IsPackable>true</IsPackable>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
