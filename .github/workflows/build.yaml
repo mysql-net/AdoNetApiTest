@@ -28,3 +28,9 @@ jobs:
 
     - name: Pack
       run: dotnet pack --configuration Release --no-build
+
+    - name: Upload Package
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ github.event.repository.name }}.nupkg
+        path: 'src/AdoNet.Specification.Tests/**/*.nupkg'
