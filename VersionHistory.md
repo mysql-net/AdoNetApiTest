@@ -1,5 +1,10 @@
 # Version History
 
+## 2.0.0 Beta 2
+
+* Add test for `Disposed` event being raised.
+* Update Xunit to 2.5.3.
+
 ## 2.0.0 Beta 1
 
 * Revert to using Xunit.SkippableFact for skippable tests.
