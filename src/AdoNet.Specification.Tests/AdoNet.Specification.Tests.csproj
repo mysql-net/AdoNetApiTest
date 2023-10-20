@@ -13,6 +13,7 @@
     <Authors>Bradley Grainger</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>ado.net;database;test</PackageTags>
     <PackageReleaseNotes>https://github.com/mysql-net/AdoNetApiTest/blob/master/VersionHistory.md</PackageReleaseNotes>
     <PackageProjectUrl>https://mysql-net.github.io/AdoNetResults/</PackageProjectUrl>
@@ -36,6 +37,10 @@
     <PackageReference Include="xunit.extensibility.execution" Version="2.5.3" />
     <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
