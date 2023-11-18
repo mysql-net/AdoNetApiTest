@@ -175,6 +175,13 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
+          workingDirectory: tests/MicrosoftSqlite8.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite8.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
           workingDirectory: tests/Sqlite.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Sqlite.Tests.trx"'
