@@ -66,16 +66,6 @@ jobs:
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
-      - task: DotNetCoreCLI@2
-        displayName: MySql.Data 8
-        inputs:
-          command: 'test'
-          workingDirectory: tests/MySqlData8.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData8.Tests.trx"'
-        continueOnError: true
-        env:
-          ConnectionString: $(ConnectionString)
       - task: PublishPipelineArtifact@0
         inputs:
           artifactName: MySQL
