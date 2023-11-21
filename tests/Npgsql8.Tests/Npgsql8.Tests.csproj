@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="AdoNet.Specification.Tests" />
+    <Using Include="System.Data.Common" />
+    <Using Include="Npgsql" />
+    <Using Include="Xunit" />
+    <PackageReference Include="Npgsql" Version="8.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AdoNet.Databases\AdoNet.Databases.csproj" />
+    <ProjectReference Include="..\..\src\AdoNet.Specification.Tests\AdoNet.Specification.Tests.csproj" />
+  </ItemGroup>
+
+</Project>

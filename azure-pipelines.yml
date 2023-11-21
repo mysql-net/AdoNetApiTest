@@ -122,6 +122,16 @@ jobs:
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: Npgsql 8
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Npgsql8.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql8.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
       - task: PublishPipelineArtifact@0
         inputs:
           artifactName: PostgreSQL
