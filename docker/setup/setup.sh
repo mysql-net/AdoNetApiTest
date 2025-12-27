@@ -15,4 +15,5 @@ docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE n
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql5;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql6;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql7;"
+docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql8;"
 echo 'done'
