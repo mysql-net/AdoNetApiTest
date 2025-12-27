@@ -18,12 +18,12 @@ public abstract class DbFactoryTestBase<TFixture> : IAsyncLifetime, IDisposable,
 		CanceledToken = m_cancellationTokenSource.Token;
 	}
 
-	public async Task InitializeAsync()
+	public async ValueTask InitializeAsync()
 	{
 		await OnInitializeAsync().ConfigureAwait(false);
 	}
 
-	public async Task DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
 		await OnDisposeAsync().ConfigureAwait(false);
 	}

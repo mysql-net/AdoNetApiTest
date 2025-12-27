@@ -1,10 +1,4 @@
-using System;
-using System.Data;
-using System.Data.Common;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace AdoNet.Specification.Tests;
 
@@ -44,11 +38,11 @@ public abstract class DbProviderFactoryTestBase<TFixture> : DbFactoryTestBase<TF
 	public virtual void DbProviderFactory_CanCreateDataSourceEnumerator_is_accurate() => Assert.Equal(Fixture.Factory.CanCreateDataSourceEnumerator, Fixture.Factory.CreateDataSourceEnumerator() is object);
 
 #if NETSTANDARD2_0
-	[SkippableFact]
-	public virtual void DbProviderFactory_CanCreateCommandBuilder_is_true() => throw new Xunit.SkipException("Not supported on this TargetFramework");
+	[Fact]
+	public virtual void DbProviderFactory_CanCreateCommandBuilder_is_true() => throw Xunit.Sdk.SkipException.ForSkip("Not supported on this TargetFramework");
 
-	[SkippableFact]
-	public virtual void DbProviderFactory_CanCreateDataAdapter_is_true() => throw new Xunit.SkipException("Not supported on this TargetFramework");
+	[Fact]
+	public virtual void DbProviderFactory_CanCreateDataAdapter_is_true() => throw Xunit.Sdk.SkipException.ForSkip("Not supported on this TargetFramework");
 #else
 	[Fact]
 	public virtual void DbProviderFactory_CanCreateCommandBuilder_is_true() => Assert.True(Fixture.Factory.CanCreateCommandBuilder);
