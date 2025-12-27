@@ -1,5 +1,12 @@
 # Version History
 
+## 3.0.0 Beta 1
+
+* Update to xUnit v3 ([#350](https://github.com/mysql-net/AdoNetApiTest/issues/350)). To update your test projects:
+  * Replace any package references to `xunit` with `xunit.v3`.
+  * Ensure test projects are using a v3.x version of `xunit.runner.visualstudio`.
+  * Follow any other instructions in [Migrating Unit Tests from v2 to v3](https://xunit.net/docs/getting-started/v3/migration).
+
 ## 2.0.0 Beta 2
 
 * Add test for `Disposed` event being raised.
