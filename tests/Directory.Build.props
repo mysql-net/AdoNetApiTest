@@ -1,4 +1,7 @@
 <Project>
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU1902;NU1903;NU1904</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageReference Include="xunit.v3" Version="3.2.1" />
