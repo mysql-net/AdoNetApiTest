@@ -22,9 +22,6 @@ resources:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@ssw0rd
 
-variables:
-  DotNetCoreSdkVersion: '8.0.x'
-
 jobs:
   - job: Linux_MySQL
     pool:
@@ -36,7 +33,7 @@ jobs:
     steps:
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - bash: |
           for i in `seq 1 30`; do
             sleep 1
@@ -81,7 +78,7 @@ jobs:
     steps:
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - task: DotNetCoreCLI@2
         displayName: Npgsql 4
         inputs:
@@ -143,7 +140,7 @@ jobs:
     steps:
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
@@ -201,7 +198,7 @@ jobs:
     steps:
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - script: |
           docker exec `docker container ls -n1 -q` /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
         displayName: 'Create sqlclient database'
@@ -245,7 +242,7 @@ jobs:
     steps:
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - task: DotNetCoreCLI@2
         displayName: SqlClientBcl
         inputs:
@@ -293,7 +290,7 @@ jobs:
           targetPath: $(Agent.BuildDirectory)/tests
       - task: UseDotNet@2
         inputs:
-          version: $(DotNetCoreSdkVersion)
+          useGlobalJson: true
       - task: DotNetCoreCLI@2
         inputs:
           command: 'run'
