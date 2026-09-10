@@ -379,6 +379,19 @@ public class DataReaderTestBase<TFixture> : DbFactoryTestBase<TFixture>
 	}
 
 	[Fact]
+	public virtual void IsClosed_returns_false_when_all_rows_read()
+	{
+		using var connection = CreateOpenConnection();
+		using var command = connection.CreateCommand();
+		command.CommandText = "SELECT 1;";
+		using var reader = command.ExecuteReader();
+		Assert.True(reader.Read());
+		Assert.False(reader.Read());
+		Assert.False(reader.NextResult());
+		Assert.False(reader.IsClosed);
+	}
+
+	[Fact]
 	public virtual void IsDBNull_works()
 	{
 		using var connection = CreateOpenConnection();
