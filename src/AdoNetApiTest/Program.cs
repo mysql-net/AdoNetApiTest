@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -41,7 +42,7 @@ class Program
 		var assemblyTestResults = testResultPaths
 			.Select(ProcessTests)
 			.OrderBy(x => x.Category)
-			.ThenBy(x => x.Name)
+			.ThenBy(x => x.Name, StringComparer.Create(CultureInfo.InvariantCulture, CompareOptions.NumericOrdering))
 			.ToList();
 		var sb = new StringBuilder($@"<!doctype html>
 <html>
@@ -104,7 +105,9 @@ class Program
 					sb.AppendFormat("<td></td>");
 				lastCategory = result.Category;
 
-				result.Results.TryGetValue(testName, out var testResult);
+				// tests can be absent for some providers, e.g., DisposeAsync tests aren't compiled for netstandard2.0 (used by net48 test projects)
+				if (!result.Results.TryGetValue(testName, out var testResult))
+					testResult = new(TestStatus.NotApplicable, "Not run for this provider");
 				var status = testResult.Status;
 				var className =
 					status == TestStatus.Pass ? "EXPECTED_RESULT" :
@@ -116,7 +119,7 @@ class Program
 					status == TestStatus.ImplementationFail ? "IMPLEMENTATION_FAIL" :
 					status == TestStatus.NotApplicable ? "NOT_APPLICABLE" :
 					"";
-				sb.AppendFormat("<td class='{0}'{1}></td>", className, testResult.Message == null ? "" : $" title=\"{EscapeHtml(testResult.Message)}\"'");
+				sb.AppendFormat("<td class='{0}'{1}></td>", className, testResult.Message == null ? "" : $" title=\"{EscapeHtml(testResult.Message)}\"");
 			}
 
 			sb.AppendLine("</tr>");
@@ -235,7 +238,9 @@ class Program
 			}
 			else if ((string) test.Attribute("outcome") == "NotExecuted")
 			{
-				testMessage = (string) test.Element(teamTest + "Output")?.Element(teamTest + "StdOut");
+				// xUnit v3 reports the skip reason as the error message; xUnit v2 wrote it to stdout
+				var output = test.Element(teamTest + "Output");
+				testMessage = (string) output?.Element(teamTest + "ErrorInfo")?.Element(teamTest + "Message") ?? (string) output?.Element(teamTest + "StdOut");
 				testStatus = testMessage == "Database doesn't support this data type" || testMessage == "Not supported on this TargetFramework" ? TestStatus.NotApplicable : TestStatus.ImplementationFail;
 			}
 			else
@@ -256,11 +261,13 @@ class Program
 							testStatus = TestStatus.ImplementationFail;
 					}
 				}
-				else if (message.StartsWith("Assert.Throws() Failure", StringComparison.Ordinal))
+				else if (message.StartsWith("Assert.Throws() Failure", StringComparison.Ordinal) ||
+						message.StartsWith("Assert.ThrowsAny() Failure", StringComparison.Ordinal))
 				{
 					// distinguish the wrong type of exception being thrown from NullReferenceException (which is always a "crash")
+					// xUnit v3 reports "Failure: No exception was thrown"; xUnit v2 reported "Actual: (No exception was thrown)"
 					var actual = Regex.Match(message, @"\bActual:\s+(.*?)$", RegexOptions.Singleline).Groups[1].Value;
-					testStatus = actual == "(No exception was thrown)" ? TestStatus.NoException :
+					testStatus = message.IndexOf("No exception was thrown", StringComparison.Ordinal) != -1 ? TestStatus.NoException :
 						actual.StartsWith("typeof(System.NullReferenceException)", StringComparison.Ordinal) ? TestStatus.Exception :
 						actual.StartsWith("typeof(System.NotSupportedException)", StringComparison.Ordinal) ? TestStatus.Exception :
 						actual.StartsWith("typeof(System.NotImplementedException)", StringComparison.Ordinal) ? TestStatus.Exception :
@@ -271,6 +278,7 @@ class Program
 				else if (message.StartsWith("Assert.Equal() Failure", StringComparison.Ordinal) ||
 						 message.StartsWith("Assert.False() Failure", StringComparison.Ordinal) ||
 						message.StartsWith("Assert.Null() Failure", StringComparison.Ordinal) ||
+						message.StartsWith("Assert.NotNull() Failure", StringComparison.Ordinal) ||
 						message.StartsWith("Assert.True() Failure", StringComparison.Ordinal))
 				{
 					testStatus = TestStatus.Fail;
