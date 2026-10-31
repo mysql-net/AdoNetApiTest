@@ -164,13 +164,6 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
-          workingDirectory: tests/MicrosoftSqlite.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite.Tests.trx"'
-        continueOnError: true
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'test'
           workingDirectory: tests/MicrosoftSqlite5.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite5.Tests.trx"'
@@ -199,9 +192,30 @@ jobs:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'
+          workingDirectory: tests/MicrosoftSqlite9.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite9.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MicrosoftSqlite10.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite10.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
           workingDirectory: tests/Sqlite.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Sqlite.Tests.trx"'
+        continueOnError: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Sqlite2.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Sqlite2.Tests.trx"'
         continueOnError: true
       - task: PublishPipelineArtifact@0
         inputs:

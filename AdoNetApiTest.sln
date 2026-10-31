@@ -19,10 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotConnectPostgres.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite.Tests", "tests\Sqlite.Tests\Sqlite.Tests.csproj", "{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite.Tests", "tests\MicrosoftSqlite.Tests\MicrosoftSqlite.Tests.csproj", "{FE87F461-CF5E-4A1F-8967-D3A158F674A1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData8.Tests", "tests\MySqlData8.Tests\MySqlData8.Tests.csproj", "{D5201906-1566-42EA-885E-076AA2C18AF0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Databases", "src\AdoNet.Databases\AdoNet.Databases.csproj", "{72764D9F-37B6-48F4-8510-4E37164E5EE1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite5.Tests", "tests\MicrosoftSqlite5.Tests\MicrosoftSqlite5.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
@@ -30,8 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql5.Tests", "tests\Npgsql5.Tests\Npgsql5.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient5.Tests", "tests\MicrosoftSqlClient5.Tests\MicrosoftSqlClient5.Tests.csproj", "{E9F423D2-72CE-407E-B404-94423F4F4E91}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaithlifeSqlite.Tests", "tests\FaithlifeSqlite.Tests\FaithlifeSqlite.Tests.csproj", "{9A5B7D2E-55D6-4053-94D6-BB83CF313276}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient3.Tests", "tests\MicrosoftSqlClient3.Tests\MicrosoftSqlClient3.Tests.csproj", "{CA0F1D91-B432-40BD-A2A2-A840A63B954C}"
 EndProject
@@ -60,6 +54,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData9.Tests", "tests\MySqlData9.Tests\MySqlData9.Tests.csproj", "{8ECAA390-3CEB-401C-8D79-9A80658C8B91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlData26.Tests", "tests\MySqlData26.Tests\MySqlData26.Tests.csproj", "{65318806-F42B-449C-97E5-F3EA164514B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite9.Tests", "tests\MicrosoftSqlite9.Tests\MicrosoftSqlite9.Tests.csproj", "{DDB725B4-A5FF-4512-B0A2-C0E53B0ED8D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite10.Tests", "tests\MicrosoftSqlite10.Tests\MicrosoftSqlite10.Tests.csproj", "{6534A0C8-D017-421A-8B8F-682069CEFDC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite2.Tests", "tests\Sqlite2.Tests\Sqlite2.Tests.csproj", "{0AB9FDCC-1BB6-4C74-B05A-D33BDBF0FCE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,14 +99,6 @@ Global
 		{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF5CFA95-6A38-4E55-B5F7-71447AB56C51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE87F461-CF5E-4A1F-8967-D3A158F674A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5201906-1566-42EA-885E-076AA2C18AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5201906-1566-42EA-885E-076AA2C18AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5201906-1566-42EA-885E-076AA2C18AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5201906-1566-42EA-885E-076AA2C18AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -123,10 +115,6 @@ Global
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A5B7D2E-55D6-4053-94D6-BB83CF313276}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -183,6 +171,18 @@ Global
 		{65318806-F42B-449C-97E5-F3EA164514B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65318806-F42B-449C-97E5-F3EA164514B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65318806-F42B-449C-97E5-F3EA164514B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB725B4-A5FF-4512-B0A2-C0E53B0ED8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB725B4-A5FF-4512-B0A2-C0E53B0ED8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB725B4-A5FF-4512-B0A2-C0E53B0ED8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB725B4-A5FF-4512-B0A2-C0E53B0ED8D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6534A0C8-D017-421A-8B8F-682069CEFDC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6534A0C8-D017-421A-8B8F-682069CEFDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6534A0C8-D017-421A-8B8F-682069CEFDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6534A0C8-D017-421A-8B8F-682069CEFDC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB9FDCC-1BB6-4C74-B05A-D33BDBF0FCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB9FDCC-1BB6-4C74-B05A-D33BDBF0FCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB9FDCC-1BB6-4C74-B05A-D33BDBF0FCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB9FDCC-1BB6-4C74-B05A-D33BDBF0FCE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
