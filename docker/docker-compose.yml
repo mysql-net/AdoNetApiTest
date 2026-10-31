@@ -1,21 +1,23 @@
+name: ado
+
 services:
   mssql:
-    image: mcr.microsoft.com/mssql/server:2017-CU17-ubuntu
+    image: mcr.microsoft.com/mssql/server:2025-latest
     ports:
       - "1433:1433"
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: P@ssw0rd
+      MSSQL_SA_PASSWORD: P@ssw0rd
 
   mysql:
-    image: mysql:8.4
+    image: mysql:9.7
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: test
 
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     ports:
       - "5432:5432"
     environment:

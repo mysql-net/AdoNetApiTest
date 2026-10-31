@@ -1,26 +1,26 @@
 resources:
   containers:
   - container: mysql
-    image: mysql:5.7.40
+    image: mysql:9.7
     ports:
     - "3300:3306"
     env:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: test
   - container: postgres
-    image: postgres:15.0-alpine
+    image: postgres:18-alpine
     ports:
     - 5432:5432
     env:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: test
   - container: sqlserver
-    image: mcr.microsoft.com/mssql/server:2017-CU17-ubuntu
+    image: mcr.microsoft.com/mssql/server:2025-latest
     ports:
     - "1433:1433"
     env:
       ACCEPT_EULA: Y
-      SA_PASSWORD: P@ssw0rd
+      MSSQL_SA_PASSWORD: P@ssw0rd
 
 jobs:
   - job: Linux_MySQL
@@ -29,7 +29,7 @@ jobs:
     services:
       mysql: mysql
     variables:
-      ConnectionString: "Server=localhost;Port=3300;User Id=root;Password=password;SSL Mode=none;Database=test;CharacterSet=utf8mb4"
+      ConnectionString: "Server=localhost;Port=3300;User Id=root;Password=password;Database=test;CharacterSet=utf8mb4"
     steps:
       - task: UseDotNet@2
         inputs:
@@ -54,12 +54,22 @@ jobs:
         env:
           ConnectionString: $(ConnectionString)
       - task: DotNetCoreCLI@2
-        displayName: MySql.Data 6
+        displayName: MySql.Data 9
         inputs:
           command: 'test'
-          workingDirectory: tests/MySqlData.Tests
+          workingDirectory: tests/MySqlData9.Tests
           publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData.Tests.trx"'
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData9.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: MySql.Data 26
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MySqlData26.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MySqlData26.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
@@ -79,16 +89,6 @@ jobs:
       - task: UseDotNet@2
         inputs:
           useGlobalJson: true
-      - task: DotNetCoreCLI@2
-        displayName: Npgsql 4
-        inputs:
-          command: 'test'
-          workingDirectory: tests/Npgsql4.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql4.Tests.trx"'
-        continueOnError: true
-        env:
-          ConnectionString: $(ConnectionString)
       - task: DotNetCoreCLI@2
         displayName: Npgsql 5
         inputs:
@@ -126,6 +126,26 @@ jobs:
           workingDirectory: tests/Npgsql8.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql8.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: Npgsql 9
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Npgsql9.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql9.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        displayName: Npgsql 10
+        inputs:
+          command: 'test'
+          workingDirectory: tests/Npgsql10.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql10.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
@@ -200,7 +220,7 @@ jobs:
         inputs:
           useGlobalJson: true
       - script: |
-          docker exec `docker container ls -n1 -q` /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
+          docker exec `docker container ls -n1 -q` /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P P@ssw0rd -Q "create database sqlclient;"
         displayName: 'Create sqlclient database'
       - task: DotNetCoreCLI@2
         inputs:
@@ -217,6 +237,24 @@ jobs:
           workingDirectory: tests/MicrosoftSqlClient5.Tests
           publishTestResults: false
           arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient5.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MicrosoftSqlClient6.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient6.Tests.trx"'
+        continueOnError: true
+        env:
+          ConnectionString: $(ConnectionString)
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          workingDirectory: tests/MicrosoftSqlClient7.Tests
+          publishTestResults: false
+          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlClient7.Tests.trx"'
         continueOnError: true
         env:
           ConnectionString: $(ConnectionString)
