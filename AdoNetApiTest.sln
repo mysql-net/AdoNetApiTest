@@ -21,17 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqlite.Tests", "tests\Sqlit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNet.Databases", "src\AdoNet.Databases\AdoNet.Databases.csproj", "{72764D9F-37B6-48F4-8510-4E37164E5EE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite5.Tests", "tests\MicrosoftSqlite5.Tests\MicrosoftSqlite5.Tests.csproj", "{552A65C9-12BD-4D0B-846D-839913B3EC8D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql5.Tests", "tests\Npgsql5.Tests\Npgsql5.Tests.csproj", "{827DD0A8-D9B2-4C17-9F25-0A8927538E89}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient5.Tests", "tests\MicrosoftSqlClient5.Tests\MicrosoftSqlClient5.Tests.csproj", "{E9F423D2-72CE-407E-B404-94423F4F4E91}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient3.Tests", "tests\MicrosoftSqlClient3.Tests\MicrosoftSqlClient3.Tests.csproj", "{CA0F1D91-B432-40BD-A2A2-A840A63B954C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Npgsql6.Tests", "tests\Npgsql6.Tests\Npgsql6.Tests.csproj", "{AEF85E25-B126-48A7-97D4-774D39349327}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlite6.Tests", "tests\MicrosoftSqlite6.Tests\MicrosoftSqlite6.Tests.csproj", "{9FB36AAD-59CF-4DBC-A3A9-42BFF3507E9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlClient4.Tests", "tests\MicrosoftSqlClient4.Tests\MicrosoftSqlClient4.Tests.csproj", "{35CA13FA-B483-42FB-8759-ECD18196E890}"
 EndProject
@@ -103,30 +93,10 @@ Global
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72764D9F-37B6-48F4-8510-4E37164E5EE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{552A65C9-12BD-4D0B-846D-839913B3EC8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{827DD0A8-D9B2-4C17-9F25-0A8927538E89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9F423D2-72CE-407E-B404-94423F4F4E91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA0F1D91-B432-40BD-A2A2-A840A63B954C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEF85E25-B126-48A7-97D4-774D39349327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEF85E25-B126-48A7-97D4-774D39349327}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEF85E25-B126-48A7-97D4-774D39349327}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEF85E25-B126-48A7-97D4-774D39349327}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FB36AAD-59CF-4DBC-A3A9-42BFF3507E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FB36AAD-59CF-4DBC-A3A9-42BFF3507E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FB36AAD-59CF-4DBC-A3A9-42BFF3507E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FB36AAD-59CF-4DBC-A3A9-42BFF3507E9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35CA13FA-B483-42FB-8759-ECD18196E890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35CA13FA-B483-42FB-8759-ECD18196E890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35CA13FA-B483-42FB-8759-ECD18196E890}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -90,26 +90,6 @@ jobs:
         inputs:
           useGlobalJson: true
       - task: DotNetCoreCLI@2
-        displayName: Npgsql 5
-        inputs:
-          command: 'test'
-          workingDirectory: tests/Npgsql5.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql5.Tests.trx"'
-        continueOnError: true
-        env:
-          ConnectionString: $(ConnectionString)
-      - task: DotNetCoreCLI@2
-        displayName: Npgsql 6
-        inputs:
-          command: 'test'
-          workingDirectory: tests/Npgsql6.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/Npgsql6.Tests.trx"'
-        continueOnError: true
-        env:
-          ConnectionString: $(ConnectionString)
-      - task: DotNetCoreCLI@2
         displayName: Npgsql 7
         inputs:
           command: 'test'
@@ -161,20 +141,6 @@ jobs:
       - task: UseDotNet@2
         inputs:
           useGlobalJson: true
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'test'
-          workingDirectory: tests/MicrosoftSqlite5.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite5.Tests.trx"'
-        continueOnError: true
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'test'
-          workingDirectory: tests/MicrosoftSqlite6.Tests
-          publishTestResults: false
-          arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/MicrosoftSqlite6.Tests.trx"'
-        continueOnError: true
       - task: DotNetCoreCLI@2
         inputs:
           command: 'test'

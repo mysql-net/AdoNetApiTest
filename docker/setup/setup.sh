@@ -1,6 +1,5 @@
 #!/bin/bash
 echo 'setup.sh'
-docker exec ado-mssql-1 /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient3;"
 docker exec ado-mssql-1 /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient4;"
 docker exec ado-mssql-1 /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient5;"
 docker exec ado-mssql-1 /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P P@ssw0rd -Q "create database mssqlclient6;"
@@ -12,8 +11,6 @@ docker exec ado-mysql-1 mysql -uroot -ptest -e "create schema mysqlconnector col
 docker exec ado-mysql-1 mysql -uroot -ptest -e "create schema mysqldata9 collate utf8mb4_bin;"
 docker exec ado-mysql-1 mysql -uroot -ptest -e "create schema mysqldata26 collate utf8mb4_bin;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE dotconnect;"
-docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql5;"
-docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql6;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql7;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql8;"
 docker exec -e PGPASSWORD=test ado-postgres-1 psql -U root -c "CREATE DATABASE npgsql9;"
